@@ -2,6 +2,7 @@ package de.bitbrain.mindmazer.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
 import de.bitbrain.mindmazer.MindmazerGame;
 
 public class DesktopLauncher {

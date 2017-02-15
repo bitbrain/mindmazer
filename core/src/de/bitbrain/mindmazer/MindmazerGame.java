@@ -9,6 +9,11 @@ import de.bitbrain.mindmazer.screens.IngameScreen;
 public class MindmazerGame extends BrainGdxGame {
 
    @Override
+   public void resize(int width, int height) {
+      super.resize(width, height);
+   }
+
+   @Override
    protected GameAssetLoader getAssetLoader() {
       return new MindmazerAssetLoader();
    }

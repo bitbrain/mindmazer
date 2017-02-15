@@ -8,5 +8,4 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    public IngameScreen(MindmazerGame game) {
       super(game);
    }
-
 }
