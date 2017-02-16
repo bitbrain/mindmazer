@@ -4,20 +4,31 @@ public class Biom {
 
    private final byte[][] data;
    private final int startX, startY;
+   private final int height, width;
    private final int endX, endY;
    private final int length;
 
-   public Biom(byte[][] data, int startX, int startY, int endX, int endY, int length) {
+   public Biom(byte[][] data, int startX, int startY, int endX, int endY, int width, int height, int length) {
       this.data = data;
       this.startX = startX;
       this.startY = startY;
       this.endX = endX;
       this.endY = endY;
       this.length = length;
+      this.width = width;
+      this.height = height;
    }
 
    public int getLength() {
       return length;
+   }
+
+   public int getWidth() {
+      return width;
+   }
+
+   public int getHeight() {
+      return height;
    }
 
    public byte getCell(int indexX, int indexY) {

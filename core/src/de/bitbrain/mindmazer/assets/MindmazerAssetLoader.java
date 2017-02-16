@@ -7,8 +7,7 @@ import de.bitbrain.braingdx.assets.GameAssetLoader;
 public class MindmazerAssetLoader implements GameAssetLoader {
 
    @Override
-   public void put(Map<String, Class<?>> arg0) {
-
+   public void put(Map<String, Class<?>> map) {
    }
 
 }

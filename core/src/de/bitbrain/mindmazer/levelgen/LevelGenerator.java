@@ -8,23 +8,72 @@ import com.google.common.collect.Lists;
 public class LevelGenerator {
    
    private static final List<byte[]> BASIC_POOL = Lists.newArrayList(
-         BiomData.Basic.LINE_UP, 
          BiomData.Basic.SNAKE_LEFT,
+         BiomData.Basic.LINE_UP,
          BiomData.Basic.SNAKE_RIGHT
    );
 
    private final BiomFactory factory = new BiomFactory();
 
-   public LevelStage generateLevel() {
-      final int stages = 3;
+   public LevelStage generateLevel(int stages) {
       List<Biom> biomes = new ArrayList<Biom>();
+      List<Integer> absolutesX = new ArrayList<Integer>();
+      List<Integer> absolutesY = new ArrayList<Integer>();
+
       int length = 0;
-      byte[][] completeData = null; // TODO
-      byte[][] currentData = null; // TODO
+      int maxY = 0;
+      int minX = 0;
+      int maxX = 0;
+      int offsetX = 0;
+
+      // Calculate and position biomes
       for (int i = 0; i < stages; ++i) {
+
          Biom biom = factory.create(getRandomData(getStagedPool(i)));
+
+         int diffX = biom.getEndX() - biom.getStartX();
+
+         int biomLeft = offsetX - (biom.getWidth() - (biom.getWidth() - biom.getStartX()));
+         int biomRight = offsetX + (biom.getWidth() - biom.getStartX());
+
+         if (i == 0 || biomLeft < minX) {
+            minX = biomLeft;
+         }
+         if (i == 0 || biomRight > maxX) {
+            maxX = biomRight;
+         }
+
+         offsetX += diffX;
+         absolutesX.add(biomLeft);
+         absolutesY.add(maxY);
+
+         maxY += biom.getHeight();
          length += biom.getLength();
          biomes.add(biom);
+      }
+
+      // Generate world
+      int worldWidth = maxX - minX;
+      int worldHeight = maxY;
+      byte[][] completeData = new byte[worldWidth][worldHeight];
+      byte[][] currentData = new byte[worldWidth][worldHeight];
+
+      // Convert absolute offsets
+      for (int i = 0; i < absolutesX.size(); ++i) {
+         int convertedOffsetX = absolutesX.get(i) - minX;
+         absolutesX.set(i, convertedOffsetX);
+      }
+
+      // Extract biome data into world
+      for (int i = 0; i < biomes.size(); ++i) {
+         Biom biom = biomes.get(i);
+         for (int x = 0; x < biom.getWidth(); ++x) {
+            for (int y = 0; y < biom.getHeight(); ++y) {
+               int translatedX = absolutesX.get(i) + x;
+               int translatedY = absolutesY.get(i) + y;
+               completeData[translatedX][translatedY] = biom.getCell((biom.getWidth() - 1) - x, y);
+            }
+         }
       }
       return new LevelStage(biomes, length, completeData, currentData);
    }
@@ -35,6 +84,7 @@ public class LevelGenerator {
    }
 
    private byte[] getRandomData(List<byte[]> pool) {
-      return pool.get((int) (Math.random() * pool.size()));
+      int index = (int) (Math.random() * pool.size());
+      return pool.get(index);
    }
 }

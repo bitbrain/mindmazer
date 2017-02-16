@@ -4,7 +4,7 @@ public class BiomFactory {
 
    public Biom create(byte[] biomData) {
       int columns = biomData[biomData.length - 1];
-      int rows = biomData.length / columns;
+      int rows = (biomData.length - 1) / columns;
       byte[][] data = new byte[columns][rows];
       int xCounter = 0;
       int yCounter = 0;
@@ -29,6 +29,6 @@ public class BiomFactory {
             yCounter++;
          }
       }
-      return new Biom(data, startX, startY, endX, endY, length);
+      return new Biom(data, startX, startY, endX, endY, columns, rows, length);
    }
 }

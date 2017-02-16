@@ -3,7 +3,6 @@ package de.bitbrain.mindmazer.assets;
 public interface Assets {
 
    interface Textures {
-      // TODO
    }
 
    interface Sounds {
