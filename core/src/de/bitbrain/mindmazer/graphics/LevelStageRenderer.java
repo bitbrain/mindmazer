@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import de.bitbrain.braingdx.graphics.GameObjectRenderManager.GameObjectRenderer;
 import de.bitbrain.braingdx.world.GameObject;
@@ -16,6 +17,10 @@ public class LevelStageRenderer implements GameObjectRenderer {
    private byte[][] data;
 
    private Texture texture;
+
+   private Sprite sprite;
+
+   private int cellOffset;
 
    public LevelStageRenderer(byte[][] data) {
       this.data = data;
@@ -34,12 +39,15 @@ public class LevelStageRenderer implements GameObjectRenderer {
       if (texture == null) {
          buildTextureBuffer(batch);
       }
-      batch.draw(texture, object.getLeft(), object.getHeight());
+      sprite.setFlip(true, false);
+      sprite.setPosition(object.getLeft(), object.getTop() - cellOffset * 2);
+      sprite.draw(batch);
    }
 
    private void buildTextureBuffer(Batch batch) {
+      cellOffset = (int) (Config.TILE_SIZE * 0.23f);
       int textureWidth = Config.TILE_SIZE * data.length;
-      int textureHeight = Config.TILE_SIZE * data[0].length;
+      int textureHeight = Config.TILE_SIZE * data[0].length + cellOffset;
       if (texture != null) {
          texture.dispose();
       }
@@ -50,6 +58,22 @@ public class LevelStageRenderer implements GameObjectRenderer {
             float x = Config.TILE_SIZE * indexX;
             float y = Config.TILE_SIZE * indexY;
             byte value = data[indexX][indexY];
+            if (value != 0) {
+               if (indexX % 2 == 0) {
+                  if (indexY % 2 == 0) {
+                     map.setColor(Colors.CELL_B_DARK);
+                  } else {
+                     map.setColor(Colors.CELL_A_DARK);
+                  }
+               } else {
+                  if (indexY % 2 == 0) {
+                     map.setColor(Colors.CELL_A_DARK);
+                  } else {
+                     map.setColor(Colors.CELL_B_DARK);
+                  }
+               }
+               map.fillRectangle((int) x, (int) y + cellOffset, Config.TILE_SIZE, Config.TILE_SIZE);
+            }
             if (value != 0) {
                if (indexX % 2 == 0) {
                   if (indexY % 2 == 0) {
@@ -69,6 +93,7 @@ public class LevelStageRenderer implements GameObjectRenderer {
          }
       }
       texture = new Texture(map);
+      sprite = new Sprite(texture);
       map.dispose();
    }
 

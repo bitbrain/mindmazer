@@ -8,9 +8,10 @@ import com.google.common.collect.Lists;
 public class LevelGenerator {
    
    private static final List<byte[]> BASIC_POOL = Lists.newArrayList(
+         BiomData.Basic.SNAKE_RIGHT,
          BiomData.Basic.SNAKE_LEFT,
          BiomData.Basic.LINE_UP,
-         BiomData.Basic.SNAKE_RIGHT
+         BiomData.Basic.LINE_UP
    );
 
    private final BiomFactory factory = new BiomFactory();
@@ -30,6 +31,10 @@ public class LevelGenerator {
       for (int i = 0; i < stages; ++i) {
 
          Biom biom = factory.create(getRandomData(getStagedPool(i)));
+
+         if (i == 0) {
+            System.out.println(biom.getStartX());
+         }
 
          int diffX = biom.getEndX() - biom.getStartX();
 
@@ -75,7 +80,7 @@ public class LevelGenerator {
             }
          }
       }
-      return new LevelStage(biomes, length, completeData, currentData);
+      return new LevelStage(biomes, length, completeData, currentData, absolutesX, absolutesY);
    }
 
    private List<byte[]> getStagedPool(int stage) {

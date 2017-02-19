@@ -9,7 +9,6 @@ public class BiomFactory {
       int xCounter = 0;
       int yCounter = 0;
       int startX = -1;
-      int startY = -1;
       int endX = -1;
       int endY = -1;
       int length = 0;
@@ -20,15 +19,14 @@ public class BiomFactory {
             length++;
          } else if (biomData[index] > 0) {
             startX = xCounter;
-            startY = yCounter;
             length++;
          }
          data[xCounter][yCounter] = biomData[index];
-         if (++xCounter == columns) {
+         if (++xCounter >= columns) {
             xCounter = 0;
             yCounter++;
          }
       }
-      return new Biom(data, startX, startY, endX, endY, columns, rows, length);
+      return new Biom(data, startX, 0, endX, endY, columns, rows, length);
    }
 }
