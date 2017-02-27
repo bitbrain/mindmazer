@@ -42,7 +42,8 @@ public class GameOverHandler implements RasteredMovementListener {
       object.setActive(false);
       camera.setTarget(null);
       tweenManager.killTarget(object);
-      Tween.to(object, GameObjectTween.SCALE, 1.0f).target(0f).ease(TweenEquations.easeOutExpo)
+      Tween.to(object, GameObjectTween.ALPHA, 1.0f).target(0f).ease(TweenEquations.easeOutQuad).start(tweenManager);
+      Tween.to(object, GameObjectTween.SCALE, 1.0f).target(0.2f).ease(TweenEquations.easeOutQuad)
       .setCallbackTriggers(TweenCallback.COMPLETE)
       .setCallback(new TweenCallback() {
          @Override
@@ -52,6 +53,7 @@ public class GameOverHandler implements RasteredMovementListener {
                   camera.setTarget(object);
                   object.getScale().set(1f, 1f);
                   object.setActive(true);
+                  object.getColor().a = 1f;
                }
       }).start(tweenManager);
 

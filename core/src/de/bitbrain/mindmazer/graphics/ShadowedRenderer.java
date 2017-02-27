@@ -43,6 +43,7 @@ public class ShadowedRenderer implements GameObjectRenderer {
       sprite.setPosition(object.getLeft() + object.getOffset().x + PADDING,
             object.getTop() + object.getOffset().y + PADDING / 4);
       sprite.draw(batch);
+      sprite.setAlpha(object.getColor().a);
       renderer.render(object, batch, delta);
    }
 
