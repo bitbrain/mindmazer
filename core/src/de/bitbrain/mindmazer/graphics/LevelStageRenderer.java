@@ -39,7 +39,7 @@ public class LevelStageRenderer implements GameObjectRenderer {
       if (texture == null) {
          buildTextureBuffer(batch);
       }
-      sprite.setFlip(true, false);
+      sprite.setFlip(false, true);
       sprite.setPosition(object.getLeft(), object.getTop() - cellOffset * 2);
       sprite.draw(batch);
    }
@@ -54,7 +54,7 @@ public class LevelStageRenderer implements GameObjectRenderer {
       Pixmap map = new Pixmap(textureWidth, textureHeight, Format.RGBA8888);
       map.setColor(new Color(0f, 0f, 0f, 0f));
       for (int indexX = 0; indexX < data.length; ++indexX) {
-         for (int indexY = 0; indexY < data[indexX].length; ++indexY) {
+         for (int indexY = data[indexX].length - 1; indexY >= 0; --indexY) {
             float x = Config.TILE_SIZE * indexX;
             float y = Config.TILE_SIZE * indexY;
             byte value = data[indexX][indexY];
@@ -72,7 +72,7 @@ public class LevelStageRenderer implements GameObjectRenderer {
                      map.setColor(Colors.CELL_B_DARK);
                   }
                }
-               map.fillRectangle((int) x, (int) y + cellOffset, Config.TILE_SIZE, Config.TILE_SIZE);
+               map.fillRectangle((int) x, (int) y, Config.TILE_SIZE, Config.TILE_SIZE);
             }
             if (value != 0) {
                if (indexX % 2 == 0) {
@@ -88,7 +88,7 @@ public class LevelStageRenderer implements GameObjectRenderer {
                      map.setColor(Colors.CELL_B);
                   }
                }
-               map.fillRectangle((int) x, (int) y, Config.TILE_SIZE, Config.TILE_SIZE);
+               map.fillRectangle((int) x, (int) y + cellOffset, Config.TILE_SIZE, Config.TILE_SIZE);
             }
          }
       }

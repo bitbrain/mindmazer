@@ -25,7 +25,6 @@ public class LevelStage implements TiledCollisionResolver {
    }
 
    public int getAbsoluteStartOffsetX(int index) {
-      System.out.println(offsetsX.get(index) + "+" + getBiom(index).getStartX());
       return getBiom(index).getStartX() + offsetsX.get(index);
    }
 

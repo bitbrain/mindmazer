@@ -32,10 +32,6 @@ public class LevelGenerator {
 
          Biom biom = factory.create(getRandomData(getStagedPool(i)));
 
-         if (i == 0) {
-            System.out.println(biom.getStartX());
-         }
-
          int diffX = biom.getEndX() - biom.getStartX();
 
          int biomLeft = offsetX - (biom.getWidth() - (biom.getWidth() - biom.getStartX()));
