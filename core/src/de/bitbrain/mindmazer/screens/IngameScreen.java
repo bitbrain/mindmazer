@@ -19,6 +19,7 @@ import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.assets.Assets.Textures;
+import de.bitbrain.mindmazer.core.GameOverHandler;
 import de.bitbrain.mindmazer.graphics.LevelStageRenderer;
 import de.bitbrain.mindmazer.graphics.ShadowedRenderer;
 import de.bitbrain.mindmazer.levelgen.LevelGenerator;
@@ -54,12 +55,17 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       getGameCamera().setZoomScale(0.001f);
 
       OrientationMovementController controller = new OrientationMovementController();
-      RasteredMovementBehavior behavior = new RasteredMovementBehavior(controller, levelStage)
+      RasteredMovementBehavior behavior = new RasteredMovementBehavior(controller)
             .interval(0.3f).rasterSize(Config.TILE_SIZE, Config.TILE_SIZE);
       getBehaviorManager().apply(behavior, player);
       getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 200f, getLightingManager()),
             player);
       setupShaders();
+      registerGameHandlers(levelStage, behavior);
+   }
+
+   private void registerGameHandlers(LevelStage levelStage, RasteredMovementBehavior behavior) {
+      behavior.addListener(new GameOverHandler(levelStage, getGameCamera()));
    }
 
    private void setupShaders() {

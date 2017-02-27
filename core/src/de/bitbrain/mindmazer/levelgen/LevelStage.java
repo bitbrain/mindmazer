@@ -2,10 +2,9 @@ package de.bitbrain.mindmazer.levelgen;
 
 import java.util.List;
 
-import de.bitbrain.braingdx.behavior.movement.TiledCollisionResolver;
-import de.bitbrain.braingdx.world.GameObject;
+import de.bitbrain.mindmazer.Config;
 
-public class LevelStage implements TiledCollisionResolver {
+public class LevelStage {
 
    private final List<Biom> biomes;
    private final int length;
@@ -32,6 +31,14 @@ public class LevelStage implements TiledCollisionResolver {
       return getBiom(index).getStartY() + offsetsY.get(index);
    }
 
+   public int convertToIndexX(float x) {
+      return (int) (x / Config.TILE_SIZE);
+   }
+
+   public int convertToIndexY(float y) {
+      return (int) (y / Config.TILE_SIZE);
+   }
+
    public int getLength() {
       return length;
    }
@@ -45,29 +52,26 @@ public class LevelStage implements TiledCollisionResolver {
    }
 
    public byte getCurrentCell(int indexX, int indexY) {
+      if (indexX < 0 || indexY < 0) {
+         return 0;
+      }
+      if (indexX >= currentData.length || indexY >= currentData[0].length) {
+         return 0;
+      }
       return currentData[indexX][indexY];
    }
 
    public byte getCompleteCell(int indexX, int indexY) {
+      if (indexX < 0 || indexY < 0) {
+         return 0;
+      }
+      if (indexX >= completeData.length || indexY >= completeData[0].length) {
+         return 0;
+      }
       return completeData[indexX][indexY];
    }
 
    public byte[][] getCompleteData() {
       return completeData;
-   }
-
-   @Override
-   public boolean isCollision(int x, int y, int layer) {
-      return false;
-   }
-
-   @Override
-   public boolean isCollision(float x, float y, int layer) {
-      return false;
-   }
-
-   @Override
-   public boolean isCollision(GameObject object, int xOffset, int yOffset) {
-      return false;
    }
 }

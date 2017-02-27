@@ -39,7 +39,7 @@ public class ShadowedRenderer implements GameObjectRenderer {
          pixmap.dispose();
          sprite = new Sprite(texture);
       }
-      
+      sprite.setScale(object.getScale().x, object.getScale().y);
       sprite.setPosition(object.getLeft() + object.getOffset().x + PADDING,
             object.getTop() + object.getOffset().y + PADDING / 4);
       sprite.draw(batch);
