@@ -15,6 +15,6 @@ public interface Assets {
    }
 
    interface ParticleEffects {
-      // TODO
+      String JUMP_LAND = "particles/jump-land.p";
    }
 }
