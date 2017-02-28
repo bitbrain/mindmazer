@@ -48,7 +48,8 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       player.setDimensions(Config.TILE_SIZE, Config.TILE_SIZE);
       player.setPosition(levelStage.getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
             levelStage.getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
-      getRenderManager().register("player", new ShadowedRenderer(new SpriteRenderer(Textures.PLAYER)));
+      ShadowedRenderer renderer = new ShadowedRenderer(new SpriteRenderer(Textures.PLAYER));
+      getRenderManager().register("player", renderer);
       getGameCamera().setTarget(player);
       getGameCamera().setSpeed(2.2f);
       getGameCamera().setBaseZoom(0.2f);
@@ -58,6 +59,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       RasteredMovementBehavior behavior = new RasteredMovementBehavior(controller)
             .interval(0.3f).rasterSize(Config.TILE_SIZE, Config.TILE_SIZE);
       getBehaviorManager().apply(behavior, player);
+      behavior.addListener(renderer);
       getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 200f, getLightingManager()),
             player);
       setupShaders();
