@@ -21,7 +21,7 @@ import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.assets.Assets.Textures;
 import de.bitbrain.mindmazer.core.GameOverHandler;
 import de.bitbrain.mindmazer.graphics.LevelStageRenderer;
-import de.bitbrain.mindmazer.graphics.ShadowedRenderer;
+import de.bitbrain.mindmazer.graphics.JumpAnimationRenderer;
 import de.bitbrain.mindmazer.levelgen.LevelGenerator;
 import de.bitbrain.mindmazer.levelgen.LevelStage;
 
@@ -48,7 +48,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       player.setDimensions(Config.TILE_SIZE, Config.TILE_SIZE);
       player.setPosition(levelStage.getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
             levelStage.getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
-      ShadowedRenderer renderer = new ShadowedRenderer(new SpriteRenderer(Textures.PLAYER), getParticleManager());
+      JumpAnimationRenderer renderer = new JumpAnimationRenderer(new SpriteRenderer(Textures.PLAYER));
       getRenderManager().register("player", renderer);
       getGameCamera().setTarget(player);
       getGameCamera().setSpeed(2.2f);
@@ -57,7 +57,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
       OrientationMovementController controller = new OrientationMovementController();
       RasteredMovementBehavior behavior = new RasteredMovementBehavior(controller)
-            .interval(0.3f).rasterSize(Config.TILE_SIZE, Config.TILE_SIZE);
+            .interval(0.4f).rasterSize(Config.TILE_SIZE, Config.TILE_SIZE);
       getBehaviorManager().apply(behavior, player);
       behavior.addListener(renderer);
       getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 200f, getLightingManager()),
