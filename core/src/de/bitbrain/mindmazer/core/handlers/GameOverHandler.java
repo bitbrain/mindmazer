@@ -1,4 +1,4 @@
-package de.bitbrain.mindmazer.core;
+package de.bitbrain.mindmazer.core.handlers;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -11,24 +11,24 @@ import de.bitbrain.braingdx.tweens.GameObjectTween;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Config;
-import de.bitbrain.mindmazer.levelgen.LevelStage;
+import de.bitbrain.mindmazer.core.LevelManager;
 
 public class GameOverHandler implements RasteredMovementListener {
 
-   private final LevelStage stage;
+   private final LevelManager levelManager;
    private final GameCamera camera;
    private final TweenManager tweenManager = SharedTweenManager.getInstance();
 
-   public GameOverHandler(LevelStage stage, GameCamera camera) {
-      this.stage = stage;
+   public GameOverHandler(LevelManager levelManager, GameCamera camera) {
+      this.levelManager = levelManager;
       this.camera = camera;
    }
 
    @Override
    public void moveAfter(GameObject object) {
-      int indexX = stage.convertToIndexX(object.getLeft());
-      int indexY = stage.convertToIndexY(object.getTop());
-      if (stage.getCompleteCell(indexX, indexY) == 0) {
+      int indexX = levelManager.getCurrentStage().convertToIndexX(object.getLeft());
+      int indexY = levelManager.getCurrentStage().convertToIndexY(object.getTop());
+      if (levelManager.getCurrentStage().getCompleteCell(indexX, indexY) == 0) {
          respawn(object);
       }
    }
@@ -48,8 +48,8 @@ public class GameOverHandler implements RasteredMovementListener {
       .setCallback(new TweenCallback() {
          @Override
          public void onEvent(int arg0, BaseTween<?> arg1) {
-                  object.setPosition(stage.getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
-                        stage.getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
+                  object.setPosition(levelManager.getCurrentStage().getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
+                        levelManager.getCurrentStage().getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
                   camera.setTarget(object);
                   object.getScale().set(1f, 1f);
                   object.setActive(true);

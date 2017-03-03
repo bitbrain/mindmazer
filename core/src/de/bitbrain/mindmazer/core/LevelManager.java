@@ -18,6 +18,10 @@ public class LevelManager {
       this.renderManager = renderManager;
    }
 
+   public LevelStage getCurrentStage() {
+      return currentStage;
+   }
+
    public void obscureLevel() {
       currentRenderer.setStage(currentStage.getCurrentData());
    }
@@ -28,8 +32,12 @@ public class LevelManager {
 
    public LevelStage generateLevelStage() {
       currentStage = generator.generateLevel(6);
-      currentRenderer = new LevelStageRenderer(currentStage.getCompleteData());
-      renderManager.register(Types.WORLD, currentRenderer);
+      if (currentRenderer == null) {
+         currentRenderer = new LevelStageRenderer(currentStage.getCompleteData());
+         renderManager.register(Types.WORLD, currentRenderer);
+      } else {
+         currentRenderer.setStage(currentStage.getCompleteData());
+      }
       return currentStage;
    }
 }

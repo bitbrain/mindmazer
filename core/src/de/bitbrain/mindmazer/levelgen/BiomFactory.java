@@ -27,6 +27,6 @@ public class BiomFactory {
             yCounter++;
          }
       }
-      return new Biom(data, startX, 0, endX, endY, columns, rows, length);
+      return new Biom(data, startX, 0, endX, endY + rows - 1, columns, rows, length);
    }
 }

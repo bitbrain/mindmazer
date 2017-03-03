@@ -22,6 +22,8 @@ public class LevelStageRenderer implements GameObjectRenderer {
 
    private int cellOffset;
 
+   private boolean renderRequest = true;
+
    public LevelStageRenderer(byte[][] data) {
       this.data = data;
    }
@@ -34,14 +36,15 @@ public class LevelStageRenderer implements GameObjectRenderer {
       this.data = data;
       if (texture != null) {
          texture.dispose();
-         texture = null;
+         renderRequest = true;
       }
    }
 
    @Override
    public void render(GameObject object, Batch batch, float delta) {
-      if (texture == null) {
+      if (renderRequest) {
          buildTextureBuffer(batch);
+         renderRequest = false;
       }
       sprite.setFlip(false, true);
       sprite.setPosition(object.getLeft(), object.getTop() - cellOffset * 2);

@@ -21,10 +21,10 @@ import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.Types;
 import de.bitbrain.mindmazer.assets.Assets.Textures;
-import de.bitbrain.mindmazer.core.GameOverHandler;
 import de.bitbrain.mindmazer.core.LevelManager;
+import de.bitbrain.mindmazer.core.handlers.GameOverHandler;
+import de.bitbrain.mindmazer.core.handlers.LevelLoaderHandler;
 import de.bitbrain.mindmazer.graphics.JumpAnimationRenderer;
-import de.bitbrain.mindmazer.levelgen.LevelStage;
 
 public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
@@ -39,12 +39,12 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    protected void onCreateStage(Stage stage, int width, int height) {
       setBackgroundColor(Colors.BACKGROUND);
       levelManager = new LevelManager(getRenderManager());
-      LevelStage levelStage = levelManager.generateLevelStage();
-      GameObject player = setupNewPlayer(levelStage);
+      levelManager.generateLevelStage();
+      GameObject player = setupNewPlayer(levelManager);
       setupWorld();
       setupCamera(player);
       setupShaders();
-      setupRenderers(levelStage);
+      setupRenderers();
    }
 
    @Override
@@ -65,32 +65,33 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       world.setType(Types.WORLD);
    }
 
-   private void setupRenderers(LevelStage levelStage) {
+   private void setupRenderers() {
       JumpAnimationRenderer jumpAnimationRenderer = new JumpAnimationRenderer(new SpriteRenderer(Textures.PLAYER));
       getRenderManager().register(Types.PLAYER, jumpAnimationRenderer);
       behavior.addListener(jumpAnimationRenderer);
    }
 
-   private GameObject setupNewPlayer(LevelStage stage) {
+   private GameObject setupNewPlayer(LevelManager levelManager) {
       GameObject player = getGameWorld().addObject();
       player.setType(Types.PLAYER);
       player.setZIndex(10);
       player.setDimensions(Config.TILE_SIZE, Config.TILE_SIZE);
-      player.setPosition(stage.getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
-            stage.getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
-
+      player.setPosition(levelManager.getCurrentStage().getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
+            levelManager.getCurrentStage().getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
       OrientationMovementController controller = new OrientationMovementController();
       behavior = new RasteredMovementBehavior(controller)
             .interval(0.4f).rasterSize(Config.TILE_SIZE, Config.TILE_SIZE);
       getBehaviorManager().apply(behavior, player);
       getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 200f, getLightingManager()),
             player);
-      setupGameHandlers(stage, behavior);
+      setupGameHandlers(player, levelManager, behavior);
       return player;
    }
 
-   private void setupGameHandlers(LevelStage levelStage, RasteredMovementBehavior behavior) {
-      behavior.addListener(new GameOverHandler(levelStage, getGameCamera()));
+   private void setupGameHandlers(GameObject player, LevelManager levelManager,
+         RasteredMovementBehavior behavior) {
+      behavior.addListener(new GameOverHandler(levelManager, getGameCamera()));
+      behavior.addListener(new LevelLoaderHandler(levelManager, player));
    }
 
    private void setupCamera(GameObject target) {

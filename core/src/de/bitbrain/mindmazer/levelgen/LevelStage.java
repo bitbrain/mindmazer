@@ -51,6 +51,18 @@ public class LevelStage {
       return biomes.size();
    }
 
+   public int getLastCellX() {
+      Biom biom = getBiom(getNumberOfBiomes() - 1);
+      int x = biom.getEndX();
+      return offsetsX.get(getNumberOfBiomes() - 1) + x;
+   }
+
+   public int getLastCellY() {
+      Biom biom = getBiom(getNumberOfBiomes() - 1);
+      int y = biom.getEndY();
+      return offsetsY.get(getNumberOfBiomes() - 1) + y;
+   }
+
    public byte getCurrentCell(int indexX, int indexY) {
       if (indexX < 0 || indexY < 0) {
          return 0;
