@@ -1,6 +1,7 @@
 package de.bitbrain.mindmazer.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -21,14 +22,14 @@ import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.Types;
 import de.bitbrain.mindmazer.assets.Assets.Textures;
 import de.bitbrain.mindmazer.core.GameOverHandler;
+import de.bitbrain.mindmazer.core.LevelManager;
 import de.bitbrain.mindmazer.graphics.JumpAnimationRenderer;
-import de.bitbrain.mindmazer.graphics.LevelStageRenderer;
-import de.bitbrain.mindmazer.levelgen.LevelGenerator;
 import de.bitbrain.mindmazer.levelgen.LevelStage;
 
 public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    private RasteredMovementBehavior behavior;
+   private LevelManager levelManager;
 
    public IngameScreen(MindmazerGame game) {
       super(game);
@@ -37,13 +38,24 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    @Override
    protected void onCreateStage(Stage stage, int width, int height) {
       setBackgroundColor(Colors.BACKGROUND);
-      LevelGenerator levelGenerator = new LevelGenerator();
-      LevelStage levelStage = levelGenerator.generateLevel(6);
+      levelManager = new LevelManager(getRenderManager());
+      LevelStage levelStage = levelManager.generateLevelStage();
       GameObject player = setupNewPlayer(levelStage);
       setupWorld();
       setupCamera(player);
       setupShaders();
       setupRenderers(levelStage);
+   }
+
+   @Override
+   protected void onUpdate(float delta) {
+      super.onUpdate(delta);
+      if (Gdx.input.isKeyJustPressed(Keys.Q)) {
+         levelManager.obscureLevel();
+      } else if (Gdx.input.isKeyJustPressed(Keys.E)) {
+         levelManager.revealLevel();
+
+      }
    }
 
    private void setupWorld() {
@@ -54,7 +66,6 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    }
 
    private void setupRenderers(LevelStage levelStage) {
-      getRenderManager().register(Types.WORLD, new LevelStageRenderer(levelStage.getCompleteData()));
       JumpAnimationRenderer jumpAnimationRenderer = new JumpAnimationRenderer(new SpriteRenderer(Textures.PLAYER));
       getRenderManager().register(Types.PLAYER, jumpAnimationRenderer);
       behavior.addListener(jumpAnimationRenderer);

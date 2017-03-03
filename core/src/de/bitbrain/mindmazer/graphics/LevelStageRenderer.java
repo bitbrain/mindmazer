@@ -32,6 +32,10 @@ public class LevelStageRenderer implements GameObjectRenderer {
 
    public void setStage(byte[][] data) {
       this.data = data;
+      if (texture != null) {
+         texture.dispose();
+         texture = null;
+      }
    }
 
    @Override

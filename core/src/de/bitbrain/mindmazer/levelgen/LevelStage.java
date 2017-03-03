@@ -74,4 +74,8 @@ public class LevelStage {
    public byte[][] getCompleteData() {
       return completeData;
    }
+
+   public byte[][] getCurrentData() {
+      return currentData;
+   }
 }
