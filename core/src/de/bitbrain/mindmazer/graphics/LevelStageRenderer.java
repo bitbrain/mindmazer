@@ -32,6 +32,10 @@ public class LevelStageRenderer implements GameObjectRenderer {
    public void init() {
    }
 
+   public void addCell(int indexX, int indexY) {
+      renderRequest = true;
+   }
+
    public void setStage(byte[][] data) {
       this.data = data;
       if (texture != null) {

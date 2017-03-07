@@ -48,6 +48,7 @@ public class GameOverHandler implements RasteredMovementListener {
       .setCallback(new TweenCallback() {
          @Override
          public void onEvent(int arg0, BaseTween<?> arg1) {
+                  levelManager.resetCurrentStage();
                   object.setPosition(levelManager.getCurrentStage().getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
                         levelManager.getCurrentStage().getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
                   camera.setTarget(object);

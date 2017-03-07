@@ -24,6 +24,7 @@ import de.bitbrain.mindmazer.assets.Assets.Textures;
 import de.bitbrain.mindmazer.core.LevelManager;
 import de.bitbrain.mindmazer.core.handlers.GameOverHandler;
 import de.bitbrain.mindmazer.core.handlers.LevelLoaderHandler;
+import de.bitbrain.mindmazer.graphics.CellRenderHandler;
 import de.bitbrain.mindmazer.graphics.JumpAnimationRenderer;
 
 public class IngameScreen extends AbstractScreen<MindmazerGame> {
@@ -92,6 +93,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
          RasteredMovementBehavior behavior) {
       behavior.addListener(new GameOverHandler(levelManager, getGameCamera()));
       behavior.addListener(new LevelLoaderHandler(levelManager, player));
+      behavior.addListener(new CellRenderHandler(levelManager));
    }
 
    private void setupCamera(GameObject target) {

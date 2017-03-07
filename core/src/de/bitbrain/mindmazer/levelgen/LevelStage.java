@@ -9,7 +9,7 @@ public class LevelStage {
    private final List<Biom> biomes;
    private final int length;
    private final byte[][] completeData;
-   private final byte[][] currentData;
+   private byte[][] currentData;
    private final List<Integer> offsetsX;
    private final List<Integer> offsetsY;
 
@@ -89,5 +89,19 @@ public class LevelStage {
 
    public byte[][] getCurrentData() {
       return currentData;
+   }
+
+   public void setCurrentData(int indexX, int indexY, byte value) {
+      if (indexX < 0 || indexY < 0) {
+         return;
+      }
+      if (indexX >= currentData.length || indexY >= currentData[0].length) {
+         return;
+      }
+      currentData[indexX][indexY] = value;
+   }
+
+   public void resetCurrentData() {
+      currentData = new byte[completeData.length][completeData[0].length];
    }
 }
