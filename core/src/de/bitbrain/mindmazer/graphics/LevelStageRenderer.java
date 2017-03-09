@@ -34,6 +34,11 @@ public class LevelStageRenderer implements GameObjectRenderer {
 
    public void addCell(int indexX, int indexY) {
       renderRequest = true;
+      // TODO
+   }
+
+   public void reset() {
+      renderRequest = true;
    }
 
    public void setStage(byte[][] data) {
@@ -105,7 +110,6 @@ public class LevelStageRenderer implements GameObjectRenderer {
       }
       texture = new Texture(map);
       sprite = new Sprite(texture);
-      map.dispose();
    }
 
 }

@@ -38,7 +38,9 @@ public class LevelManager {
    public void resetCurrentStage() {
       currentStage.resetCurrentData();
       currentRenderer.setStage(currentStage.getCurrentData());
-      setCurrentData(currentStage.getAbsoluteStartOffsetX(0), currentStage.getAbsoluteStartOffsetY(0), (byte) 1);
+      currentStage.setCurrentData(currentStage.getAbsoluteStartOffsetX(0), currentStage.getAbsoluteStartOffsetY(0),
+            (byte) 1);
+      currentRenderer.reset();
    }
 
    public LevelStage generateLevelStage() {
