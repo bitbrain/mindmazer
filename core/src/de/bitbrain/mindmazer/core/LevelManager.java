@@ -31,8 +31,10 @@ public class LevelManager {
    }
 
    public void setCurrentData(int indexX, int indexY, byte value) {
-      currentStage.setCurrentData(indexX, indexY, value);
-      currentRenderer.addCell(indexX, indexY);
+      if (!currentStage.containsAlready(indexX, indexY, value)) {
+         currentStage.setCurrentData(indexX, indexY, value);
+         currentRenderer.addCell(indexX, indexY);
+      }
    }
 
    public void resetCurrentStage() {

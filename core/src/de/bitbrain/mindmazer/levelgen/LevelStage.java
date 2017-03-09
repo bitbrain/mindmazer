@@ -64,23 +64,17 @@ public class LevelStage {
    }
 
    public byte getCurrentCell(int indexX, int indexY) {
-      if (indexX < 0 || indexY < 0) {
-         return 0;
+      if (verifyCurrentIndex(indexX, indexY)) {
+         return currentData[indexX][indexY];
       }
-      if (indexX >= currentData.length || indexY >= currentData[0].length) {
-         return 0;
-      }
-      return currentData[indexX][indexY];
+      return 0;
    }
 
    public byte getCompleteCell(int indexX, int indexY) {
-      if (indexX < 0 || indexY < 0) {
-         return 0;
+      if (verifyCompleteIndex(indexX, indexY)) {
+         return completeData[indexX][indexY];
       }
-      if (indexX >= completeData.length || indexY >= completeData[0].length) {
-         return 0;
-      }
-      return completeData[indexX][indexY];
+      return 0;
    }
 
    public byte[][] getCompleteData() {
@@ -91,17 +85,40 @@ public class LevelStage {
       return currentData;
    }
 
+   public boolean containsAlready(int indexX, int indexY, byte value) {
+      if (verifyCurrentIndex(indexX, indexY)) {
+         return currentData[indexX][indexY] == value;
+      }
+      return true;
+   }
+
    public void setCurrentData(int indexX, int indexY, byte value) {
-      if (indexX < 0 || indexY < 0) {
-         return;
+      if (verifyCurrentIndex(indexX, indexY)) {
+         currentData[indexX][indexY] = value;
       }
-      if (indexX >= currentData.length || indexY >= currentData[0].length) {
-         return;
-      }
-      currentData[indexX][indexY] = value;
    }
 
    public void resetCurrentData() {
       currentData = new byte[completeData.length][completeData[0].length];
+   }
+
+   private boolean verifyCurrentIndex(int indexX, int indexY) {
+      if (indexX < 0 || indexY < 0) {
+         return false;
+      }
+      if (indexX >= currentData.length || indexY >= currentData[0].length) {
+         return false;
+      }
+      return true;
+   }
+
+   private boolean verifyCompleteIndex(int indexX, int indexY) {
+      if (indexX < 0 || indexY < 0) {
+         return false;
+      }
+      if (indexX >= completeData.length || indexY >= completeData[0].length) {
+         return false;
+      }
+      return true;
    }
 }
