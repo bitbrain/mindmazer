@@ -28,7 +28,7 @@ public class GameOverHandler implements RasteredMovementListener {
    public void moveAfter(GameObject object) {
       int indexX = levelManager.getCurrentStage().convertToIndexX(object.getLeft());
       int indexY = levelManager.getCurrentStage().convertToIndexY(object.getTop());
-      if (levelManager.getCurrentStage().getCompleteCell(indexX, indexY) == 0) {
+      if (levelManager.getCurrentStage().getCompleteCell(indexX, indexY) != 1) {
          respawn(object);
       }
    }

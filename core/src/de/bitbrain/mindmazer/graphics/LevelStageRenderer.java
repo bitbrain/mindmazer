@@ -137,45 +137,53 @@ public class LevelStageRenderer implements GameObjectRenderer {
             if (isCurrentlyProcessed(indexX, indexY)) {
                continue;
             }
-            float x = Config.TILE_SIZE * indexX;
-            float y = Config.TILE_SIZE * indexY;
             byte value = data[indexX][indexY];
-            if (value != 0) {
-               if (indexX % 2 == 0) {
-                  if (indexY % 2 == 0) {
-                     map.setColor(Colors.CELL_B_DARK);
-                  } else {
-                     map.setColor(Colors.CELL_A_DARK);
-                  }
-               } else {
-                  if (indexY % 2 == 0) {
-                     map.setColor(Colors.CELL_A_DARK);
-                  } else {
-                     map.setColor(Colors.CELL_B_DARK);
-                  }
-               }
-               map.fillRectangle((int) x, (int) y, Config.TILE_SIZE, Config.TILE_SIZE);
+            if (value == 1) {
+               drawCellOntoPixmap(map, value, indexX, indexY, Colors.CELL_A, Colors.CELL_A_DARK, Colors.CELL_B,
+                     Colors.CELL_B_DARK);
             }
-            if (value != 0) {
-               if (indexX % 2 == 0) {
-                  if (indexY % 2 == 0) {
-                     map.setColor(Colors.CELL_B);
-                  } else {
-                     map.setColor(Colors.CELL_A);
-                  }
-               } else {
-                  if (indexY % 2 == 0) {
-                     map.setColor(Colors.CELL_A);
-                  } else {
-                     map.setColor(Colors.CELL_B);
-                  }
-               }
-               map.fillRectangle((int) x, (int) y + CELL_OFFSET, Config.TILE_SIZE, Config.TILE_SIZE);
+            if (value == 2) {
+               drawCellOntoPixmap(map, value, indexX, indexY, Color.RED, Color.RED, Color.RED, Color.RED);
             }
+
          }
       }
       texture = new Texture(map);
       sprite = new Sprite(texture);
+   }
+
+   private void drawCellOntoPixmap(Pixmap map, byte value, int indexX, int indexY, Color colorA, Color colorADark,
+         Color colorB, Color colorBDark) {
+      float x = Config.TILE_SIZE * indexX;
+      float y = Config.TILE_SIZE * indexY;
+      if (indexX % 2 == 0) {
+         if (indexY % 2 == 0) {
+            map.setColor(colorBDark);
+         } else {
+            map.setColor(colorADark);
+         }
+      } else {
+         if (indexY % 2 == 0) {
+            map.setColor(colorADark);
+         } else {
+            map.setColor(colorBDark);
+         }
+      }
+      map.fillRectangle((int) x, (int) y, Config.TILE_SIZE, Config.TILE_SIZE);
+      if (indexX % 2 == 0) {
+         if (indexY % 2 == 0) {
+            map.setColor(colorB);
+         } else {
+            map.setColor(colorA);
+         }
+      } else {
+         if (indexY % 2 == 0) {
+            map.setColor(colorA);
+         } else {
+            map.setColor(colorB);
+         }
+      }
+      map.fillRectangle((int) x, (int) y + CELL_OFFSET, Config.TILE_SIZE, Config.TILE_SIZE);
    }
 
    private boolean isCurrentlyProcessed(int x, int y) {
