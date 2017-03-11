@@ -15,19 +15,20 @@ public class CellRenderHandler implements RasteredMovementListener {
 
    @Override
    public void moveAfter(GameObject object) {
+
+
+   }
+
+   @Override
+   public void moveBefore(GameObject object, float moveX, float moveY, float duration) {
       LevelStage stage = levelManager.getCurrentStage();
       if (stage != null) {
-         int indexX = levelManager.getCurrentStage().convertToIndexX(object.getLeft());
-         int indexY = levelManager.getCurrentStage().convertToIndexY(object.getTop());
+         int indexX = levelManager.getCurrentStage().convertToIndexX(object.getLeft() + moveX);
+         int indexY = levelManager.getCurrentStage().convertToIndexY(object.getTop() + moveY);
          if (stage.getCompleteCell(indexX, indexY) > 0) {
             levelManager.setCurrentData(indexX, indexY, (byte) 1);
          }
       }
-   }
-
-   @Override
-   public void moveBefore(GameObject arg0, float arg1, float arg2, float arg3) {
-      // noOp
    }
 
 }

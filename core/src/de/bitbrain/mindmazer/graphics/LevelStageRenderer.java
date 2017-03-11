@@ -30,23 +30,17 @@ import de.bitbrain.mindmazer.Config;
 public class LevelStageRenderer implements GameObjectRenderer {
 
    private static final int CELL_OFFSET = (int) (Config.TILE_SIZE * 0.23f);
-   private static final float CELL_ANIMATION_TIME = 0.45f;
+   private static final float CELL_ANIMATION_TIME = 0.65f;
 
    private byte[][] data;
-
    private Texture texture;
-
    private Texture blockA, blockB;
-
    private Sprite sprite;
-
    private boolean renderRequest = true;
 
-   private Set<String> cellIds = new HashSet<String>();
-
-   private List<Cell> cells = new ArrayList<Cell>();
-
-   private TweenManager tweenManager = SharedTweenManager.getInstance();
+   private final Set<String> cellIds = new HashSet<String>();
+   private final List<Cell> cells = new ArrayList<Cell>();
+   private final TweenManager tweenManager = SharedTweenManager.getInstance();
 
    public LevelStageRenderer(byte[][] data) {
       this.data = data;
@@ -107,11 +101,7 @@ public class LevelStageRenderer implements GameObjectRenderer {
 
    private void animate(final Cell cell) {
       cell.getSprite().setScale(0.5f);
-      Tween.to(cell.getColor(), ColorTween.A, CELL_ANIMATION_TIME)
-           .target(1f)
-           .ease(TweenEquations.easeInCubic)
-           .start(tweenManager);
-      Tween.to(cell.getSprite(), SpriteTween.SCALE, CELL_ANIMATION_TIME * 1.5f)
+      Tween.to(cell.getColor(), ColorTween.A, CELL_ANIMATION_TIME * 1.2f)
            .target(1f)
            .ease(TweenEquations.easeInCubic)
            .setCallbackTriggers(TweenCallback.COMPLETE)
@@ -124,7 +114,9 @@ public class LevelStageRenderer implements GameObjectRenderer {
             }              
            })
            .start(tweenManager);
-      cell.getOffset().y = -CELL_OFFSET * 4f;
+      Tween.to(cell.getSprite(), SpriteTween.SCALE, CELL_ANIMATION_TIME).target(1f).ease(TweenEquations.easeInCubic)
+            .start(tweenManager);
+      cell.getOffset().y = -CELL_OFFSET * 6f;
       Tween.to(cell.getOffset(), VectorTween.POS_Y, CELL_ANIMATION_TIME)
       .target(0f)
       .ease(TweenEquations.easeInCubic)
