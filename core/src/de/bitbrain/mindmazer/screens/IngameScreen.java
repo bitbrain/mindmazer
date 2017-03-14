@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import de.bitbrain.braingdx.behavior.movement.RasteredMovementBehavior;
 import de.bitbrain.braingdx.graphics.lighting.PointLightBehavior;
@@ -21,16 +25,20 @@ import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.Types;
 import de.bitbrain.mindmazer.assets.Assets.Textures;
+import de.bitbrain.mindmazer.core.GameStats;
 import de.bitbrain.mindmazer.core.LevelManager;
 import de.bitbrain.mindmazer.core.handlers.GameOverHandler;
+import de.bitbrain.mindmazer.core.handlers.GameStatsHandler;
 import de.bitbrain.mindmazer.core.handlers.LevelLoaderHandler;
 import de.bitbrain.mindmazer.graphics.CellRenderHandler;
 import de.bitbrain.mindmazer.graphics.JumpAnimationRenderer;
+import de.bitbrain.mindmazer.ui.GameProgressLabel;
 
 public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    private RasteredMovementBehavior behavior;
    private LevelManager levelManager;
+   private GameStats stats;
 
    public IngameScreen(MindmazerGame game) {
       super(game);
@@ -41,16 +49,24 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       setBackgroundColor(Colors.BACKGROUND);
       levelManager = new LevelManager(getRenderManager());
       levelManager.generateLevelStage();
+      stats = new GameStats(levelManager);
       GameObject player = setupNewPlayer(levelManager);
       setupWorld();
+      setupUI(stage, stats);
       setupCamera(player);
       setupShaders();
       setupRenderers();
    }
 
    @Override
+   protected Viewport getViewport(int width, int height) {
+      return new FitViewport(width, height);
+   }
+
+   @Override
    protected void onUpdate(float delta) {
       super.onUpdate(delta);
+      stats.update(delta);
       if (Gdx.input.isKeyJustPressed(Keys.Q)) {
          levelManager.obscureLevel();
       } else if (Gdx.input.isKeyJustPressed(Keys.E)) {
@@ -91,8 +107,9 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    private void setupGameHandlers(GameObject player, LevelManager levelManager,
          RasteredMovementBehavior behavior) {
+      behavior.addListener(new GameStatsHandler(levelManager, stats));
       behavior.addListener(new GameOverHandler(levelManager, getGameCamera()));
-      behavior.addListener(new LevelLoaderHandler(levelManager, player));
+      behavior.addListener(new LevelLoaderHandler(levelManager, player, stats));
       behavior.addListener(new CellRenderHandler(levelManager));
    }
 
@@ -118,6 +135,15 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
             Math.round(Gdx.graphics.getHeight() / 2f), false);
       vignette.setIntensity(0.45f);
       worldPipe.addEffects(vignette);
-      worldPipe.addEffects(bloom);
+      RenderPipe uiPipe = getRenderPipeline().getPipe(RenderPipeIds.UI);
+      uiPipe.addEffects(bloom);
+   }
+
+   private void setupUI(Stage stage, GameStats stats) {
+      Table layout = new Table();
+      layout.setFillParent(true);
+      Label label = new GameProgressLabel(stats);
+      layout.top().padTop(20f).add(label);
+      stage.addActor(layout);
    }
 }

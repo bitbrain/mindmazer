@@ -17,4 +17,8 @@ public interface Assets {
    interface ParticleEffects {
       String JUMP_LAND = "particles/jump-land.p";
    }
+
+   interface Fonts {
+      String RESOURCE = "fonts/resource.ttf";
+   }
 }
