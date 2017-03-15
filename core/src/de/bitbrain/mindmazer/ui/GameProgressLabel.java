@@ -27,7 +27,7 @@ public class GameProgressLabel extends Label {
 
    public GameProgressLabel(GameStats stats) {
       super("0%", Styles.LABEL_TEXT_INFO);
-      setColor(Colors.CELL_B.cpy());
+      setColor(Colors.CELL_A_DARK.cpy());
       this.stats = stats;
    }
 
@@ -43,15 +43,15 @@ public class GameProgressLabel extends Label {
             .ease(TweenEquations.easeNone)
             .start(SharedTweenManager.getInstance());
          Tween.to(getColor(), ColorTween.R, INTERVAL * 3)
-            .target(Colors.CELL_B.r)
+               .target(Colors.CELL_A_DARK.r)
             .ease(TweenEquations.easeInCubic)
             .start(SharedTweenManager.getInstance());
          Tween.to(getColor(), ColorTween.G, INTERVAL * 3)
-            .target(Colors.CELL_B.g)
+               .target(Colors.CELL_A_DARK.g)
             .ease(TweenEquations.easeInCubic)
             .start(SharedTweenManager.getInstance());
          Tween.to(getColor(), ColorTween.B, INTERVAL * 3)
-            .target(Colors.CELL_B.b)
+               .target(Colors.CELL_A_DARK.b)
             .ease(TweenEquations.easeInCubic)
             .start(SharedTweenManager.getInstance());
       }
