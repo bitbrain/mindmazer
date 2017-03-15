@@ -13,6 +13,7 @@ public class MindmazerAssetLoader implements GameAssetLoader {
    @Override
    public void put(Map<String, Class<?>> map) {
       map.put(Assets.Textures.PLAYER, Texture.class);
+      map.put(Assets.Textures.CHIME, Texture.class);
       map.put(Assets.ParticleEffects.JUMP_LAND, ParticleEffect.class);
       map.put(Assets.Fonts.RESOURCE, FreeTypeFontGenerator.class);
    }
