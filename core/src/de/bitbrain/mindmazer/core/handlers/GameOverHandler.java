@@ -12,16 +12,19 @@ import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.core.LevelManager;
+import de.bitbrain.mindmazer.graphics.ScreenFader;
 
 public class GameOverHandler implements RasteredMovementListener {
 
    private final LevelManager levelManager;
    private final GameCamera camera;
    private final TweenManager tweenManager = SharedTweenManager.getInstance();
+   private final ScreenFader fader;
 
-   public GameOverHandler(LevelManager levelManager, GameCamera camera) {
+   public GameOverHandler(LevelManager levelManager, GameCamera camera, ScreenFader fader) {
       this.levelManager = levelManager;
       this.camera = camera;
+      this.fader = fader;
    }
 
    @Override
@@ -42,12 +45,14 @@ public class GameOverHandler implements RasteredMovementListener {
       object.setActive(false);
       camera.setTarget(null);
       tweenManager.killTarget(object);
+      fader.fadeOut(null, 1f);
       Tween.to(object, GameObjectTween.ALPHA, 1.0f).target(0f).ease(TweenEquations.easeOutQuad).start(tweenManager);
       Tween.to(object, GameObjectTween.SCALE, 1.0f).target(0.2f).ease(TweenEquations.easeOutQuad)
       .setCallbackTriggers(TweenCallback.COMPLETE)
       .setCallback(new TweenCallback() {
          @Override
          public void onEvent(int arg0, BaseTween<?> arg1) {
+                  fader.fadeIn(null, 1f);
                   levelManager.resetCurrentStage();
                   object.setPosition(levelManager.getCurrentStage().getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
                         levelManager.getCurrentStage().getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);

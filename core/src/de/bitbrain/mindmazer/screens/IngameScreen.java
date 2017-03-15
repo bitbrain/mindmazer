@@ -32,6 +32,7 @@ import de.bitbrain.mindmazer.core.handlers.GameStatsHandler;
 import de.bitbrain.mindmazer.core.handlers.LevelLoaderHandler;
 import de.bitbrain.mindmazer.graphics.CellRenderHandler;
 import de.bitbrain.mindmazer.graphics.JumpAnimationRenderer;
+import de.bitbrain.mindmazer.graphics.ScreenFader;
 import de.bitbrain.mindmazer.ui.GameProgressLabel;
 
 public class IngameScreen extends AbstractScreen<MindmazerGame> {
@@ -39,6 +40,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    private RasteredMovementBehavior behavior;
    private LevelManager levelManager;
    private GameStats stats;
+   private ScreenFader fader;
 
    public IngameScreen(MindmazerGame game) {
       super(game);
@@ -46,6 +48,8 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    @Override
    protected void onCreateStage(Stage stage, int width, int height) {
+      fader = new ScreenFader();
+      getRenderPipeline().set("overlay", fader);
       setBackgroundColor(Colors.BACKGROUND);
       levelManager = new LevelManager(getRenderManager());
       levelManager.generateLevelStage();
@@ -56,6 +60,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       setupCamera(player);
       setupShaders();
       setupRenderers();
+      fader.fadeIn(1.5f);
    }
 
    @Override
@@ -108,7 +113,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    private void setupGameHandlers(GameObject player, LevelManager levelManager,
          RasteredMovementBehavior behavior) {
       behavior.addListener(new GameStatsHandler(levelManager, stats));
-      behavior.addListener(new GameOverHandler(levelManager, getGameCamera()));
+      behavior.addListener(new GameOverHandler(levelManager, getGameCamera(), fader));
       behavior.addListener(new LevelLoaderHandler(levelManager, player, stats));
       behavior.addListener(new CellRenderHandler(levelManager));
    }
