@@ -17,6 +17,7 @@ import de.bitbrain.braingdx.tweens.GameObjectTween;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.tweens.VectorTween;
 import de.bitbrain.braingdx.world.GameObject;
+import de.bitbrain.mindmazer.Colors;
 
 public class JumpAnimationRenderer implements GameObjectRenderer, RasteredMovementListener {
 
@@ -43,7 +44,9 @@ public class JumpAnimationRenderer implements GameObjectRenderer, RasteredMoveme
          int width = (int) (object.getWidth() - PADDING * 2);
          int height = (int) (object.getHeight() / 2.5f - PADDING / 2);
          Pixmap pixmap = new Pixmap(width, height, Format.RGBA8888);
-         pixmap.setColor(new Color(0f, 0f, 0f, 0.22f));
+         Color color = Colors.CELL_B.cpy();
+         color.a = 0.3f;
+         pixmap.setColor(color);
          pixmap.fillRectangle(0, 0, width, height);
          Texture texture = new Texture(pixmap);
          pixmap.dispose();
