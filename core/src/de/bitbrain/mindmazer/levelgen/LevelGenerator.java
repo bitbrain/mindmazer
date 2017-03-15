@@ -8,10 +8,11 @@ import com.google.common.collect.Lists;
 public class LevelGenerator {
    
    private static final List<byte[]> BASIC_POOL = Lists.newArrayList(
-         BiomData.Basic.SNAKE_RIGHT,
-         BiomData.Basic.SNAKE_LEFT,
-         BiomData.Basic.LINE_UP,
-         BiomData.Basic.LINE_UP
+         BiomData.Simple.LINE_UP,
+         BiomData.Simple.LINE_UP,
+         BiomData.Advanced.SNAKE_RIGHT,
+         BiomData.Advanced.SNAKE_LEFT,
+         BiomData.Advanced.LINE_UP
    );
 
    private final BiomFactory factory = new BiomFactory();

@@ -1,8 +1,16 @@
 package de.bitbrain.mindmazer.levelgen;
 
 public interface BiomData {
+   
+   interface Simple {
+      
+      byte[] LINE_UP = {
+         1,
+         1, 1
+      };
+   }
 
-   interface Basic {
+   interface Advanced {
 
       byte[] LINE_UP = {
             1,
