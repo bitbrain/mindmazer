@@ -116,8 +116,8 @@ public class LevelStageRenderer implements GameObjectRenderer {
            .start(tweenManager);
       Tween.to(cell.getSprite(), SpriteTween.SCALE, CELL_ANIMATION_TIME).target(1f).ease(TweenEquations.easeInCubic)
             .start(tweenManager);
-      cell.getOffset().y = -CELL_OFFSET * 6f;
-      Tween.to(cell.getOffset(), VectorTween.POS_Y, CELL_ANIMATION_TIME)
+      cell.getOffset().y = -CELL_OFFSET * 10f;
+      Tween.to(cell.getOffset(), VectorTween.POS_Y, CELL_ANIMATION_TIME / 1.5f)
       .target(0f)
       .ease(TweenEquations.easeInCubic)
       .start(tweenManager);
