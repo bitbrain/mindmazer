@@ -20,6 +20,6 @@ public interface Assets {
    }
 
    interface Fonts {
-      String RESOURCE = "fonts/resource.ttf";
+      String ANGIES_NEW_HOUSE = "fonts/angies-new-house.ttf";
    }
 }

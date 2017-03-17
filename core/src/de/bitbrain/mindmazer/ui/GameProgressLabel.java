@@ -50,7 +50,7 @@ public class GameProgressLabel extends Label {
       float x = getX();
       float y = getY();
       Color color = getColor().cpy();
-      setPosition(x, y - 4f);
+      setPosition(x, y - 6f);
       setColor(Colors.CELL_B_DARK);
       super.draw(batch, parentAlpha);
       setPosition(x, y);

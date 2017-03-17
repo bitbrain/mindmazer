@@ -12,7 +12,8 @@ public class Styles {
    public static LabelStyle LABEL_TEXT_INFO = new LabelStyle();
 
    public static void init() {
-      LABEL_TEXT_INFO.font = BitmapFontBaker.bake(Assets.Fonts.RESOURCE, (int) (Gdx.graphics.getWidth() / 6.5f));
+      LABEL_TEXT_INFO.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE,
+            (int) (Gdx.graphics.getWidth() / 8.5f));
       LABEL_TEXT_INFO.fontColor = Color.WHITE;
    }
 
