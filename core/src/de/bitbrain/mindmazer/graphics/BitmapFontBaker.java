@@ -16,7 +16,6 @@ public class BitmapFontBaker {
       parameter.mono = false;
       parameter.color = Color.WHITE.cpy();
       BitmapFont font = generator.generateFont(parameter);
-      generator.dispose();
       return font;
    }
 }

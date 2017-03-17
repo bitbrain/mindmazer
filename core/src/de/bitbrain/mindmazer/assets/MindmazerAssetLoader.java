@@ -14,6 +14,7 @@ public class MindmazerAssetLoader implements GameAssetLoader {
    public void put(Map<String, Class<?>> map) {
       map.put(Assets.Textures.PLAYER, Texture.class);
       map.put(Assets.Textures.CHIME, Texture.class);
+      map.put(Assets.Textures.BUTTON_9, Texture.class);
       map.put(Assets.ParticleEffects.JUMP_LAND, ParticleEffect.class);
       map.put(Assets.Fonts.ANGIES_NEW_HOUSE, FreeTypeFontGenerator.class);
    }

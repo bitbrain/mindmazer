@@ -9,7 +9,7 @@ import de.bitbrain.braingdx.assets.GameAssetLoader;
 import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.mindmazer.assets.MindmazerAssetLoader;
-import de.bitbrain.mindmazer.screens.IngameScreen;
+import de.bitbrain.mindmazer.screens.MenuScreen;
 import de.bitbrain.mindmazer.ui.Styles;
 
 public class MindmazerGame extends BrainGdxGame {
@@ -29,6 +29,6 @@ public class MindmazerGame extends BrainGdxGame {
    @Override
    protected AbstractScreen<?> getInitialScreen() {
       Styles.init();
-      return new IngameScreen(this);
+      return new MenuScreen(this);
    }
 }
