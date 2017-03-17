@@ -12,6 +12,7 @@ import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.core.LevelManager;
+import de.bitbrain.mindmazer.core.PreviewManager;
 import de.bitbrain.mindmazer.graphics.ScreenFader;
 import de.bitbrain.mindmazer.graphics.ScreenFader.ScreenFadeCallback;
 
@@ -21,11 +22,14 @@ public class GameOverHandler implements RasteredMovementListener {
    private final GameCamera camera;
    private final TweenManager tweenManager = SharedTweenManager.getInstance();
    private final ScreenFader fader;
+   private final PreviewManager previewManager;
 
-   public GameOverHandler(LevelManager levelManager, GameCamera camera, ScreenFader fader) {
+   public GameOverHandler(LevelManager levelManager, GameCamera camera, ScreenFader fader,
+         PreviewManager previewManager) {
       this.levelManager = levelManager;
       this.camera = camera;
       this.fader = fader;
+      this.previewManager = previewManager;
    }
 
    @Override

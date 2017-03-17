@@ -5,6 +5,7 @@ import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.core.GameStats;
 import de.bitbrain.mindmazer.core.LevelManager;
+import de.bitbrain.mindmazer.core.PreviewManager;
 import de.bitbrain.mindmazer.graphics.ScreenFader;
 import de.bitbrain.mindmazer.graphics.ScreenFader.ScreenFadeCallback;
 import de.bitbrain.mindmazer.levelgen.LevelStage;
@@ -15,12 +16,15 @@ public class LevelLoaderHandler implements RasteredMovementListener {
    private final GameObject player;
    private final GameStats stats;
    private final ScreenFader fader;
+   private final PreviewManager previewManager;
 
-   public LevelLoaderHandler(LevelManager levelManager, GameObject player, GameStats stats, ScreenFader fader) {
+   public LevelLoaderHandler(LevelManager levelManager, GameObject player, GameStats stats, ScreenFader fader,
+         PreviewManager previewManager) {
       this.levelManager = levelManager;
       this.player = player;
       this.stats = stats;
       this.fader = fader;
+      this.previewManager = previewManager;
    }
 
    @Override

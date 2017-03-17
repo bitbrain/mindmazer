@@ -23,6 +23,17 @@ public class LevelStage {
       this.offsetsY = offsetsY;
    }
 
+   public float getLevelWidth() {
+      return completeData.length * Config.TILE_SIZE;
+   }
+
+   public float getLevelHeight() {
+      if (completeData.length < 1) {
+         return 0f;
+      }
+      return completeData[0].length * Config.TILE_SIZE;
+   }
+
    public int getAbsoluteStartOffsetX(int index) {
       return getBiom(index).getStartX() + offsetsX.get(index);
    }

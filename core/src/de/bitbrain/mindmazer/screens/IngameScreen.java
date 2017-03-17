@@ -27,6 +27,7 @@ import de.bitbrain.mindmazer.Types;
 import de.bitbrain.mindmazer.assets.Assets.Textures;
 import de.bitbrain.mindmazer.core.GameStats;
 import de.bitbrain.mindmazer.core.LevelManager;
+import de.bitbrain.mindmazer.core.PreviewManager;
 import de.bitbrain.mindmazer.core.handlers.GameOverHandler;
 import de.bitbrain.mindmazer.core.handlers.GameStatsHandler;
 import de.bitbrain.mindmazer.core.handlers.LevelLoaderHandler;
@@ -41,6 +42,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    private LevelManager levelManager;
    private GameStats stats;
    private ScreenFader fader;
+   private PreviewManager previewManager;
 
    public IngameScreen(MindmazerGame game) {
       super(game);
@@ -51,11 +53,12 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       fader = new ScreenFader();
       getRenderPipeline().set("overlay", fader);
       setBackgroundColor(Colors.BACKGROUND);
-      levelManager = new LevelManager(getRenderManager());
+      GameObject world = setupWorld();
+      levelManager = new LevelManager(getRenderManager(), world);
       levelManager.generateLevelStage();
       stats = new GameStats(levelManager);
       GameObject player = setupNewPlayer(levelManager);
-      setupWorld();
+      previewManager = new PreviewManager(levelManager, player, world, getGameCamera());
       setupUI(stage, stats);
       setupCamera(player);
       setupShaders();
@@ -73,18 +76,19 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       super.onUpdate(delta);
       stats.update(delta);
       if (Gdx.input.isKeyJustPressed(Keys.Q)) {
-         levelManager.obscureLevel();
+         previewManager.obscure();
       } else if (Gdx.input.isKeyJustPressed(Keys.E)) {
-         levelManager.revealLevel();
+         previewManager.preview();
 
       }
    }
 
-   private void setupWorld() {
+   private GameObject setupWorld() {
       GameObject world = getGameWorld().addObject();
       getLightingManager().setAmbientLight(new Color(0.7f, 0.7f, 0.8f, 1f));
       world.setActive(false);
       world.setType(Types.WORLD);
+      return world;
    }
 
    private void setupRenderers() {
@@ -113,8 +117,8 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    private void setupGameHandlers(GameObject player, LevelManager levelManager,
          RasteredMovementBehavior behavior) {
       behavior.addListener(new GameStatsHandler(levelManager, stats));
-      behavior.addListener(new GameOverHandler(levelManager, getGameCamera(), fader));
-      behavior.addListener(new LevelLoaderHandler(levelManager, player, stats, fader));
+      behavior.addListener(new GameOverHandler(levelManager, getGameCamera(), fader, previewManager));
+      behavior.addListener(new LevelLoaderHandler(levelManager, player, stats, fader, previewManager));
       behavior.addListener(new CellRenderHandler(levelManager));
    }
 

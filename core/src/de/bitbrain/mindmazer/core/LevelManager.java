@@ -1,6 +1,7 @@
 package de.bitbrain.mindmazer.core;
 
 import de.bitbrain.braingdx.graphics.GameObjectRenderManager;
+import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Types;
 import de.bitbrain.mindmazer.graphics.LevelStageRenderer;
 import de.bitbrain.mindmazer.levelgen.LevelGenerator;
@@ -9,13 +10,15 @@ import de.bitbrain.mindmazer.levelgen.LevelStage;
 public class LevelManager {
 
    private final GameObjectRenderManager renderManager;
+   private final GameObject world;
    private final LevelGenerator generator = new LevelGenerator();
 
    private LevelStage currentStage;
    private LevelStageRenderer currentRenderer;
 
-   public LevelManager(GameObjectRenderManager renderManager) {
+   public LevelManager(GameObjectRenderManager renderManager, GameObject world) {
       this.renderManager = renderManager;
+      this.world = world;
    }
 
    public LevelStage getCurrentStage() {
@@ -56,6 +59,7 @@ public class LevelManager {
       } else {
          currentRenderer.setStage(currentStage.getCurrentData());
       }
+      world.setDimensions(currentStage.getLevelWidth(), currentStage.getLevelHeight());
       return currentStage;
    }
 }
