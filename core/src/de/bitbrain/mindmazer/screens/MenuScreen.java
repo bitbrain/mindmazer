@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
@@ -22,9 +23,12 @@ import de.bitbrain.braingdx.postprocessing.filters.Blur.BlurType;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.mindmazer.Colors;
+import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.graphics.ScreenFader;
 import de.bitbrain.mindmazer.graphics.ScreenFader.ScreenFadeCallback;
+import de.bitbrain.mindmazer.i18n.Bundle;
+import de.bitbrain.mindmazer.i18n.Messages;
 import de.bitbrain.mindmazer.tweens.PointLightTween;
 import de.bitbrain.mindmazer.ui.HeightedLabel;
 import de.bitbrain.mindmazer.ui.Styles;
@@ -94,11 +98,11 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
       Table layout = new Table();
       layout.setFillParent(true);
       // Logo
-      Label logo = new HeightedLabel("mindmazer", Colors.CELL_B_DARK, Styles.LABEL_TEXT_LOGO);
+      Label logo = new HeightedLabel(Config.GAME_NAME, Colors.CELL_B_DARK, Styles.LABEL_TEXT_LOGO);
       logo.setColor(Colors.CELL_A);
       layout.add(logo).padBottom(Gdx.graphics.getHeight() / 8f).row();
       // Buttons
-      TextButton play = new TextButton("Play", Styles.TEXTBUTTON_MENU);
+      TextButton play = new TextButton(Bundle.translations.get(Messages.MENU_PLAY), Styles.TEXTBUTTON_MENU);
       play.addCaptureListener(new ClickListener() {
          @Override
          public void clicked(InputEvent event, float x, float y) {
@@ -114,15 +118,20 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
       layout.add(play)
             .width(Gdx.graphics.getWidth() / 1.7f).height(Gdx.graphics.getWidth() / 4.5f)
             .row();
-      TextButton close = new TextButton("Close", Styles.TEXTBUTTON_MENU);
+      TextButton close = new TextButton(Bundle.translations.get(Messages.MENU_CLOSE), Styles.TEXTBUTTON_MENU);
       layout.add(close)
             .width(Gdx.graphics.getWidth() / 1.7f).height(Gdx.graphics.getWidth() / 4.5f)
             .padTop(25f)
             .row();
       // Credits
-      Label credits = new Label("by bitbrain © 2017", Styles.LABEL_TEXT_CREDITS);
-      credits.setColor(Colors.FOREGROUND);
-      layout.add(credits).padTop(Gdx.graphics.getHeight() / 8f);
+      String text = Bundle.translations.get(Messages.GENERAL_CREDITS_DEV) + "\n" +
+                     Bundle.translations.get(Messages.GENERAL_CREDITS_AUDIO) + "\n" +
+                     "© " + Config.GAME_YEAR;
+      Label credits = new Label(text, Styles.LABEL_TEXT_CREDITS);
+      credits.setAlignment(Align.center);
+      credits.setColor(Colors.FOREGROUND.cpy());
+      credits.getColor().a = 0.6f;
+      layout.add(credits).width(Gdx.graphics.getWidth()).padTop(60f);
       stage.addActor(layout);
    }
 
