@@ -5,7 +5,8 @@ import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.core.GameStats;
 import de.bitbrain.mindmazer.core.LevelManager;
-import de.bitbrain.mindmazer.levelgen.Biom;
+import de.bitbrain.mindmazer.graphics.ScreenFader;
+import de.bitbrain.mindmazer.graphics.ScreenFader.ScreenFadeCallback;
 import de.bitbrain.mindmazer.levelgen.LevelStage;
 
 public class LevelLoaderHandler implements RasteredMovementListener {
@@ -13,23 +14,34 @@ public class LevelLoaderHandler implements RasteredMovementListener {
    private final LevelManager levelManager;
    private final GameObject player;
    private final GameStats stats;
+   private final ScreenFader fader;
 
-   public LevelLoaderHandler(LevelManager levelManager, GameObject player, GameStats stats) {
+   public LevelLoaderHandler(LevelManager levelManager, GameObject player, GameStats stats, ScreenFader fader) {
       this.levelManager = levelManager;
       this.player = player;
       this.stats = stats;
+      this.fader = fader;
    }
 
    @Override
-   public void moveAfter(GameObject object) {
+   public void moveAfter(final GameObject object) {
       if (hasEnteredLastAvailableCell(object)) {
-         LevelStage stage = levelManager.generateLevelStage();
-         Biom biom = stage.getBiom(0);
-         if (biom != null) {
-            stats.reset();
-            player.setPosition(stage.getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
-                  stage.getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
-         }
+         player.setActive(false);
+         fader.fadeOut(new ScreenFadeCallback() {
+            @Override
+            public void afterFade() {
+               LevelStage stage = levelManager.generateLevelStage();
+               stats.reset();
+               player.setPosition(stage.getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
+                     stage.getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
+               fader.fadeIn(new ScreenFadeCallback() {
+                  @Override
+                  public void afterFade() {
+                     object.setActive(true);
+                  }
+               }, 1f);
+            }
+         }, 0.5f);
       }
    }
 

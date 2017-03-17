@@ -13,6 +13,7 @@ import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.core.LevelManager;
 import de.bitbrain.mindmazer.graphics.ScreenFader;
+import de.bitbrain.mindmazer.graphics.ScreenFader.ScreenFadeCallback;
 
 public class GameOverHandler implements RasteredMovementListener {
 
@@ -52,13 +53,17 @@ public class GameOverHandler implements RasteredMovementListener {
       .setCallback(new TweenCallback() {
          @Override
          public void onEvent(int arg0, BaseTween<?> arg1) {
-                  fader.fadeIn(null, 1f);
+                  fader.fadeIn(new ScreenFadeCallback() {
+                     @Override
+                     public void afterFade() {
+                        object.setActive(true);
+                     }
+                  }, 1f);
                   levelManager.resetCurrentStage();
                   object.setPosition(levelManager.getCurrentStage().getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
                         levelManager.getCurrentStage().getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
                   camera.setTarget(object);
                   object.getScale().set(1f, 1f);
-                  object.setActive(true);
                   object.getColor().a = 1f;
                }
       }).start(tweenManager);

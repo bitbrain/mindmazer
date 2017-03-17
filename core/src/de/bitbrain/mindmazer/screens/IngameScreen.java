@@ -114,7 +114,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
          RasteredMovementBehavior behavior) {
       behavior.addListener(new GameStatsHandler(levelManager, stats));
       behavior.addListener(new GameOverHandler(levelManager, getGameCamera(), fader));
-      behavior.addListener(new LevelLoaderHandler(levelManager, player, stats));
+      behavior.addListener(new LevelLoaderHandler(levelManager, player, stats, fader));
       behavior.addListener(new CellRenderHandler(levelManager));
    }
 
