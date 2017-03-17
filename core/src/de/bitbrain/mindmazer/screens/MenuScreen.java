@@ -3,10 +3,12 @@ package de.bitbrain.mindmazer.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
@@ -22,6 +24,7 @@ import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.graphics.ScreenFader;
+import de.bitbrain.mindmazer.graphics.ScreenFader.ScreenFadeCallback;
 import de.bitbrain.mindmazer.tweens.PointLightTween;
 import de.bitbrain.mindmazer.ui.HeightedLabel;
 import de.bitbrain.mindmazer.ui.Styles;
@@ -96,6 +99,18 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
       layout.add(logo).padBottom(Gdx.graphics.getHeight() / 8f).row();
       // Buttons
       TextButton play = new TextButton("Play", Styles.TEXTBUTTON_MENU);
+      play.addCaptureListener(new ClickListener() {
+         @Override
+         public void clicked(InputEvent event, float x, float y) {
+            Gdx.input.setInputProcessor(null);
+            fader.fadeOut(new ScreenFadeCallback() {
+               @Override
+               public void afterFade() {
+                  getGame().setScreen(new IngameScreen(getGame()));
+               }
+            }, 0.8f);
+         }
+      });
       layout.add(play)
             .width(Gdx.graphics.getWidth() / 1.7f).height(Gdx.graphics.getWidth() / 4.5f)
             .row();
