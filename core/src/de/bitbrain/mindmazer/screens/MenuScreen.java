@@ -129,8 +129,6 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
                      "© " + Config.GAME_YEAR;
       Label credits = new Label(text, Styles.LABEL_TEXT_CREDITS);
       credits.setAlignment(Align.center);
-      credits.setColor(Colors.FOREGROUND.cpy());
-      credits.getColor().a = 0.6f;
       layout.add(credits).width(Gdx.graphics.getWidth()).padTop(60f);
       stage.addActor(layout);
    }
@@ -142,10 +140,10 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
       bloom.setBaseIntesity(0.8f);
       bloom.setBaseSaturation(1.7f);
       bloom.setBlurType(BlurType.Gaussian5x5b);
-      bloom.setBlurAmount(0.4f);
+      bloom.setBlurAmount(0.8f);
       bloom.setBloomSaturation(0.8f);
-      bloom.setBloomIntesity(0.6f);
-      bloom.setBlurPasses(4);
+      bloom.setBloomIntesity(0.9f);
+      bloom.setBlurPasses(7);
       Vignette vignette = new Vignette(Math.round(Gdx.graphics.getWidth() / 2f),
             Math.round(Gdx.graphics.getHeight() / 2f), false);
       vignette.setIntensity(0.45f);

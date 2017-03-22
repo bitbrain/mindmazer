@@ -28,13 +28,18 @@ public class Styles {
       LABEL_TEXT_LOGO.fontColor = Color.WHITE;
       LABEL_TEXT_CREDITS.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE,
             (int) (Gdx.graphics.getWidth() / 13.5f));
-      LABEL_TEXT_CREDITS.fontColor = Color.WHITE;
-
+      Color creditColor = Colors.FOREGROUND.cpy();
+      creditColor.a = 0.78f;
+      LABEL_TEXT_CREDITS.fontColor = creditColor;
       TEXTBUTTON_MENU.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE,
             (int) (Gdx.graphics.getWidth() / 11.5f));
       Texture buttonTexture = SharedAssetManager.getInstance().get(Assets.Textures.BUTTON_9, Texture.class);
       TEXTBUTTON_MENU.fontColor = Colors.CELL_A;
       TEXTBUTTON_MENU.up = new NinePatchDrawable(GraphicsFactory.createNinePatch(buttonTexture, 14, Colors.CELL_A));
+      TEXTBUTTON_MENU.overFontColor = Colors.CELL_B;
+      TEXTBUTTON_MENU.over = new NinePatchDrawable(GraphicsFactory.createNinePatch(buttonTexture, 14, Colors.CELL_B));
+      TEXTBUTTON_MENU.checkedFontColor = Colors.CELL_B_DARK;
+      TEXTBUTTON_MENU.checked = new NinePatchDrawable(GraphicsFactory.createNinePatch(buttonTexture, 14, Colors.CELL_B_DARK));
    }
 
 }

@@ -64,6 +64,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       setupShaders();
       setupRenderers();
       fader.fadeIn(1.5f);
+      previewManager.preview();
    }
 
    @Override
@@ -125,7 +126,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    private void setupCamera(GameObject target) {
       getGameCamera().setTarget(target);
       getGameCamera().setSpeed(2.2f);
-      getGameCamera().setBaseZoom(0.2f);
+      getGameCamera().setBaseZoom(Config.BASE_ZOOM);
       getGameCamera().setZoomScale(0.001f);
    }
 

@@ -49,7 +49,7 @@ public class LevelManager {
    }
 
    public LevelStage generateLevelStage() {
-      currentStage = generator.generateLevel(3);
+      currentStage = generator.generateLevel(4);
       // Enable the first cell by default
       currentStage.setCurrentData(currentStage.getAbsoluteStartOffsetX(0), currentStage.getAbsoluteStartOffsetY(0),
             (byte) 1);
