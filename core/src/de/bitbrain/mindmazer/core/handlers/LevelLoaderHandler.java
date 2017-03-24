@@ -38,12 +38,7 @@ public class LevelLoaderHandler implements RasteredMovementListener {
                stats.reset();
                player.setPosition(stage.getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
                      stage.getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
-               fader.fadeIn(new ScreenFadeCallback() {
-                  @Override
-                  public void afterFade() {
-                     object.setActive(true);
-                  }
-               }, 1f);
+               previewManager.preview();
             }
          }, 0.5f);
       }

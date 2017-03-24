@@ -1,7 +1,6 @@
 package de.bitbrain.mindmazer.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -34,6 +33,7 @@ import de.bitbrain.mindmazer.core.handlers.LevelLoaderHandler;
 import de.bitbrain.mindmazer.graphics.CellRenderHandler;
 import de.bitbrain.mindmazer.graphics.JumpAnimationRenderer;
 import de.bitbrain.mindmazer.graphics.ScreenFader;
+import de.bitbrain.mindmazer.input.InputManager;
 import de.bitbrain.mindmazer.ui.GameProgressLabel;
 
 public class IngameScreen extends AbstractScreen<MindmazerGame> {
@@ -59,10 +59,13 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       stats = new GameStats(levelManager);
       GameObject player = setupNewPlayer(levelManager);
       previewManager = new PreviewManager(levelManager, player, world, getGameCamera());
+      InputManager inputManager = new InputManager(previewManager);
+      getInput().addProcessor(inputManager);
       setupUI(stage, stats);
       setupCamera(player);
       setupShaders();
       setupRenderers();
+      setupGameHandlers(player, levelManager, behavior, previewManager);
       fader.fadeIn(1.5f);
       previewManager.preview();
    }
@@ -76,12 +79,6 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    protected void onUpdate(float delta) {
       super.onUpdate(delta);
       stats.update(delta);
-      if (Gdx.input.isKeyJustPressed(Keys.Q)) {
-         previewManager.obscure();
-      } else if (Gdx.input.isKeyJustPressed(Keys.E)) {
-         previewManager.preview();
-
-      }
    }
 
    private GameObject setupWorld() {
@@ -111,12 +108,11 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       getBehaviorManager().apply(behavior, player);
       getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 200f, getLightingManager()),
             player);
-      setupGameHandlers(player, levelManager, behavior);
       return player;
    }
 
    private void setupGameHandlers(GameObject player, LevelManager levelManager,
-         RasteredMovementBehavior behavior) {
+         RasteredMovementBehavior behavior, PreviewManager previewManager) {
       behavior.addListener(new GameStatsHandler(levelManager, stats));
       behavior.addListener(new GameOverHandler(levelManager, getGameCamera(), fader, previewManager));
       behavior.addListener(new LevelLoaderHandler(levelManager, player, stats, fader, previewManager));

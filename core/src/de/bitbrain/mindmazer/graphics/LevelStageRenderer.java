@@ -31,6 +31,7 @@ public class LevelStageRenderer implements GameObjectRenderer {
 
    private static final int CELL_OFFSET = (int) (Config.TILE_SIZE * 0.23f);
    private static final float CELL_ANIMATION_TIME = 0.65f;
+   private static final float OLD_LEVEL_FADE_TIME = 2f;
 
    private byte[][] data;
    private Texture texture;
@@ -77,6 +78,10 @@ public class LevelStageRenderer implements GameObjectRenderer {
       renderRequest = true;
       cells.clear();
       cellIds.clear();
+      if (oldTexture != null) {
+         oldTexture.dispose();
+         oldTexture = null;
+      }
    }
 
    public void setStage(byte[][] data) {
@@ -84,9 +89,11 @@ public class LevelStageRenderer implements GameObjectRenderer {
       if (texture != null) {
          oldSprite = sprite;
          oldTexture = texture;
-         reset();
-         tweenManager.killTarget(oldSprite, SpriteTween.ALPHA);
-         Tween.to(oldSprite, SpriteTween.ALPHA, 1.5f)
+         renderRequest = true;
+         cells.clear();
+         cellIds.clear();
+         tweenManager.killTarget(oldSprite);
+         Tween.to(oldSprite, SpriteTween.ALPHA, OLD_LEVEL_FADE_TIME)
               .target(0f)
               .ease(TweenEquations.easeOutQuad)
               .setCallbackTriggers(TweenCallback.COMPLETE)

@@ -12,6 +12,7 @@ public class PreviewManager {
    private final GameObject player;
    private final GameObject level;
    private final GameCamera camera;
+   private boolean previewed;
 
    public PreviewManager(LevelManager levelManager, GameObject player, GameObject level, GameCamera camera) {
       this.levelManager = levelManager;
@@ -20,7 +21,12 @@ public class PreviewManager {
       this.camera = camera;
    }
 
+   public boolean isPreviewed() {
+      return previewed;
+   }
+
    public void preview() {
+      previewed = true;
       player.setActive(false);
       camera.setTarget(level, false);
       camera.setBaseZoom(calculateBaseZoom());
@@ -28,6 +34,7 @@ public class PreviewManager {
    }
 
    public void obscure() {
+      previewed = false;
       player.setActive(true);
       camera.setTarget(player, false);
       camera.setBaseZoom(Config.BASE_ZOOM);

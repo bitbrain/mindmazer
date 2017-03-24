@@ -42,14 +42,13 @@ public class LevelManager {
 
    public void resetCurrentStage() {
       currentStage.resetCurrentData();
-      currentRenderer.setStage(currentStage.getCurrentData());
       currentStage.setCurrentData(currentStage.getAbsoluteStartOffsetX(0), currentStage.getAbsoluteStartOffsetY(0),
             (byte) 1);
       currentRenderer.reset();
    }
 
    public LevelStage generateLevelStage() {
-      currentStage = generator.generateLevel(4);
+      currentStage = generator.generateLevel(2);
       // Enable the first cell by default
       currentStage.setCurrentData(currentStage.getAbsoluteStartOffsetX(0), currentStage.getAbsoluteStartOffsetY(0),
             (byte) 1);
@@ -57,6 +56,7 @@ public class LevelManager {
          currentRenderer = new LevelStageRenderer(currentStage.getCurrentData());
          renderManager.register(Types.WORLD, currentRenderer);
       } else {
+         currentRenderer.reset();
          currentRenderer.setStage(currentStage.getCurrentData());
       }
       world.setDimensions(currentStage.getLevelWidth(), currentStage.getLevelHeight());
