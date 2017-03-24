@@ -36,6 +36,8 @@ public class LevelStageRenderer implements GameObjectRenderer {
    private Texture texture;
    private Texture blockA, blockB;
    private Sprite sprite;
+   private Sprite oldSprite;
+   private Texture oldTexture;
    private boolean renderRequest = true;
 
    private final Set<String> cellIds = new HashSet<String>();
@@ -80,8 +82,23 @@ public class LevelStageRenderer implements GameObjectRenderer {
    public void setStage(byte[][] data) {
       this.data = data;
       if (texture != null) {
-         texture.dispose();
+         oldSprite = sprite;
+         oldTexture = texture;
          reset();
+         tweenManager.killTarget(oldSprite, SpriteTween.ALPHA);
+         Tween.to(oldSprite, SpriteTween.ALPHA, 1.5f)
+              .target(0f)
+              .ease(TweenEquations.easeOutQuad)
+              .setCallbackTriggers(TweenCallback.COMPLETE)
+              .setCallback(new TweenCallback() {
+                  @Override
+                  public void onEvent(int arg0, BaseTween<?> arg1) {
+                     if (oldTexture != null) {
+                        oldTexture.dispose();
+                        oldTexture = null;
+                     }
+                  }
+               }).start(tweenManager);
       }
    }
 
@@ -90,6 +107,11 @@ public class LevelStageRenderer implements GameObjectRenderer {
       if (renderRequest) {
          buildTextureBuffer(batch);
          renderRequest = false;
+      }
+      if (oldTexture != null) {
+         oldSprite.setFlip(false, true);
+         oldSprite.setPosition(object.getLeft(), object.getTop() - CELL_OFFSET * 2);
+         oldSprite.draw(batch);
       }
       for (int i = cells.size() - 1; i >= 0; i--) {
          cells.get(i).draw(batch);
@@ -127,9 +149,6 @@ public class LevelStageRenderer implements GameObjectRenderer {
 
       int textureWidth = Config.TILE_SIZE * data.length;
       int textureHeight = Config.TILE_SIZE * data[0].length + CELL_OFFSET;
-      if (texture != null) {
-         texture.dispose();
-      }
       Pixmap map = new Pixmap(textureWidth, textureHeight, Format.RGBA8888);
       map.setColor(new Color(0f, 0f, 0f, 0f));
       for (int indexX = 0; indexX < data.length; ++indexX) {
