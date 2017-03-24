@@ -4,6 +4,7 @@ import de.bitbrain.braingdx.graphics.GameObjectRenderManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Types;
 import de.bitbrain.mindmazer.graphics.LevelStageRenderer;
+import de.bitbrain.mindmazer.graphics.LevelStageRenderer.LevelStageRenderListener;
 import de.bitbrain.mindmazer.levelgen.LevelGenerator;
 import de.bitbrain.mindmazer.levelgen.LevelStage;
 
@@ -25,12 +26,16 @@ public class LevelManager {
       return currentStage;
    }
 
-   public void obscureLevel() {
-      currentRenderer.setStage(currentStage.getCurrentData());
+   public void obscureLevel(LevelStageRenderListener callback) {
+      currentRenderer.setStage(currentStage.getCurrentData(), true, callback);
    }
 
    public void revealLevel() {
-      currentRenderer.setStage(currentStage.getCompleteData());
+      currentRenderer.setStage(currentStage.getCompleteData(), true);
+   }
+
+   public void revealLevel(boolean override) {
+      currentRenderer.setStage(currentStage.getCompleteData(), override);
    }
 
    public void setCurrentData(int indexX, int indexY, byte value) {
@@ -56,8 +61,7 @@ public class LevelManager {
          currentRenderer = new LevelStageRenderer(currentStage.getCurrentData());
          renderManager.register(Types.WORLD, currentRenderer);
       } else {
-         currentRenderer.reset();
-         currentRenderer.setStage(currentStage.getCurrentData());
+         currentRenderer.setStage(currentStage.getCurrentData(), false);
       }
       world.setDimensions(currentStage.getLevelWidth(), currentStage.getLevelHeight());
       return currentStage;

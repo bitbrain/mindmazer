@@ -29,9 +29,13 @@ import de.bitbrain.mindmazer.Config;
 
 public class LevelStageRenderer implements GameObjectRenderer {
 
+   public static interface LevelStageRenderListener {
+      void afterSetStage();
+   }
+
    private static final int CELL_OFFSET = (int) (Config.TILE_SIZE * 0.23f);
    private static final float CELL_ANIMATION_TIME = 0.65f;
-   private static final float OLD_LEVEL_FADE_TIME = 2f;
+   private static final float OLD_LEVEL_FADE_TIME = 0.9f;
 
    private byte[][] data;
    private Texture texture;
@@ -84,9 +88,13 @@ public class LevelStageRenderer implements GameObjectRenderer {
       }
    }
 
-   public void setStage(byte[][] data) {
+   public void setStage(byte[][] data, boolean override) {
+      this.setStage(data, override, null);
+   }
+
+   public void setStage(byte[][] data, boolean override, final LevelStageRenderListener callback) {
       this.data = data;
-      if (texture != null) {
+      if (texture != null && override) {
          oldSprite = sprite;
          oldTexture = texture;
          renderRequest = true;
@@ -100,12 +108,17 @@ public class LevelStageRenderer implements GameObjectRenderer {
               .setCallback(new TweenCallback() {
                   @Override
                   public void onEvent(int arg0, BaseTween<?> arg1) {
+                     if (callback != null) {
+                        callback.afterSetStage();
+                     }
                      if (oldTexture != null) {
                         oldTexture.dispose();
                         oldTexture = null;
                      }
                   }
                }).start(tweenManager);
+      } else {
+         reset();
       }
    }
 

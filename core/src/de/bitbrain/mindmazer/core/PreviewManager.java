@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import de.bitbrain.braingdx.graphics.GameCamera;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Config;
+import de.bitbrain.mindmazer.graphics.LevelStageRenderer.LevelStageRenderListener;
 
 public class PreviewManager {
 
@@ -33,12 +34,24 @@ public class PreviewManager {
       levelManager.revealLevel();
    }
 
+   public void initialPreview() {
+      previewed = true;
+      player.setActive(false);
+      camera.setTarget(level, false);
+      camera.setBaseZoom(calculateBaseZoom());
+      levelManager.revealLevel(false);
+   }
+
    public void obscure() {
       previewed = false;
-      player.setActive(true);
       camera.setTarget(player, false);
       camera.setBaseZoom(Config.BASE_ZOOM);
-      levelManager.obscureLevel();
+      levelManager.obscureLevel(new LevelStageRenderListener() {
+         @Override
+         public void afterSetStage() {
+            player.setActive(true);
+         }
+      });
    }
 
    private float calculateBaseZoom() {
