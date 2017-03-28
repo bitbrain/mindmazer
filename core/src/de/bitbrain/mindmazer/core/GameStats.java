@@ -29,6 +29,12 @@ public class GameStats {
       }
    }
 
+   public void reduceLife() {
+      if (life > 0) {
+         life--;
+      }
+   }
+
    public float getTime() {
       return timer.getTicks();
    }
@@ -43,9 +49,6 @@ public class GameStats {
 
    public void reset() {
       currentSteps = 0;
-      if (life > 0) {
-         life--;
-      }
    }
 
    public void step() {

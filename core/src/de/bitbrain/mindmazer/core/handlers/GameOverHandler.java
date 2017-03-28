@@ -1,7 +1,5 @@
 package de.bitbrain.mindmazer.core.handlers;
 
-import com.badlogic.gdx.Gdx;
-
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -43,16 +41,20 @@ public class GameOverHandler implements RasteredMovementListener {
 
    @Override
    public void moveAfter(GameObject object) {
+      boolean isOutOfLevel = isObjectOutOfLevel(object);
+      if (isOutOfLevel) {
+         stats.reduceLife();
+      }
       if (isGameOver()) {
          stats.reset();
-         Gdx.input.setInputProcessor(null);
+         object.setActive(false);
          fader.fadeOut(new ScreenFadeCallback() {
             @Override
             public void afterFade() {
                game.setScreen(new GameOverScreen(game, stats));
             }
          }, 1f);
-      } else if (isObjectOutOfLevel(object)) {
+      } else if (isOutOfLevel) {
          respawn(object);
       }
    }

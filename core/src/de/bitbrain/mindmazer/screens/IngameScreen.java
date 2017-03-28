@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -147,14 +146,13 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    }
 
    private void setupUI(Stage stage, GameStats stats) {
-      Table layout = new Table();
-      Table topBar = new Table();
-      layout.setFillParent(true);
+      final float padding = 20f;
       Label progressLabel = new GameProgressLabel(stats);
       LifeWidget lifeWidget = new LifeWidget(stats);
-      topBar.left().padLeft(40f).padTop(20f).add(progressLabel);
-      topBar.right().padRight(40f).padTop(40f).add(lifeWidget);
-      layout.top().center().padTop(40f).add(topBar);
-      stage.addActor(layout);
+      lifeWidget.setPosition(Gdx.graphics.getWidth() - padding * 2f,
+            Gdx.graphics.getHeight() - padding * 2f - lifeWidget.getHeight());
+      progressLabel.setPosition(padding * 2f, Gdx.graphics.getHeight() - padding - progressLabel.getPrefHeight());
+      stage.addActor(progressLabel);
+      stage.addActor(lifeWidget);
    }
 }
