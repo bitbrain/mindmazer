@@ -35,6 +35,7 @@ import de.bitbrain.mindmazer.graphics.JumpAnimationRenderer;
 import de.bitbrain.mindmazer.graphics.ScreenFader;
 import de.bitbrain.mindmazer.input.InputManager;
 import de.bitbrain.mindmazer.ui.GameProgressLabel;
+import de.bitbrain.mindmazer.ui.LifeWidget;
 
 public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
@@ -114,7 +115,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    private void setupGameHandlers(GameObject player, LevelManager levelManager,
          RasteredMovementBehavior behavior, PreviewManager previewManager) {
       behavior.addListener(new GameStatsHandler(levelManager, stats));
-      behavior.addListener(new GameOverHandler(levelManager, getGameCamera(), fader, previewManager));
+      behavior.addListener(new GameOverHandler(levelManager, getGameCamera(), fader, previewManager, getGame(), stats));
       behavior.addListener(new LevelLoaderHandler(levelManager, player, stats, fader, previewManager));
       behavior.addListener(new CellRenderHandler(levelManager));
    }
@@ -147,9 +148,13 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    private void setupUI(Stage stage, GameStats stats) {
       Table layout = new Table();
+      Table topBar = new Table();
       layout.setFillParent(true);
-      Label label = new GameProgressLabel(stats);
-      layout.top().padTop(20f).add(label);
+      Label progressLabel = new GameProgressLabel(stats);
+      LifeWidget lifeWidget = new LifeWidget(stats);
+      topBar.left().padLeft(40f).padTop(20f).add(progressLabel);
+      topBar.right().padRight(40f).padTop(40f).add(lifeWidget);
+      layout.top().center().padTop(40f).add(topBar);
       stage.addActor(layout);
    }
 }

@@ -1,11 +1,13 @@
 package de.bitbrain.mindmazer.core;
 
 import de.bitbrain.braingdx.util.DeltaTimer;
+import de.bitbrain.mindmazer.Config;
 
 public class GameStats {
 
    private int totalSteps;
    private int currentSteps;
+   private int life = Config.DEFAULT_LIFE;
    private DeltaTimer timer = new DeltaTimer();
    private final LevelManager levelManager;
 
@@ -15,6 +17,16 @@ public class GameStats {
 
    public void update(float delta) {
       timer.update(delta);
+   }
+
+   public int getLife() {
+      return life;
+   }
+
+   public void addLife() {
+      if (life > 0) {
+         life++;
+      }
    }
 
    public float getTime() {
@@ -31,6 +43,9 @@ public class GameStats {
 
    public void reset() {
       currentSteps = 0;
+      if (life > 0) {
+         life--;
+      }
    }
 
    public void step() {
