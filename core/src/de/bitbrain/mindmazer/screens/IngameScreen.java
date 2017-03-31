@@ -22,6 +22,7 @@ import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.Types;
+import de.bitbrain.mindmazer.assets.Assets;
 import de.bitbrain.mindmazer.assets.Assets.Textures;
 import de.bitbrain.mindmazer.core.GameStats;
 import de.bitbrain.mindmazer.core.LevelManager;
@@ -66,7 +67,14 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       setupGameHandlers(player, levelManager, behavior, previewManager);
       getScreenTransitions().in(1.5f);
       previewManager.preview();
+      getAudioManager().playMusic(Assets.Musics.INGAME_01);
       Gdx.app.log(LogTags.INIT, "Initialised ingame screen.");
+   }
+
+   @Override
+   public void dispose() {
+      super.dispose();
+      getAudioManager().stopMusic(Assets.Musics.INGAME_01);
    }
 
    @Override

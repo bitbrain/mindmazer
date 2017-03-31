@@ -46,13 +46,13 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
 
    @Override
    protected void onCreateStage(Stage stage, int width, int height) {
-      SharedAssetManager.getInstance().get(Assets.Musics.MAINMENU, Music.class).play();
       setBackgroundColor(Colors.BACKGROUND);
       getLightingManager().setAmbientLight(new Color(0.7f, 0.7f, 0.8f, 1f));
       setupUI(stage);
       setupShaders();
       setupFX();
       getScreenTransitions().in(1f);
+      getAudioManager().playMusic(Assets.Musics.MAINMENU);
    }
 
    @Override
@@ -110,7 +110,8 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
          @Override
          public void clicked(InputEvent event, float x, float y) {
             Gdx.input.setInputProcessor(null);
-            getScreenTransitions().out(new IngameScreen(getGame()), 1f);
+            getAudioManager().fadeOutMusic(Assets.Musics.MAINMENU, 1.5f);
+            getScreenTransitions().out(new IngameScreen(getGame()), 1.5f);
          }
       });
       layout.add(play)

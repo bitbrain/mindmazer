@@ -32,6 +32,9 @@ public class MindmazerAssetLoader implements GameAssetLoader {
 
    private void audio(Map<String, Class<?>> map) {
       map.put(Assets.Musics.MAINMENU, Music.class);
+      map.put(Assets.Musics.INGAME_01, Music.class);
+      map.put(Assets.Musics.INGAME_02, Music.class);
+      map.put(Assets.Musics.INGAME_03, Music.class);
    }
 
    private void fonts(Map<String, Class<?>> map) {

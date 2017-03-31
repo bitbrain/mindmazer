@@ -58,6 +58,7 @@ public class LevelStageRenderer implements GameObjectRenderer, Disposable {
 
    @Override
    public void init() {
+      Gdx.app.log(LogTags.INIT, "Initialising LevelStageRenderer...");
       Pixmap map = new Pixmap(Config.TILE_SIZE, Config.TILE_SIZE + CELL_OFFSET, Format.RGBA8888);
       map.setColor(Colors.CELL_A_DARK);
       map.fillRectangle(0, CELL_OFFSET, Config.TILE_SIZE, Config.TILE_SIZE);
