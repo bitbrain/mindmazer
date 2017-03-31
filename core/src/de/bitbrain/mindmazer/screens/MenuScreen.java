@@ -23,6 +23,8 @@ import de.bitbrain.braingdx.postprocessing.effects.Bloom;
 import de.bitbrain.braingdx.postprocessing.effects.Vignette;
 import de.bitbrain.braingdx.postprocessing.filters.Blur.BlurType;
 import de.bitbrain.braingdx.screens.AbstractScreen;
+import de.bitbrain.braingdx.screens.TransitionCallback;
+import de.bitbrain.braingdx.tweens.ActorTween;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.Config;
@@ -38,6 +40,7 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
 
    static {
       Tween.registerAccessor(PointLight.class, new PointLightTween());
+      Tween.registerAccessor(Label.class, new ActorTween());
    }
 
    public MenuScreen(MindmazerGame game) {
@@ -103,7 +106,7 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
       // Logo
       Label logo = new HeightedLabel(Config.GAME_NAME, Colors.CELL_B_DARK, Styles.LABEL_TEXT_LOGO);
       logo.setColor(Colors.CELL_A);
-      layout.add(logo).padBottom(Gdx.graphics.getHeight() / 8f).row();
+      layout.add(logo).padBottom(Gdx.graphics.getHeight() / 15f).row();
       // Buttons
       TextButton play = new TextButton(Bundle.translations.get(Messages.MENU_PLAY), Styles.TEXTBUTTON_MENU);
       play.addCaptureListener(new ClickListener() {
@@ -118,17 +121,39 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
             .width(Gdx.graphics.getWidth() / 1.7f).height(Gdx.graphics.getWidth() / 4.5f)
             .row();
       TextButton close = new TextButton(Bundle.translations.get(Messages.MENU_CLOSE), Styles.TEXTBUTTON_MENU);
+      close.addCaptureListener(new ClickListener() {
+         @Override
+         public void clicked(InputEvent event, float x, float y) {
+            Gdx.input.setInputProcessor(null);
+            getAudioManager().fadeOutMusic(Assets.Musics.MAINMENU, 1.5f);
+            getScreenTransitions().out(new TransitionCallback() {
+               @Override
+               public void afterTransition() {
+                  Gdx.app.exit();
+               }
+               @Override
+               public void beforeTransition() {
+                  
+               }               
+            }, 1.5f);
+         }
+      });
       layout.add(close)
             .width(Gdx.graphics.getWidth() / 1.7f).height(Gdx.graphics.getWidth() / 4.5f)
-            .padTop(25f)
+            .padTop(35f)
             .row();
       // Credits
       String text = Bundle.translations.get(Messages.GENERAL_CREDITS_DEV) + "\n" +
                      Bundle.translations.get(Messages.GENERAL_CREDITS_AUDIO) + "\n" +
-                     "© " + Config.GAME_YEAR;
+                     Config.GAME_VERSION;
       Label credits = new Label(text, Styles.LABEL_TEXT_CREDITS);
       credits.setAlignment(Align.center);
-      layout.add(credits).width(Gdx.graphics.getWidth()).padTop(60f);
+      layout.add(credits).width(Gdx.graphics.getWidth()).height(200f).padTop(60f);
+      Tween.to(credits, ActorTween.SCALE, 1f)
+           .target(1.1f)
+           .repeatYoyo(Tween.INFINITY, 0f)
+           .ease(TweenEquations.easeOutCubic)
+           .start(getTweenManager());
       stage.addActor(layout);
    }
 

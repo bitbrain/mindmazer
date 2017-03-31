@@ -3,7 +3,7 @@ package de.bitbrain.mindmazer;
 public interface Config {
 
    String GAME_NAME = "mindmazer";
-   String GAME_YEAR = "2017";
+   String GAME_VERSION = "v0.0.1";
    boolean DEBUG = false;
    int TILE_SIZE = 16;
    float BASE_ZOOM = 0.2f;
