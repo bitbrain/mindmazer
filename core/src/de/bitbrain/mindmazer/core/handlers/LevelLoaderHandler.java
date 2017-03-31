@@ -1,13 +1,13 @@
 package de.bitbrain.mindmazer.core.handlers;
 
 import de.bitbrain.braingdx.behavior.movement.RasteredMovementBehavior.RasteredMovementListener;
+import de.bitbrain.braingdx.screens.ScreenTransitions;
+import de.bitbrain.braingdx.screens.TransitionCallback;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.core.GameStats;
 import de.bitbrain.mindmazer.core.LevelManager;
 import de.bitbrain.mindmazer.core.PreviewManager;
-import de.bitbrain.mindmazer.graphics.ScreenFader;
-import de.bitbrain.mindmazer.graphics.ScreenFader.ScreenFadeCallback;
 import de.bitbrain.mindmazer.levelgen.LevelStage;
 
 public class LevelLoaderHandler implements RasteredMovementListener {
@@ -15,15 +15,13 @@ public class LevelLoaderHandler implements RasteredMovementListener {
    private final LevelManager levelManager;
    private final GameObject player;
    private final GameStats stats;
-   private final ScreenFader fader;
    private final PreviewManager previewManager;
 
-   public LevelLoaderHandler(LevelManager levelManager, GameObject player, GameStats stats, ScreenFader fader,
+   public LevelLoaderHandler(LevelManager levelManager, GameObject player, GameStats stats,
          PreviewManager previewManager) {
       this.levelManager = levelManager;
       this.player = player;
       this.stats = stats;
-      this.fader = fader;
       this.previewManager = previewManager;
    }
 
@@ -31,15 +29,20 @@ public class LevelLoaderHandler implements RasteredMovementListener {
    public void moveAfter(final GameObject object) {
       if (hasEnteredLastAvailableCell(object)) {
          player.setActive(false);
-         fader.fadeOut(new ScreenFadeCallback() {
+         ScreenTransitions.getInstance().out(new TransitionCallback() {
             @Override
-            public void afterFade() {
-               fader.fadeIn(1f);
+            public void afterTransition() {
+               ScreenTransitions.getInstance().in(1f);
                LevelStage stage = levelManager.generateLevelStage();
                stats.reset();
                player.setPosition(stage.getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
                      stage.getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
                previewManager.initialPreview();
+            }
+
+            @Override
+            public void beforeTransition() {
+
             }
          }, 1.0f);
       }

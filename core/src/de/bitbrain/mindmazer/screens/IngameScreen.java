@@ -31,17 +31,16 @@ import de.bitbrain.mindmazer.core.handlers.GameStatsHandler;
 import de.bitbrain.mindmazer.core.handlers.LevelLoaderHandler;
 import de.bitbrain.mindmazer.graphics.CellRenderHandler;
 import de.bitbrain.mindmazer.graphics.JumpAnimationRenderer;
-import de.bitbrain.mindmazer.graphics.ScreenFader;
 import de.bitbrain.mindmazer.input.InputManager;
 import de.bitbrain.mindmazer.ui.GameProgressLabel;
 import de.bitbrain.mindmazer.ui.LifeWidget;
+import de.bitbrain.mindmazer.util.LogTags;
 
 public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    private RasteredMovementBehavior behavior;
    private LevelManager levelManager;
    private GameStats stats;
-   private ScreenFader fader;
    private PreviewManager previewManager;
 
    public IngameScreen(MindmazerGame game) {
@@ -50,8 +49,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    @Override
    protected void onCreateStage(Stage stage, int width, int height) {
-      fader = new ScreenFader();
-      getRenderPipeline().set("overlay", fader);
+      Gdx.app.log(LogTags.INIT, "Initialising ingame screen...");
       setBackgroundColor(Colors.BACKGROUND);
       GameObject world = setupWorld();
       levelManager = new LevelManager(getRenderManager(), world);
@@ -66,8 +64,9 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       setupShaders();
       setupRenderers();
       setupGameHandlers(player, levelManager, behavior, previewManager);
-      fader.fadeIn(1.5f);
+      getScreenTransitions().in(1.5f);
       previewManager.preview();
+      Gdx.app.log(LogTags.INIT, "Initialised ingame screen.");
    }
 
    @Override
@@ -97,6 +96,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    private GameObject setupNewPlayer(LevelManager levelManager) {
       GameObject player = getGameWorld().addObject();
+      player.setActive(true);
       player.setType(Types.PLAYER);
       player.setZIndex(10);
       player.setDimensions(Config.TILE_SIZE, Config.TILE_SIZE);
@@ -114,8 +114,8 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    private void setupGameHandlers(GameObject player, LevelManager levelManager,
          RasteredMovementBehavior behavior, PreviewManager previewManager) {
       behavior.addListener(new GameStatsHandler(levelManager, stats));
-      behavior.addListener(new GameOverHandler(levelManager, getGameCamera(), fader, previewManager, getGame(), stats));
-      behavior.addListener(new LevelLoaderHandler(levelManager, player, stats, fader, previewManager));
+      behavior.addListener(new GameOverHandler(levelManager, getGameCamera(), previewManager, getGame(), stats));
+      behavior.addListener(new LevelLoaderHandler(levelManager, player, stats, previewManager));
       behavior.addListener(new CellRenderHandler(levelManager));
    }
 

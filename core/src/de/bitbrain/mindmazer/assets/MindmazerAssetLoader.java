@@ -2,6 +2,7 @@ package de.bitbrain.mindmazer.assets;
 
 import java.util.Map;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -12,11 +13,28 @@ public class MindmazerAssetLoader implements GameAssetLoader {
 
    @Override
    public void put(Map<String, Class<?>> map) {
+      textures(map);
+      particles(map);
+      audio(map);
+      fonts(map);
+   }
+
+   private void textures(Map<String, Class<?>> map) {
       map.put(Assets.Textures.PLAYER, Texture.class);
       map.put(Assets.Textures.CHIME, Texture.class);
       map.put(Assets.Textures.BUTTON_9, Texture.class);
       map.put(Assets.Textures.LIFE, Texture.class);
+   }
+
+   private void particles(Map<String, Class<?>> map) {
       map.put(Assets.ParticleEffects.JUMP_LAND, ParticleEffect.class);
+   }
+
+   private void audio(Map<String, Class<?>> map) {
+      map.put(Assets.Musics.MAINMENU, Music.class);
+   }
+
+   private void fonts(Map<String, Class<?>> map) {
       map.put(Assets.Fonts.ANGIES_NEW_HOUSE, FreeTypeFontGenerator.class);
    }
 

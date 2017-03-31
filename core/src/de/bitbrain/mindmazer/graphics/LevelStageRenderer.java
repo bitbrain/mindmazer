@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -26,8 +28,9 @@ import de.bitbrain.braingdx.tweens.VectorTween;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.Config;
+import de.bitbrain.mindmazer.util.LogTags;
 
-public class LevelStageRenderer implements GameObjectRenderer {
+public class LevelStageRenderer implements GameObjectRenderer, Disposable {
 
    public static interface LevelStageRenderListener {
       void afterSetStage();
@@ -69,8 +72,29 @@ public class LevelStageRenderer implements GameObjectRenderer {
       map.dispose();
    }
 
+   @Override
+   public void dispose() {
+      Gdx.app.log(LogTags.DISPOSE, "Disposing LevelStageRenderer...");
+      if (data != null) {
+         data = null;
+         if (blockA != null) {
+            blockA.dispose();
+         }
+         if (blockB != null) {
+            blockB.dispose();
+         }
+         if (oldTexture != null) {
+            oldTexture.dispose();
+         }
+         if (texture != null) {
+            texture.dispose();
+         }
+      }
+   }
+
    public void addCell(int x, int y) {
       if (!isCurrentlyProcessed(x, y)) {
+         Gdx.app.log(LogTags.RENDER, "Adding new cell to LevelStageRenderer at " + x + "," + y);
          Cell cell = new Cell(x, y);
          cellIds.add(cell.getId());
          cells.add(cell);
@@ -79,6 +103,7 @@ public class LevelStageRenderer implements GameObjectRenderer {
    }
 
    public void reset() {
+      Gdx.app.log(LogTags.RENDER, "Resetting LevelStageRenderer...");
       renderRequest = true;
       cells.clear();
       cellIds.clear();
@@ -166,7 +191,7 @@ public class LevelStageRenderer implements GameObjectRenderer {
    }
 
    private void buildTextureBuffer(Batch batch) {
-
+      Gdx.app.log(LogTags.RENDER, "Building texture buffer for current LevelStage...");
       int textureWidth = Config.TILE_SIZE * data.length;
       int textureHeight = Config.TILE_SIZE * data[0].length + CELL_OFFSET;
       Pixmap map = new Pixmap(textureWidth, textureHeight, Format.RGBA8888);
@@ -189,6 +214,7 @@ public class LevelStageRenderer implements GameObjectRenderer {
       }
       texture = new Texture(map);
       sprite = new Sprite(texture);
+      Gdx.app.log(LogTags.RENDER, "Successfully built texture buffer!");
    }
 
    private void drawCellOntoPixmap(Pixmap map, byte value, int indexX, int indexY, Color colorA, Color colorADark,
@@ -295,5 +321,6 @@ public class LevelStageRenderer implements GameObjectRenderer {
          return id;
       }
    }
+
 
 }

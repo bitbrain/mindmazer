@@ -7,6 +7,7 @@ import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import de.bitbrain.braingdx.behavior.movement.RasteredMovementBehavior.RasteredMovementListener;
 import de.bitbrain.braingdx.graphics.GameCamera;
+import de.bitbrain.braingdx.screens.ScreenTransitions;
 import de.bitbrain.braingdx.tweens.GameObjectTween;
 import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
@@ -15,8 +16,6 @@ import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.core.GameStats;
 import de.bitbrain.mindmazer.core.LevelManager;
 import de.bitbrain.mindmazer.core.PreviewManager;
-import de.bitbrain.mindmazer.graphics.ScreenFader;
-import de.bitbrain.mindmazer.graphics.ScreenFader.ScreenFadeCallback;
 import de.bitbrain.mindmazer.screens.GameOverScreen;
 
 public class GameOverHandler implements RasteredMovementListener {
@@ -24,16 +23,14 @@ public class GameOverHandler implements RasteredMovementListener {
    private final LevelManager levelManager;
    private final GameCamera camera;
    private final TweenManager tweenManager = SharedTweenManager.getInstance();
-   private final ScreenFader fader;
    private final PreviewManager previewManager;
    private final MindmazerGame game;
    private final GameStats stats;
 
-   public GameOverHandler(LevelManager levelManager, GameCamera camera, ScreenFader fader,
+   public GameOverHandler(LevelManager levelManager, GameCamera camera,
          PreviewManager previewManager, MindmazerGame game, GameStats stats) {
       this.levelManager = levelManager;
       this.camera = camera;
-      this.fader = fader;
       this.previewManager = previewManager;
       this.game = game;
       this.stats = stats;
@@ -48,12 +45,7 @@ public class GameOverHandler implements RasteredMovementListener {
       if (isGameOver()) {
          stats.reset();
          object.setActive(false);
-         fader.fadeOut(new ScreenFadeCallback() {
-            @Override
-            public void afterFade() {
-               game.setScreen(new GameOverScreen(game, stats));
-            }
-         }, 1f);
+         ScreenTransitions.getInstance().out(new GameOverScreen(game, stats), 1.5f);
       } else if (isOutOfLevel) {
          respawn(object);
       }
@@ -78,14 +70,14 @@ public class GameOverHandler implements RasteredMovementListener {
       object.setActive(false);
       camera.setTarget(null);
       tweenManager.killTarget(object);
-      fader.fadeOut(null, 1f);
+      ScreenTransitions.getInstance().out(1f);
       Tween.to(object, GameObjectTween.ALPHA, 1.0f).target(0f).ease(TweenEquations.easeOutQuad).start(tweenManager);
       Tween.to(object, GameObjectTween.SCALE, 1.0f).target(0.2f).ease(TweenEquations.easeOutQuad)
       .setCallbackTriggers(TweenCallback.COMPLETE)
       .setCallback(new TweenCallback() {
          @Override
          public void onEvent(int arg0, BaseTween<?> arg1) {
-                  fader.fadeIn(1f);
+                  ScreenTransitions.getInstance().in(1.5f);
                   levelManager.resetCurrentStage();
                   object.setPosition(levelManager.getCurrentStage().getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
                         levelManager.getCurrentStage().getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);

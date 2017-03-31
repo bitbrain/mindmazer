@@ -14,7 +14,7 @@ public interface Assets {
    }
 
    interface Musics {
-      // TODO
+      String MAINMENU = "sound/4m_mainmenuformindmazer.ogg";
    }
 
    interface ParticleEffects {

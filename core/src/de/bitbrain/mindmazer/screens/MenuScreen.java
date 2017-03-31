@@ -1,6 +1,7 @@
 package de.bitbrain.mindmazer.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -15,6 +16,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import box2dLight.PointLight;
+import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.graphics.pipeline.RenderPipe;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
 import de.bitbrain.braingdx.postprocessing.effects.Bloom;
@@ -25,8 +27,7 @@ import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.MindmazerGame;
-import de.bitbrain.mindmazer.graphics.ScreenFader;
-import de.bitbrain.mindmazer.graphics.ScreenFader.ScreenFadeCallback;
+import de.bitbrain.mindmazer.assets.Assets;
 import de.bitbrain.mindmazer.i18n.Bundle;
 import de.bitbrain.mindmazer.i18n.Messages;
 import de.bitbrain.mindmazer.tweens.PointLightTween;
@@ -39,22 +40,24 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
       Tween.registerAccessor(PointLight.class, new PointLightTween());
    }
 
-   private ScreenFader fader;
-
    public MenuScreen(MindmazerGame game) {
       super(game);
    }
 
    @Override
    protected void onCreateStage(Stage stage, int width, int height) {
-      fader = new ScreenFader();
-      getRenderPipeline().set("overlay", fader);
+      SharedAssetManager.getInstance().get(Assets.Musics.MAINMENU, Music.class).play();
       setBackgroundColor(Colors.BACKGROUND);
       getLightingManager().setAmbientLight(new Color(0.7f, 0.7f, 0.8f, 1f));
       setupUI(stage);
       setupShaders();
       setupFX();
-      fader.fadeIn(2.5f);
+      getScreenTransitions().in(1f);
+   }
+
+   @Override
+   public void dispose() {
+      SharedAssetManager.getInstance().get(Assets.Musics.MAINMENU, Music.class).stop();
    }
 
    private void setupFX() {
@@ -107,12 +110,7 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
          @Override
          public void clicked(InputEvent event, float x, float y) {
             Gdx.input.setInputProcessor(null);
-            fader.fadeOut(new ScreenFadeCallback() {
-               @Override
-               public void afterFade() {
-                  getGame().setScreen(new IngameScreen(getGame()));
-               }
-            }, 0.8f);
+            getScreenTransitions().out(new IngameScreen(getGame()), 1f);
          }
       });
       layout.add(play)

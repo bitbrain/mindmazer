@@ -4,7 +4,7 @@ public interface Config {
 
    String GAME_NAME = "mindmazer";
    String GAME_YEAR = "2017";
-   boolean DEBUG = true;
+   boolean DEBUG = false;
    int TILE_SIZE = 16;
    float BASE_ZOOM = 0.2f;
    int DEFAULT_LIFE = 3;

@@ -1,5 +1,7 @@
 package de.bitbrain.mindmazer.core;
 
+import com.badlogic.gdx.Gdx;
+
 import de.bitbrain.braingdx.graphics.GameObjectRenderManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Types;
@@ -7,6 +9,7 @@ import de.bitbrain.mindmazer.graphics.LevelStageRenderer;
 import de.bitbrain.mindmazer.graphics.LevelStageRenderer.LevelStageRenderListener;
 import de.bitbrain.mindmazer.levelgen.LevelGenerator;
 import de.bitbrain.mindmazer.levelgen.LevelStage;
+import de.bitbrain.mindmazer.util.LogTags;
 
 public class LevelManager {
 
@@ -53,17 +56,20 @@ public class LevelManager {
    }
 
    public LevelStage generateLevelStage() {
+      Gdx.app.log(LogTags.LEVELGEN, "Generating new level...");
       currentStage = generator.generateLevel(2);
       // Enable the first cell by default
       currentStage.setCurrentData(currentStage.getAbsoluteStartOffsetX(0), currentStage.getAbsoluteStartOffsetY(0),
             (byte) 1);
       if (currentRenderer == null) {
+         Gdx.app.log(LogTags.INIT, "Initialising LevelStageRenderer...");
          currentRenderer = new LevelStageRenderer(currentStage.getCurrentData());
          renderManager.register(Types.WORLD, currentRenderer);
       } else {
          currentRenderer.setStage(currentStage.getCurrentData(), false);
       }
       world.setDimensions(currentStage.getLevelWidth(), currentStage.getLevelHeight());
+      Gdx.app.log(LogTags.LEVELGEN, "Generated new level: length=" + currentStage.getLength());
       return currentStage;
    }
 }

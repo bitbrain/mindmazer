@@ -14,13 +14,10 @@ import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.core.GameStats;
-import de.bitbrain.mindmazer.graphics.ScreenFader;
 
 public class GameOverScreen extends AbstractScreen<MindmazerGame> {
 
    private final GameStats stats;
-
-   private ScreenFader fader;
 
    private boolean fadingOut = false;
 
@@ -31,18 +28,10 @@ public class GameOverScreen extends AbstractScreen<MindmazerGame> {
 
    @Override
    protected void onCreateStage(Stage stage, int width, int height) {
-      fader = new ScreenFader();
-      getRenderPipeline().set("overlay", fader);
       setBackgroundColor(Colors.BACKGROUND);
       getLightingManager().setAmbientLight(new Color(0.7f, 0.7f, 0.8f, 1f));
       setupShaders();
-      Gdx.input.setInputProcessor(null);
-      fader.fadeIn(new ScreenFader.ScreenFadeCallback() {
-         @Override
-         public void afterFade() {
-            Gdx.input.setInputProcessor(getInput());
-         }
-      }, 2.5f);
+      getScreenTransitions().in(1f);
    }
    
    @Override
@@ -51,12 +40,7 @@ public class GameOverScreen extends AbstractScreen<MindmazerGame> {
       if (!fadingOut && Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Keys.ANY_KEY)) {
          Gdx.input.setInputProcessor(null);
          fadingOut = true;
-         fader.fadeOut(new ScreenFader.ScreenFadeCallback() {            
-            @Override
-            public void afterFade() {
-               getGame().setScreen(new MenuScreen(getGame()));
-            }
-         }, 1f);
+         getScreenTransitions().out(new MenuScreen(getGame()), 1f);
       }
    }
 
