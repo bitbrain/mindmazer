@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import de.bitbrain.braingdx.BrainGdxGame;
 import de.bitbrain.braingdx.assets.GameAssetLoader;
 import de.bitbrain.braingdx.assets.SharedAssetManager;
+import de.bitbrain.braingdx.audio.AudioManager;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.mindmazer.assets.MindmazerAssetLoader;
 import de.bitbrain.mindmazer.i18n.Bundle;
@@ -32,6 +33,7 @@ public class MindmazerGame extends BrainGdxGame {
    protected AbstractScreen<?> getInitialScreen() {
       Styles.init();
       Bundle.load();
+      AudioManager.getInstance().setVolume(Config.MUSIC_VOLUME);
       if (Config.DEBUG) {
          return new IngameScreen(this);
       } else {

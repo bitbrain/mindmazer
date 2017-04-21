@@ -121,6 +121,7 @@ public class LevelStageRenderer implements GameObjectRenderer, Disposable {
    public void setStage(byte[][] data, boolean override, final LevelStageRenderListener callback) {
       this.data = data;
       if (texture != null && override) {
+         Gdx.app.log(LogTags.RENDER, "Overriding existing stage in LevelStageRenderer...");
          oldSprite = sprite;
          oldTexture = texture;
          renderRequest = true;
@@ -144,6 +145,7 @@ public class LevelStageRenderer implements GameObjectRenderer, Disposable {
                   }
                }).start(tweenManager);
       } else {
+         Gdx.app.log(LogTags.RENDER, "Resetting existing stage in LevelStageRenderer...");
          reset();
       }
    }

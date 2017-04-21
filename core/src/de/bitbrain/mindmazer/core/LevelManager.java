@@ -30,14 +30,17 @@ public class LevelManager {
    }
 
    public void obscureLevel(LevelStageRenderListener callback) {
+      Gdx.app.log(LogTags.LEVELGEN, "Obscuring level...");
       currentRenderer.setStage(currentStage.getCurrentData(), true, callback);
    }
 
    public void revealLevel() {
+      Gdx.app.log(LogTags.LEVELGEN, "Revealing level...");
       currentRenderer.setStage(currentStage.getCompleteData(), true);
    }
 
    public void revealLevel(boolean override) {
+      Gdx.app.log(LogTags.LEVELGEN, "Revealing level (override)...");
       currentRenderer.setStage(currentStage.getCompleteData(), override);
    }
 
@@ -49,6 +52,7 @@ public class LevelManager {
    }
 
    public void resetCurrentStage() {
+      Gdx.app.log(LogTags.LEVELGEN, "Resetting current stage...");
       currentStage.resetCurrentData();
       currentStage.setCurrentData(currentStage.getAbsoluteStartOffsetX(0), currentStage.getAbsoluteStartOffsetY(0),
             (byte) 1);
@@ -62,10 +66,11 @@ public class LevelManager {
       currentStage.setCurrentData(currentStage.getAbsoluteStartOffsetX(0), currentStage.getAbsoluteStartOffsetY(0),
             (byte) 1);
       if (currentRenderer == null) {
-         Gdx.app.log(LogTags.INIT, "Initialising LevelStageRenderer...");
+         Gdx.app.log(LogTags.INIT, "Creating new LevelStageRenderer...");
          currentRenderer = new LevelStageRenderer(currentStage.getCurrentData());
          renderManager.register(Types.WORLD, currentRenderer);
       } else {
+         Gdx.app.log(LogTags.LEVELGEN, "Setting current stage on existing LevelStageRenderer!");
          currentRenderer.setStage(currentStage.getCurrentData(), false);
       }
       world.setDimensions(currentStage.getLevelWidth(), currentStage.getLevelHeight());

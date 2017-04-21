@@ -5,4 +5,5 @@ public interface LogTags {
    String LEVELGEN = "LEVELGEN";
    String RENDER = "RENDER";
    String DISPOSE = "DISPOSE";
+   String GAMEPLAY = "GAMEPLAY";
 }

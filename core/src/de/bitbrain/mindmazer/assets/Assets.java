@@ -14,10 +14,10 @@ public interface Assets {
    }
 
    interface Musics {
-      String MAINMENU = "sound/4m_mainmenuformindmazer.ogg";
-      String INGAME_01 = "sound/maingame_1.ogg";
-      String INGAME_02 = "sound/maingame_2.ogg";
-      String INGAME_03 = "sound/maingame_3.ogg";
+      String MAINMENU = "music/4m_mainmenuformindmazer.ogg";
+      String INGAME_01 = "music/maingame_1.ogg";
+      String INGAME_02 = "music/maingame_2.ogg";
+      String INGAME_03 = "music/maingame_3.ogg";
    }
 
    interface ParticleEffects {

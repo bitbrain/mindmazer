@@ -1,5 +1,7 @@
 package de.bitbrain.mindmazer.core.handlers;
 
+import com.badlogic.gdx.Gdx;
+
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -17,6 +19,7 @@ import de.bitbrain.mindmazer.core.GameStats;
 import de.bitbrain.mindmazer.core.LevelManager;
 import de.bitbrain.mindmazer.core.PreviewManager;
 import de.bitbrain.mindmazer.screens.GameOverScreen;
+import de.bitbrain.mindmazer.util.LogTags;
 
 public class GameOverHandler implements RasteredMovementListener {
 
@@ -77,6 +80,7 @@ public class GameOverHandler implements RasteredMovementListener {
       .setCallback(new TweenCallback() {
          @Override
          public void onEvent(int arg0, BaseTween<?> arg1) {
+                  Gdx.app.log(LogTags.GAMEPLAY, "Respawning...");
                   ScreenTransitions.getInstance().in(1.5f);
                   levelManager.resetCurrentStage();
                   object.setPosition(levelManager.getCurrentStage().getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
