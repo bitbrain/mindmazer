@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 
 public interface Colors {
 
-   Color BACKGROUND = Color.valueOf("321d43");
-   Color FOREGROUND = Color.valueOf("473058");
-   Color CELL_A = Color.valueOf("52f1ff");
-   Color CELL_B = Color.valueOf("52c8ff");
-   Color CELL_A_DARK = Color.valueOf("4dc5e7");
-   Color CELL_B_DARK = Color.valueOf("3584d4");
+   Color BACKGROUND = Color.valueOf("1f1627");
+   Color FOREGROUND = Color.valueOf("39253f");
+   Color CELL_A = Color.valueOf("00ff84");
+   Color CELL_B = Color.valueOf("1fb175");
+   Color CELL_A_DARK = Color.valueOf("00c666");
+   Color CELL_B_DARK = Color.valueOf("138c5a");
 }

@@ -15,7 +15,6 @@ import de.bitbrain.braingdx.graphics.renderer.SpriteRenderer;
 import de.bitbrain.braingdx.input.OrientationMovementController;
 import de.bitbrain.braingdx.postprocessing.effects.Bloom;
 import de.bitbrain.braingdx.postprocessing.effects.Vignette;
-import de.bitbrain.braingdx.postprocessing.filters.Blur.BlurType;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Colors;
@@ -140,8 +139,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
       bloom.setBaseIntesity(0.8f);
       bloom.setBaseSaturation(1.7f);
-      bloom.setBlurType(BlurType.Gaussian5x5b);
-      bloom.setBlurAmount(0.4f);
+      bloom.setBlurAmount(0.7f);
       bloom.setBloomSaturation(0.8f);
       bloom.setBloomIntesity(0.6f);
       bloom.setBlurPasses(4);
