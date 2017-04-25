@@ -1,10 +1,14 @@
 package de.bitbrain.mindmazer.core.handlers;
 
+import com.badlogic.gdx.audio.Sound;
+
+import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.behavior.movement.RasteredMovementBehavior.RasteredMovementListener;
 import de.bitbrain.braingdx.screens.ScreenTransitions;
 import de.bitbrain.braingdx.screens.TransitionCallback;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Config;
+import de.bitbrain.mindmazer.assets.Assets;
 import de.bitbrain.mindmazer.core.GameStats;
 import de.bitbrain.mindmazer.core.LevelManager;
 import de.bitbrain.mindmazer.core.PreviewManager;
@@ -28,6 +32,7 @@ public class LevelLoaderHandler implements RasteredMovementListener {
    @Override
    public void moveAfter(final GameObject object) {
       if (hasEnteredLastAvailableCell(object)) {
+         SharedAssetManager.getInstance().get(Assets.Sounds.LEVEL_UP, Sound.class).play();
          player.setActive(false);
          ScreenTransitions.getInstance().out(new TransitionCallback() {
             @Override

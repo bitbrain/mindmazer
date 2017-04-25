@@ -1,10 +1,13 @@
 package de.bitbrain.mindmazer.core;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 
+import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.graphics.GameCamera;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Config;
+import de.bitbrain.mindmazer.assets.Assets;
 import de.bitbrain.mindmazer.graphics.LevelStageRenderer.LevelStageRenderListener;
 
 public class PreviewManager {
@@ -27,6 +30,7 @@ public class PreviewManager {
    }
 
    public void preview() {
+      SharedAssetManager.getInstance().get(Assets.Sounds.SHOW_MAP, Sound.class).play();
       previewed = true;
       player.setActive(false);
       camera.setTarget(level, false);
@@ -35,6 +39,7 @@ public class PreviewManager {
    }
 
    public void initialPreview() {
+      SharedAssetManager.getInstance().get(Assets.Sounds.SHOW_MAP, Sound.class).play();
       previewed = true;
       player.setActive(false);
       camera.setTarget(level, false);
@@ -43,6 +48,7 @@ public class PreviewManager {
    }
 
    public void obscure() {
+      SharedAssetManager.getInstance().get(Assets.Sounds.OBSCURE_MAP, Sound.class).play();
       previewed = false;
       camera.setTarget(player, false);
       camera.setBaseZoom(Config.BASE_ZOOM);

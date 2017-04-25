@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
 import de.bitbrain.braingdx.behavior.movement.RasteredMovementBehavior;
 import de.bitbrain.braingdx.graphics.lighting.PointLightBehavior;
 import de.bitbrain.braingdx.graphics.pipeline.RenderPipe;
@@ -16,6 +18,8 @@ import de.bitbrain.braingdx.input.OrientationMovementController;
 import de.bitbrain.braingdx.postprocessing.effects.Bloom;
 import de.bitbrain.braingdx.postprocessing.effects.Vignette;
 import de.bitbrain.braingdx.screens.AbstractScreen;
+import de.bitbrain.braingdx.tweens.ColorTween;
+import de.bitbrain.braingdx.tweens.GameObjectTween;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.Config;
@@ -103,7 +107,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    private GameObject setupNewPlayer(LevelManager levelManager) {
       GameObject player = getGameWorld().addObject();
-      player.setActive(true);
+      player.setActive(false);
       player.setType(Types.PLAYER);
       player.setZIndex(10);
       player.setDimensions(Config.TILE_SIZE, Config.TILE_SIZE);
@@ -115,6 +119,16 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       getBehaviorManager().apply(behavior, player);
       getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 200f, getLightingManager()),
             player);
+      player.setOffset(0f, 400f);
+      player.getColor().a = 0f;
+      Tween.to(player, GameObjectTween.OFFSET_Y, 1.0f)
+           .target(0f)
+            .ease(TweenEquations.easeOutBounce)
+           .start(getTweenManager());
+      Tween.to(player.getColor(), ColorTween.A, 1.0f)
+           .target(1f)
+           .ease(TweenEquations.easeInCubic)
+           .start(getTweenManager());
       return player;
    }
 

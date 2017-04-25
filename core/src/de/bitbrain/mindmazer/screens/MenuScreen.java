@@ -2,6 +2,7 @@ package de.bitbrain.mindmazer.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -113,6 +114,7 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
          @Override
          public void clicked(InputEvent event, float x, float y) {
             Gdx.input.setInputProcessor(null);
+            SharedAssetManager.getInstance().get(Assets.Sounds.BUTTON_CLICK, Sound.class).play();
             getAudioManager().fadeOutMusic(Assets.Musics.MAINMENU, 1.5f);
             getScreenTransitions().out(new IngameScreen(getGame()), 1.5f);
          }
@@ -126,6 +128,7 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
          public void clicked(InputEvent event, float x, float y) {
             Gdx.input.setInputProcessor(null);
             getAudioManager().fadeOutMusic(Assets.Musics.MAINMENU, 1.5f);
+            SharedAssetManager.getInstance().get(Assets.Sounds.BUTTON_CLICK, Sound.class).play();
             getScreenTransitions().out(new TransitionCallback() {
                @Override
                public void afterTransition() {

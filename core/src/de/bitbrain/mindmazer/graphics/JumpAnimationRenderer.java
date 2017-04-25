@@ -1,5 +1,6 @@
 package de.bitbrain.mindmazer.graphics;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.behavior.movement.RasteredMovementBehavior.RasteredMovementListener;
 import de.bitbrain.braingdx.graphics.GameObjectRenderManager.GameObjectRenderer;
 import de.bitbrain.braingdx.graphics.renderer.SpriteRenderer;
@@ -18,6 +20,7 @@ import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.tweens.VectorTween;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Colors;
+import de.bitbrain.mindmazer.assets.Assets;
 
 public class JumpAnimationRenderer implements GameObjectRenderer, RasteredMovementListener {
 
@@ -63,6 +66,7 @@ public class JumpAnimationRenderer implements GameObjectRenderer, RasteredMoveme
    @Override
    public void moveBefore(GameObject object, float moveX, float moveY, float interval) {
       TweenManager tweenManager = SharedTweenManager.getInstance();
+      SharedAssetManager.getInstance().get(Assets.Sounds.JUMP_01, Sound.class).play();
       tweenManager.killTarget(renderer.getOffset());
       Tween.to(renderer.getOffset(), VectorTween.POS_Y, interval / 2f)
             .target(JUMP_HEIGHT)
@@ -80,6 +84,7 @@ public class JumpAnimationRenderer implements GameObjectRenderer, RasteredMoveme
 
    @Override
    public void moveAfter(GameObject object) {
+      SharedAssetManager.getInstance().get(Assets.Sounds.LAND_01, Sound.class).play();
       /*
        * FIXME make particle effects more consistent ManagedParticleEffect effect =
        * particleManager.create(Assets.ParticleEffects.JUMP_LAND); effects.add(effect);

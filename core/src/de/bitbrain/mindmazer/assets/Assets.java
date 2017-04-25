@@ -10,7 +10,14 @@ public interface Assets {
    }
 
    interface Sounds {
-      // TODO
+      String OBSCURE_MAP = "sound/hidemap.ogg";
+      String SHOW_MAP = "sound/showmap.ogg";
+      String DEATH = "sound/death.ogg";
+      String BUTTON_CLICK = "sound/button_click.ogg";
+      String LEVEL_UP = "sound/1up.ogg";
+      String GAME_OVER = "sound/game_over_fx_short.ogg";
+      String JUMP_01 = "sound/jump_1.ogg";
+      String LAND_01 = "sound/land_1.ogg";
    }
 
    interface Musics {
@@ -18,6 +25,7 @@ public interface Assets {
       String INGAME_01 = "music/maingame_1.ogg";
       String INGAME_02 = "music/maingame_2.ogg";
       String INGAME_03 = "music/maingame_3.ogg";
+      String GAMEOVER = "music/game_over_screen.ogg";
    }
 
    interface ParticleEffects {

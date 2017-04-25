@@ -1,12 +1,14 @@
 package de.bitbrain.mindmazer.core.handlers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.behavior.movement.RasteredMovementBehavior.RasteredMovementListener;
 import de.bitbrain.braingdx.graphics.GameCamera;
 import de.bitbrain.braingdx.screens.ScreenTransitions;
@@ -15,6 +17,7 @@ import de.bitbrain.braingdx.tweens.SharedTweenManager;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.MindmazerGame;
+import de.bitbrain.mindmazer.assets.Assets;
 import de.bitbrain.mindmazer.core.GameStats;
 import de.bitbrain.mindmazer.core.LevelManager;
 import de.bitbrain.mindmazer.core.PreviewManager;
@@ -43,9 +46,11 @@ public class GameOverHandler implements RasteredMovementListener {
    public void moveAfter(GameObject object) {
       boolean isOutOfLevel = isObjectOutOfLevel(object);
       if (isOutOfLevel) {
+         SharedAssetManager.getInstance().get(Assets.Sounds.DEATH, Sound.class).play();
          stats.reduceLife();
       }
       if (isGameOver()) {
+         SharedAssetManager.getInstance().get(Assets.Sounds.GAME_OVER, Sound.class).play();
          stats.reset();
          object.setActive(false);
          ScreenTransitions.getInstance().out(new GameOverScreen(game, stats), 1.5f);

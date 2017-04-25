@@ -13,6 +13,7 @@ import de.bitbrain.braingdx.postprocessing.filters.Blur.BlurType;
 import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.MindmazerGame;
+import de.bitbrain.mindmazer.assets.Assets;
 import de.bitbrain.mindmazer.core.GameStats;
 
 public class GameOverScreen extends AbstractScreen<MindmazerGame> {
@@ -27,9 +28,16 @@ public class GameOverScreen extends AbstractScreen<MindmazerGame> {
    }
 
    @Override
+   public void dispose() {
+      super.dispose();
+      getAudioManager().stopMusic(Assets.Musics.GAMEOVER);
+   }
+
+   @Override
    protected void onCreateStage(Stage stage, int width, int height) {
       setBackgroundColor(Colors.BACKGROUND);
       getLightingManager().setAmbientLight(new Color(0.7f, 0.7f, 0.8f, 1f));
+      getAudioManager().fadeInMusic(Assets.Musics.GAMEOVER);
       setupShaders();
       getScreenTransitions().in(1f);
    }
