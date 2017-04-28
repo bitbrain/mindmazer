@@ -9,4 +9,5 @@ public interface Config {
    float BASE_ZOOM = 0.2f;
    int DEFAULT_LIFE = 3;
    float MUSIC_VOLUME = 0.5f;
+   int SWIPE_TOLERANCE = 8;
 }

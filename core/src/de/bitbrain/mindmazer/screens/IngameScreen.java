@@ -61,7 +61,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       stats = new GameStats(levelManager);
       GameObject player = setupNewPlayer(levelManager);
       previewManager = new PreviewManager(levelManager, player, world, getGameCamera());
-      InputManager inputManager = new InputManager(previewManager);
+      InputManager inputManager = new InputManager(previewManager, behavior);
       getInput().addProcessor(inputManager);
       setupUI(stage, stats);
       setupCamera(player);
