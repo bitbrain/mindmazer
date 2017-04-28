@@ -32,7 +32,7 @@ public class LevelLoaderHandler implements RasteredMovementListener {
    @Override
    public void moveAfter(final GameObject object) {
       if (hasEnteredLastAvailableCell(object)) {
-         SharedAssetManager.getInstance().get(Assets.Sounds.LEVEL_UP, Sound.class).play();
+         SharedAssetManager.getInstance().get(Assets.Sounds.LEVEL_COMPLETE, Sound.class).play();
          player.setActive(false);
          ScreenTransitions.getInstance().out(new TransitionCallback() {
             @Override

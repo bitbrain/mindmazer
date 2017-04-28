@@ -30,7 +30,6 @@ public class PreviewManager {
    }
 
    public void preview() {
-      SharedAssetManager.getInstance().get(Assets.Sounds.SHOW_MAP, Sound.class).play(0.4f, 1f, 0f);
       previewed = true;
       player.setActive(false);
       camera.setTarget(level, false);
@@ -39,7 +38,6 @@ public class PreviewManager {
    }
 
    public void initialPreview() {
-      SharedAssetManager.getInstance().get(Assets.Sounds.SHOW_MAP, Sound.class).play(0.4f, 1f, 0f);
       previewed = true;
       player.setActive(false);
       camera.setTarget(level, false);
@@ -50,8 +48,9 @@ public class PreviewManager {
    public void obscure() {
       SharedAssetManager.getInstance().get(Assets.Sounds.OBSCURE_MAP, Sound.class).play(0.4f, 1f, 0f);
       previewed = false;
-      camera.setTarget(player, false);
-      camera.setBaseZoom(Config.BASE_ZOOM);
+      // Disable player zoom for now, it's easier for the gameplay
+      // camera.setTarget(player, false);
+      // camera.setBaseZoom(Config.BASE_ZOOM);
       levelManager.obscureLevel(new LevelStageRenderListener() {
          @Override
          public void afterSetStage() {

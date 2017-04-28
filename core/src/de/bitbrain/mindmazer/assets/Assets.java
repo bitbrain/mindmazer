@@ -14,7 +14,8 @@ public interface Assets {
       String SHOW_MAP = "sound/showmap.ogg";
       String DEATH = "sound/death.ogg";
       String BUTTON_CLICK = "sound/button_click.ogg";
-      String LEVEL_UP = "sound/1up.ogg";
+      String LIFE_UP = "sound/1up.ogg";
+      String LEVEL_COMPLETE = "sound/level_complete.ogg";
       String GAME_OVER = "sound/game_over_fx_short.ogg";
       String JUMP_01 = "sound/jump_1.ogg";
       String LAND_01 = "sound/land_1.ogg";
