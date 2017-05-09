@@ -3,6 +3,7 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url 'https://jitpack.io' }
         jcenter()
     }
     dependencies {
@@ -30,6 +31,7 @@ allprojects {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -39,7 +41,6 @@ project(":desktop") {
 
     dependencies {    
         compile project(":core")
-        compile "de.bitbrain.braingdx:core:1.0.0"
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
@@ -89,8 +90,8 @@ project(":core") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        compile "de.bitbrain.braingdx:core:1.0.0"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compile 'com.github.bitbrain:braingdx:deploy-SNAPSHOT'
     }
 }
 
