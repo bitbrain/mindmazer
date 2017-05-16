@@ -107,7 +107,6 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    private GameObject setupNewPlayer(LevelManager levelManager) {
       GameObject player = getGameWorld().addObject();
-      player.setActive(false);
       player.setType(Types.PLAYER);
       player.setZIndex(10);
       player.setDimensions(Config.TILE_SIZE, Config.TILE_SIZE);
@@ -119,16 +118,6 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       getBehaviorManager().apply(behavior, player);
       getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 200f, getLightingManager()),
             player);
-      player.setOffset(0f, 400f);
-      player.getColor().a = 0f;
-      Tween.to(player, GameObjectTween.OFFSET_Y, 1.0f)
-           .target(0f)
-            .ease(TweenEquations.easeOutBounce)
-           .start(getTweenManager());
-      Tween.to(player.getColor(), ColorTween.A, 1.0f)
-           .target(1f)
-           .ease(TweenEquations.easeInCubic)
-           .start(getTweenManager());
       return player;
    }
 
