@@ -3,17 +3,17 @@ package de.bitbrain.mindmazer.levelgen;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
 public class LevelGenerator {
-   
-   private static final List<byte[]> BASIC_POOL = Lists.newArrayList(
-         BiomData.Simple.LINE_UP,
-         BiomData.Simple.LINE_UP,
-         BiomData.Advanced.SNAKE_RIGHT,
-         BiomData.Advanced.SNAKE_LEFT,
-         BiomData.Advanced.LINE_UP
-   );
+
+   private static final List<byte[]> BASIC_POOL = new ArrayList<byte[]>();
+
+   static {
+     BASIC_POOL.add(BiomData.Simple.LINE_UP);
+     BASIC_POOL.add(BiomData.Simple.LINE_UP);
+     BASIC_POOL.add(BiomData.Advanced.SNAKE_RIGHT);
+     BASIC_POOL.add(BiomData.Advanced.SNAKE_LEFT);
+     BASIC_POOL.add(BiomData.Advanced.LINE_UP);
+   }
 
    private final BiomFactory factory = new BiomFactory();
 
