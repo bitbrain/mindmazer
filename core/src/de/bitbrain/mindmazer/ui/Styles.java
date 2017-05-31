@@ -18,19 +18,25 @@ public class Styles {
    public static final LabelStyle LABEL_TEXT_LOGO = new LabelStyle();
    public static final LabelStyle LABEL_TEXT_INFO = new LabelStyle();
    public static final LabelStyle LABEL_TEXT_CREDITS = new LabelStyle();
+   public static final LabelStyle LABEL_CAPTION = new LabelStyle();
    public static final TextButtonStyle TEXTBUTTON_MENU = new TextButtonStyle();
 
    public static void init() {
-      LABEL_TEXT_INFO.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE, (int) (Gdx.graphics.getWidth() / 8.5f));
-      LABEL_TEXT_INFO.fontColor = Color.WHITE;
+      LABEL_TEXT_INFO.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE, (int) (Gdx.graphics.getWidth() / 9.5f));
+      LABEL_TEXT_INFO.fontColor = Colors.CELL_C;
       LABEL_TEXT_LOGO.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE,
             (int) (Gdx.graphics.getWidth() / 5.5f));
-      LABEL_TEXT_LOGO.fontColor = Color.WHITE;
+      LABEL_TEXT_LOGO.fontColor = Colors.CELL_C;
+      
       LABEL_TEXT_CREDITS.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE,
             (int) (Gdx.graphics.getWidth() / 13.5f));
       Color creditColor = Colors.FOREGROUND.cpy();
       creditColor.a = 0.78f;
       LABEL_TEXT_CREDITS.fontColor = creditColor;
+      
+      LABEL_CAPTION.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE, (int) (Gdx.graphics.getWidth() / 6.5f));
+      LABEL_CAPTION.fontColor = Colors.CELL_A;
+      
       TEXTBUTTON_MENU.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE,
             (int) (Gdx.graphics.getWidth() / 11.5f));
       Texture buttonTexture = SharedAssetManager.getInstance().get(Assets.Textures.BUTTON_9, Texture.class);

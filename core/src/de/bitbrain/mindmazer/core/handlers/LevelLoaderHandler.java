@@ -40,6 +40,7 @@ public class LevelLoaderHandler implements RasteredMovementListener {
                ScreenTransitions.getInstance().in(1f);
                LevelStage stage = levelManager.generateLevelStage();
                stats.reset();
+               stats.addPoint();
                player.setPosition(stage.getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
                      stage.getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
                previewManager.initialPreview();

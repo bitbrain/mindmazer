@@ -10,6 +10,7 @@ public class GameStats {
    private int life = Config.DEFAULT_LIFE;
    private DeltaTimer timer = new DeltaTimer();
    private final LevelManager levelManager;
+   private int points;
 
    public GameStats(LevelManager levelManager) {
       this.levelManager = levelManager;
@@ -49,6 +50,14 @@ public class GameStats {
 
    public void reset() {
       currentSteps = 0;
+   }
+   
+   public void addPoint() {
+	   points++;
+   }
+   
+   public int getPoints() {
+	   return points;
    }
 
    public void step() {
