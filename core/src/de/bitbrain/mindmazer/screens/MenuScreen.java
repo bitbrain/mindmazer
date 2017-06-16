@@ -17,6 +17,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import box2dLight.PointLight;
+import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.graphics.pipeline.RenderPipe;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
@@ -43,20 +44,23 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
       Tween.registerAccessor(PointLight.class, new PointLightTween());
       Tween.registerAccessor(Label.class, new ActorTween());
    }
+   
+   private GameContext context;
 
    public MenuScreen(MindmazerGame game) {
       super(game);
    }
 
    @Override
-   protected void onCreateStage(Stage stage, int width, int height) {
+   protected void onCreate(GameContext context) {
+	  this.context = context;
       setBackgroundColor(Colors.BACKGROUND);
-      getLightingManager().setAmbientLight(new Color(0.7f, 0.7f, 0.8f, 1f));
-      setupUI(stage);
+      context.getLightingManager().setAmbientLight(new Color(0.7f, 0.7f, 0.8f, 1f));
+      setupUI(context.getStage());
       setupShaders();
       setupFX();
-      getScreenTransitions().in(1f);
-      getAudioManager().playMusic(Assets.Musics.MAINMENU);
+      context.getScreenTransitions().in(1f);
+      context.getAudioManager().playMusic(Assets.Musics.MAINMENU);
    }
 
    @Override
@@ -66,7 +70,7 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
 
    private void setupFX() {
       TweenManager tweenManager = SharedTweenManager.getInstance();
-      PointLight lightA = getLightingManager().addPointLight("backgroundLightA",
+      PointLight lightA = context.getLightingManager().addPointLight("backgroundLightA",
             new Vector2(Gdx.graphics.getWidth() - Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() / 5f), 800f,
             Colors.FOREGROUND);
       Tween.to(lightA, PointLightTween.DISTANCE, 6f)
@@ -78,7 +82,7 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
             .target(Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 5f)
            .repeatYoyo(Tween.INFINITY,  0)
            .start(tweenManager);
-      PointLight lightB = getLightingManager().addPointLight("backgroundLightB",
+      PointLight lightB = context.getLightingManager().addPointLight("backgroundLightB",
             new Vector2(Gdx.graphics.getWidth() / 3f, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 5f), 500f,
             Color.valueOf("76fffa"));
       Tween.to(lightB, PointLightTween.DISTANCE, 6f)
@@ -108,6 +112,7 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
       Label logo = new HeightedLabel(Config.GAME_NAME, Colors.CELL_B_DARK, Styles.LABEL_TEXT_LOGO);
       logo.setColor(Colors.CELL_A);
       layout.add(logo).padBottom(Gdx.graphics.getHeight() / 15f).row();
+      
       // Buttons
       TextButton play = new TextButton(Bundle.translations.get(Messages.MENU_PLAY), Styles.TEXTBUTTON_MENU);
       play.addCaptureListener(new ClickListener() {
@@ -115,8 +120,8 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
          public void clicked(InputEvent event, float x, float y) {
             Gdx.input.setInputProcessor(null);
             SharedAssetManager.getInstance().get(Assets.Sounds.BUTTON_CLICK, Sound.class).play();
-            getAudioManager().fadeOutMusic(Assets.Musics.MAINMENU, 1.5f);
-            getScreenTransitions().out(new IngameScreen(getGame()), 1.5f);
+            context.getAudioManager().fadeOutMusic(Assets.Musics.MAINMENU, 1.5f);
+            context.getScreenTransitions().out(new IngameScreen(getGame()), 1.5f);
          }
       });
       layout.add(play)
@@ -127,9 +132,9 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
          @Override
          public void clicked(InputEvent event, float x, float y) {
             Gdx.input.setInputProcessor(null);
-            getAudioManager().fadeOutMusic(Assets.Musics.MAINMENU, 1.5f);
+            context.getAudioManager().fadeOutMusic(Assets.Musics.MAINMENU, 1.5f);
             SharedAssetManager.getInstance().get(Assets.Sounds.BUTTON_CLICK, Sound.class).play();
-            getScreenTransitions().out(new TransitionCallback() {
+            context.getScreenTransitions().out(new TransitionCallback() {
                @Override
                public void afterTransition() {
                   Gdx.app.exit();
@@ -156,12 +161,12 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
            .target(1.1f)
            .repeatYoyo(Tween.INFINITY, 0f)
            .ease(TweenEquations.easeOutCubic)
-           .start(getTweenManager());
+           .start(context.getTweenManager());
       stage.addActor(layout);
    }
 
    private void setupShaders() {
-      RenderPipe worldPipe = getRenderPipeline().getPipe(RenderPipeIds.WORLD);
+      RenderPipe worldPipe = context.getRenderPipeline().getPipe(RenderPipeIds.WORLD);
       Bloom bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.9f), Math.round(Gdx.graphics.getHeight() * 0.9f));
 
       bloom.setBaseIntesity(0.8f);
@@ -175,7 +180,7 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
             Math.round(Gdx.graphics.getHeight() / 2f), false);
       vignette.setIntensity(0.45f);
       worldPipe.addEffects(vignette);
-      RenderPipe uiPipe = getRenderPipeline().getPipe(RenderPipeIds.UI);
+      RenderPipe uiPipe = context.getRenderPipeline().getPipe(RenderPipeIds.UI);
       uiPipe.addEffects(bloom);
    }
 

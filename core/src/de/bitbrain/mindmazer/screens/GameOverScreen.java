@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
+import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.graphics.pipeline.RenderPipe;
 import de.bitbrain.braingdx.graphics.pipeline.layers.RenderPipeIds;
 import de.bitbrain.braingdx.postprocessing.effects.Bloom;
@@ -28,6 +29,8 @@ public class GameOverScreen extends AbstractScreen<MindmazerGame> {
    private final GameStats stats;
 
    private boolean fadingOut = false;
+   
+   private GameContext context;
 
    public GameOverScreen(MindmazerGame game, GameStats stats) {
       super(game);
@@ -37,17 +40,18 @@ public class GameOverScreen extends AbstractScreen<MindmazerGame> {
    @Override
    public void dispose() {
       super.dispose();
-      getAudioManager().stopMusic(Assets.Musics.GAMEOVER);
+      context.getAudioManager().stopMusic(Assets.Musics.GAMEOVER);
    }
 
    @Override
-   protected void onCreateStage(Stage stage, int width, int height) {
+   protected void onCreate(GameContext context) {
+	  this.context = context;
       setBackgroundColor(Colors.BACKGROUND);
-      getLightingManager().setAmbientLight(new Color(0.7f, 0.7f, 0.8f, 1f));
-      getAudioManager().fadeInMusic(Assets.Musics.GAMEOVER);
-      setupUI(stage);
+      context.getLightingManager().setAmbientLight(new Color(0.7f, 0.7f, 0.8f, 1f));
+      context.getAudioManager().fadeInMusic(Assets.Musics.GAMEOVER);
+      setupUI(context.getStage());
       setupShaders();
-      getScreenTransitions().in(1f);
+      context.getScreenTransitions().in(1f);
    }
    
    @Override
@@ -56,7 +60,7 @@ public class GameOverScreen extends AbstractScreen<MindmazerGame> {
       if (!fadingOut && Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Keys.ANY_KEY)) {
          Gdx.input.setInputProcessor(null);
          fadingOut = true;
-         getScreenTransitions().out(new MenuScreen(getGame()), 1f);
+         context.getScreenTransitions().out(new MenuScreen(getGame()), 1f);
       }
    }
    
@@ -141,7 +145,7 @@ public class GameOverScreen extends AbstractScreen<MindmazerGame> {
    }
 
    private void setupShaders() {
-      RenderPipe worldPipe = getRenderPipeline().getPipe(RenderPipeIds.WORLD);
+      RenderPipe worldPipe = context.getRenderPipeline().getPipe(RenderPipeIds.WORLD);
       Bloom bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.9f), Math.round(Gdx.graphics.getHeight() * 0.9f));
 
       bloom.setBaseIntesity(0.8f);
@@ -155,7 +159,7 @@ public class GameOverScreen extends AbstractScreen<MindmazerGame> {
             Math.round(Gdx.graphics.getHeight() / 2f), false);
       vignette.setIntensity(0.45f);
       worldPipe.addEffects(vignette);
-      RenderPipe uiPipe = getRenderPipeline().getPipe(RenderPipeIds.UI);
+      RenderPipe uiPipe = context.getRenderPipeline().getPipe(RenderPipeIds.UI);
       uiPipe.addEffects(bloom);
    }
 

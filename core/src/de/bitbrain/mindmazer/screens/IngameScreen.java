@@ -7,8 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenEquations;
+import de.bitbrain.braingdx.GameContext;
 import de.bitbrain.braingdx.behavior.movement.RasteredMovementBehavior;
 import de.bitbrain.braingdx.graphics.lighting.PointLightBehavior;
 import de.bitbrain.braingdx.graphics.pipeline.RenderPipe;
@@ -18,8 +17,6 @@ import de.bitbrain.braingdx.input.OrientationMovementController;
 import de.bitbrain.braingdx.postprocessing.effects.Bloom;
 import de.bitbrain.braingdx.postprocessing.effects.Vignette;
 import de.bitbrain.braingdx.screens.AbstractScreen;
-import de.bitbrain.braingdx.tweens.ColorTween;
-import de.bitbrain.braingdx.tweens.GameObjectTween;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.Config;
@@ -46,38 +43,40 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    private LevelManager levelManager;
    private GameStats stats;
    private PreviewManager previewManager;
+   private GameContext context;
 
    public IngameScreen(MindmazerGame game) {
       super(game);
    }
 
    @Override
-   protected void onCreateStage(Stage stage, int width, int height) {
+   protected void onCreate(GameContext context) {
       Gdx.app.log(LogTags.INIT, "Initialising ingame screen...");
+      this.context = context;
       setBackgroundColor(Colors.BACKGROUND);
       GameObject world = setupWorld();
-      levelManager = new LevelManager(getRenderManager(), world);
+      levelManager = new LevelManager(context.getRenderManager(), world);
       levelManager.generateLevelStage();
       stats = new GameStats(levelManager);
       GameObject player = setupNewPlayer(levelManager);
-      previewManager = new PreviewManager(levelManager, player, world, getGameCamera());
+      previewManager = new PreviewManager(levelManager, player, world, context.getGameCamera());
       InputManager inputManager = new InputManager(previewManager, behavior);
-      getInput().addProcessor(inputManager);
-      setupUI(stage, stats);
+      context.getInput().addProcessor(inputManager);
+      setupUI(context.getStage(), stats);
       setupCamera(player);
       setupShaders();
       setupRenderers();
       setupGameHandlers(player, levelManager, behavior, previewManager);
-      getScreenTransitions().in(1.5f);
+      context.getScreenTransitions().in(1.5f);
       previewManager.preview();
-      getAudioManager().playMusic(Assets.Musics.INGAME_01);
+      context. getAudioManager().playMusic(Assets.Musics.INGAME_01);
       Gdx.app.log(LogTags.INIT, "Initialised ingame screen.");
    }
 
    @Override
    public void dispose() {
       super.dispose();
-      getAudioManager().stopMusic(Assets.Musics.INGAME_01);
+      context.getAudioManager().stopMusic(Assets.Musics.INGAME_01);
    }
 
    @Override
@@ -92,8 +91,8 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    }
 
    private GameObject setupWorld() {
-      GameObject world = getGameWorld().addObject();
-      getLightingManager().setAmbientLight(new Color(0.7f, 0.7f, 0.8f, 1f));
+      GameObject world = context.getGameWorld().addObject();
+      context.getLightingManager().setAmbientLight(new Color(0.7f, 0.7f, 0.8f, 1f));
       world.setActive(false);
       world.setType(Types.WORLD);
       return world;
@@ -101,12 +100,12 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    private void setupRenderers() {
       JumpAnimationRenderer jumpAnimationRenderer = new JumpAnimationRenderer(new SpriteRenderer(Textures.PLAYER));
-      getRenderManager().register(Types.PLAYER, jumpAnimationRenderer);
+      context.getRenderManager().register(Types.PLAYER, jumpAnimationRenderer);
       behavior.addListener(jumpAnimationRenderer);
    }
 
    private GameObject setupNewPlayer(LevelManager levelManager) {
-      GameObject player = getGameWorld().addObject();
+      GameObject player = context.getGameWorld().addObject();
       player.setType(Types.PLAYER);
       player.setZIndex(10);
       player.setDimensions(Config.TILE_SIZE, Config.TILE_SIZE);
@@ -115,8 +114,8 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       OrientationMovementController controller = new OrientationMovementController();
       behavior = new RasteredMovementBehavior(controller)
             .interval(0.4f).rasterSize(Config.TILE_SIZE, Config.TILE_SIZE);
-      getBehaviorManager().apply(behavior, player);
-      getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 200f, getLightingManager()),
+      context.getBehaviorManager().apply(behavior, player);
+      context.getBehaviorManager().apply(new PointLightBehavior(Color.WHITE, 200f, context.getLightingManager()),
             player);
       return player;
    }
@@ -124,20 +123,20 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    private void setupGameHandlers(GameObject player, LevelManager levelManager,
          RasteredMovementBehavior behavior, PreviewManager previewManager) {
       behavior.addListener(new GameStatsHandler(levelManager, stats));
-      behavior.addListener(new GameOverHandler(levelManager, getGameCamera(), previewManager, getGame(), stats));
+      behavior.addListener(new GameOverHandler(levelManager, context.getGameCamera(), previewManager, getGame(), stats));
       behavior.addListener(new LevelLoaderHandler(levelManager, player, stats, previewManager));
       behavior.addListener(new CellRenderHandler(levelManager));
    }
 
    private void setupCamera(GameObject target) {
-      getGameCamera().setTarget(target);
-      getGameCamera().setSpeed(2.2f);
-      getGameCamera().setBaseZoom(Config.BASE_ZOOM);
-      getGameCamera().setZoomScale(0.001f);
+	  context.getGameCamera().setTarget(target);
+	  context.getGameCamera().setSpeed(2.2f);
+	  context.getGameCamera().setBaseZoom(Config.BASE_ZOOM);
+	  context.getGameCamera().setZoomScale(0.001f);
    }
 
    private void setupShaders() {
-      RenderPipe worldPipe = getRenderPipeline().getPipe(RenderPipeIds.WORLD);
+      RenderPipe worldPipe = context.getRenderPipeline().getPipe(RenderPipeIds.WORLD);
       Bloom bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.9f), Math.round(Gdx.graphics.getHeight() * 0.9f));
 
       bloom.setBaseIntesity(0.8f);
@@ -150,7 +149,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
             Math.round(Gdx.graphics.getHeight() / 2f), false);
       vignette.setIntensity(0.45f);
       worldPipe.addEffects(vignette);
-      RenderPipe uiPipe = getRenderPipeline().getPipe(RenderPipeIds.UI);
+      RenderPipe uiPipe = context.getRenderPipeline().getPipe(RenderPipeIds.UI);
       uiPipe.addEffects(bloom);
    }
 

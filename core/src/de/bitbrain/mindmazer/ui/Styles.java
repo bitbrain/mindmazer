@@ -26,7 +26,7 @@ public class Styles {
       LABEL_TEXT_INFO.fontColor = Colors.CELL_C;
       LABEL_TEXT_LOGO.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE,
             (int) (Gdx.graphics.getWidth() / 5.5f));
-      LABEL_TEXT_LOGO.fontColor = Colors.CELL_C;
+      LABEL_TEXT_LOGO.fontColor = Color.WHITE;
       
       LABEL_TEXT_CREDITS.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE,
             (int) (Gdx.graphics.getWidth() / 13.5f));
