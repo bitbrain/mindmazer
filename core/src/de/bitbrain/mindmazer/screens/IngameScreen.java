@@ -3,7 +3,6 @@ package de.bitbrain.mindmazer.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -33,8 +32,9 @@ import de.bitbrain.mindmazer.core.handlers.LevelLoaderHandler;
 import de.bitbrain.mindmazer.graphics.CellRenderHandler;
 import de.bitbrain.mindmazer.graphics.JumpAnimationRenderer;
 import de.bitbrain.mindmazer.input.InputManager;
-import de.bitbrain.mindmazer.ui.GameProgressLabel;
-import de.bitbrain.mindmazer.ui.LifeWidget;
+import de.bitbrain.mindmazer.ui.CurrentStageLabel;
+import de.bitbrain.mindmazer.ui.LifeLabel;
+import de.bitbrain.mindmazer.ui.Styles;
 import de.bitbrain.mindmazer.util.LogTags;
 
 public class IngameScreen extends AbstractScreen<MindmazerGame> {
@@ -155,11 +155,11 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    private void setupUI(Stage stage, GameStats stats) {
       final float padding = 20f;
-      Label progressLabel = new GameProgressLabel(stats);
-      LifeWidget lifeWidget = new LifeWidget(stats);
-      lifeWidget.setPosition(Gdx.graphics.getWidth() - padding * 2f,
-            Gdx.graphics.getHeight() - padding * 2f - lifeWidget.getHeight());
-      progressLabel.setPosition(padding * 2f, Gdx.graphics.getHeight() - padding - progressLabel.getPrefHeight());
+      CurrentStageLabel progressLabel = new CurrentStageLabel(stats, Styles.LABEL_TEXT_INFO);
+      LifeLabel lifeWidget = new LifeLabel(stats, Styles.LABEL_TEXT_INFO);
+      lifeWidget.setPosition(Gdx.graphics.getWidth() - padding * 2f - lifeWidget.getPrefWidth(),
+            Gdx.graphics.getHeight() - padding - lifeWidget.getPrefHeight());
+      progressLabel.setPosition(padding * 2f, Gdx.graphics.getHeight() - padding - progressLabel.getHeight());
       stage.addActor(progressLabel);
       stage.addActor(lifeWidget);
    }

@@ -22,6 +22,7 @@ import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.assets.Assets;
 import de.bitbrain.mindmazer.core.GameStats;
+import de.bitbrain.mindmazer.ui.HeightedLabel;
 import de.bitbrain.mindmazer.ui.Styles;
 
 public class GameOverScreen extends AbstractScreen<MindmazerGame> {
@@ -74,7 +75,7 @@ public class GameOverScreen extends AbstractScreen<MindmazerGame> {
 	   Table layout = new Table();
 	   layout.setFillParent(true);
 	   stage.addActor(layout);
-	   Label gameOver = new Label("GAME OVER!", Styles.LABEL_CAPTION);
+	   HeightedLabel gameOver = new HeightedLabel("GAME OVER!", Styles.LABEL_CAPTION);
 	   layout.add(gameOver).height(50f).padBottom(60f).row();
 	   Label points = new Label(stats.getPoints() + " points", Styles.LABEL_TEXT_INFO);
 	   layout.add(points).height(120f).row();

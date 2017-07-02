@@ -8,6 +8,6 @@ public interface Config {
    int TILE_SIZE = 16;
    float BASE_ZOOM = 0.2f;
    int DEFAULT_LIFE = 3;
-   float MUSIC_VOLUME = 0.5f;
+   float MUSIC_VOLUME = 0.0f;
    int SWIPE_TOLERANCE = 8;
 }

@@ -109,8 +109,7 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
       Table layout = new Table();
       layout.setFillParent(true);
       // Logo
-      Label logo = new HeightedLabel(Config.GAME_NAME, Colors.CELL_B_DARK, Styles.LABEL_TEXT_LOGO);
-      logo.setColor(Colors.CELL_A);
+      Label logo = new HeightedLabel(Config.GAME_NAME, Styles.LABEL_TEXT_LOGO);
       layout.add(logo).padBottom(Gdx.graphics.getHeight() / 15f).row();
       
       // Buttons

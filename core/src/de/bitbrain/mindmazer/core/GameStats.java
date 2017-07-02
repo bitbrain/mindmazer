@@ -7,6 +7,7 @@ public class GameStats {
 
    private int totalSteps;
    private int currentSteps;
+   private int stage = 1;
    private int life = Config.DEFAULT_LIFE;
    private DeltaTimer timer = new DeltaTimer();
    private final LevelManager levelManager;
@@ -22,6 +23,14 @@ public class GameStats {
 
    public int getLife() {
       return life;
+   }
+   
+   public int getStage() {
+   	return stage;
+   }
+   
+   public void nextStage() {
+   	stage++;
    }
 
    public void addLife() {
