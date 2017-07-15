@@ -3,9 +3,11 @@ package de.bitbrain.mindmazer.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import de.bitbrain.braingdx.assets.SharedAssetManager;
 import de.bitbrain.braingdx.graphics.GraphicsFactory;
@@ -20,11 +22,16 @@ public class Styles {
    public static final LabelStyle LABEL_TEXT_CREDITS = new LabelStyle();
    public static final HeightedLabelStyle LABEL_CAPTION = new HeightedLabelStyle();
    public static final TextButtonStyle TEXTBUTTON_MENU = new TextButtonStyle();
+	public static final TextButtonStyle TEXTBUTTON_TOAST = new TextButtonStyle();
 
    public static void init() {
       LABEL_TEXT_INFO.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE, (int) (Gdx.graphics.getWidth() / 10.5f));
       LABEL_TEXT_INFO.fontColor = Colors.CELL_A;
-      LABEL_TEXT_INFO.fontColorHeighted = Colors.CELL_B_DARK;      
+      LABEL_TEXT_INFO.fontColorHeighted = Colors.CELL_B_DARK;  
+      
+      TEXTBUTTON_TOAST.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE, (int) (Gdx.graphics.getWidth() / 8.5f));
+      TEXTBUTTON_TOAST.fontColor = Color.WHITE;
+      TEXTBUTTON_TOAST.up = new SpriteDrawable(new Sprite(GraphicsFactory.createTexture(2, 2, new Color(0f, 0f, 0f, 0.65f))));
       
       LABEL_TEXT_LOGO.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE,
             (int) (Gdx.graphics.getWidth() / 5.5f));

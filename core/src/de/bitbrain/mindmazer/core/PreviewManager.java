@@ -12,6 +12,9 @@ import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.assets.Assets;
 import de.bitbrain.mindmazer.graphics.LevelStageRenderer.LevelStageRenderListener;
+import de.bitbrain.mindmazer.i18n.Bundle;
+import de.bitbrain.mindmazer.i18n.Messages;
+import de.bitbrain.mindmazer.ui.Toast;
 
 public class PreviewManager {
 
@@ -39,6 +42,7 @@ public class PreviewManager {
       camera.setTarget(level, false);
       camera.setBaseZoom(calculateBaseZoom());
       levelManager.revealLevel();
+      Toast.getInstance().makeToast(Bundle.translations.get(Messages.TOAST_PREPARE));
    }
 
    public void initialPreview() {
@@ -48,6 +52,7 @@ public class PreviewManager {
       camera.setTarget(level, false);
       camera.setBaseZoom(calculateBaseZoom());
       levelManager.revealLevel(false);
+      Toast.getInstance().makeToast(Bundle.translations.get(Messages.TOAST_PREPARE));
    }
 
    public void obscure() {
@@ -63,6 +68,7 @@ public class PreviewManager {
             player.setActive(true);
          }
       });
+      camera.setTarget(player, false);
    }
 
    private float calculateBaseZoom() {

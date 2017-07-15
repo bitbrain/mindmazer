@@ -22,8 +22,18 @@ public class InputManager extends InputAdapter {
    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
       if (previewManager.isPreviewed()) {
          previewManager.obscure();
+         return true;
       }
-      return super.touchDown(screenX, screenY, pointer, button);
+      return false;
+   }
+   
+   @Override
+   public boolean keyDown(int keycode) {
+   	if (previewManager.isPreviewed()) {
+         previewManager.obscure();
+         return true;
+      }
+   	return false;
    }
 
    @Override

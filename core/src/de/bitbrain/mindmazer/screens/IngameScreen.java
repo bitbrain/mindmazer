@@ -35,6 +35,7 @@ import de.bitbrain.mindmazer.input.InputManager;
 import de.bitbrain.mindmazer.ui.CurrentStageLabel;
 import de.bitbrain.mindmazer.ui.LifeLabel;
 import de.bitbrain.mindmazer.ui.Styles;
+import de.bitbrain.mindmazer.ui.Toast;
 import de.bitbrain.mindmazer.util.LogTags;
 
 public class IngameScreen extends AbstractScreen<MindmazerGame> {
@@ -52,6 +53,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    @Override
    protected void onCreate(GameContext context) {
       Gdx.app.log(LogTags.INIT, "Initialising ingame screen...");
+      Toast.getInstance().setStage(context.getStage());
       this.context = context;
       setBackgroundColor(Colors.BACKGROUND);
       GameObject world = setupWorld();

@@ -2,6 +2,7 @@ package de.bitbrain.mindmazer.core.handlers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -21,7 +22,10 @@ import de.bitbrain.mindmazer.assets.Assets;
 import de.bitbrain.mindmazer.core.GameStats;
 import de.bitbrain.mindmazer.core.LevelManager;
 import de.bitbrain.mindmazer.core.PreviewManager;
+import de.bitbrain.mindmazer.i18n.Bundle;
+import de.bitbrain.mindmazer.i18n.Messages;
 import de.bitbrain.mindmazer.screens.GameOverScreen;
+import de.bitbrain.mindmazer.ui.Toast;
 import de.bitbrain.mindmazer.util.LogTags;
 
 public class GameOverHandler implements RasteredMovementListener {
@@ -48,6 +52,7 @@ public class GameOverHandler implements RasteredMovementListener {
       if (isOutOfLevel) {
          SharedAssetManager.getInstance().get(Assets.Sounds.DEATH, Sound.class).play();
          stats.reduceLife();
+         Toast.getInstance().makeToast(Bundle.translations.get(Messages.TOAST_DEATH), Color.RED, 2f, 1.5f);
       }
       if (isGameOver()) {
          SharedAssetManager.getInstance().get(Assets.Sounds.GAME_OVER, Sound.class).play();

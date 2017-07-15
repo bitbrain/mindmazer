@@ -7,12 +7,16 @@ import de.bitbrain.braingdx.behavior.movement.RasteredMovementBehavior.RasteredM
 import de.bitbrain.braingdx.screens.ScreenTransitions;
 import de.bitbrain.braingdx.screens.TransitionCallback;
 import de.bitbrain.braingdx.world.GameObject;
+import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.assets.Assets;
 import de.bitbrain.mindmazer.core.GameStats;
 import de.bitbrain.mindmazer.core.LevelManager;
 import de.bitbrain.mindmazer.core.PreviewManager;
+import de.bitbrain.mindmazer.i18n.Bundle;
+import de.bitbrain.mindmazer.i18n.Messages;
 import de.bitbrain.mindmazer.levelgen.LevelStage;
+import de.bitbrain.mindmazer.ui.Toast;
 
 public class LevelLoaderHandler implements RasteredMovementListener {
 
@@ -34,6 +38,7 @@ public class LevelLoaderHandler implements RasteredMovementListener {
       if (hasEnteredLastAvailableCell(object)) {
          SharedAssetManager.getInstance().get(Assets.Sounds.LEVEL_COMPLETE, Sound.class).play();
          player.setActive(false);
+         Toast.getInstance().makeToast(Bundle.translations.get(Messages.TOAST_COMPLETE), Colors.CELL_A, 2f, 1f);
          ScreenTransitions.getInstance().out(new TransitionCallback() {
             @Override
             public void afterTransition() {
