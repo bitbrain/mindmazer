@@ -70,8 +70,10 @@ public class GameStats {
    }
 
    public void step() {
-      totalSteps++;
       currentSteps++;
+      if (currentSteps > totalSteps) {
+      	totalSteps++;
+      }
    }
 
    public int getLevelSteps() {
