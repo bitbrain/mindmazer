@@ -139,7 +139,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
    private void setupShaders() {
       RenderPipe worldPipe = context.getRenderPipeline().getPipe(RenderPipeIds.WORLD);
-      Bloom bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.9f), Math.round(Gdx.graphics.getHeight() * 0.9f));
+      Bloom bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.7f), Math.round(Gdx.graphics.getHeight() * 0.7f));
 
       bloom.setBaseIntesity(0.8f);
       bloom.setBaseSaturation(1.7f);
