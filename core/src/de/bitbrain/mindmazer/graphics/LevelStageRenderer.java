@@ -58,7 +58,7 @@ public class LevelStageRenderer implements GameObjectRenderer, Disposable {
 
    @Override
    public void init() {
-      Gdx.app.log(LogTags.INIT, "Initialising LevelStageRenderer...");
+      Gdx.app.debug(LogTags.INIT, "Initialising LevelStageRenderer...");
       Pixmap map = new Pixmap(Config.TILE_SIZE, Config.TILE_SIZE + CELL_OFFSET, Format.RGBA8888);
       map.setColor(Colors.CELL_A_DARK);
       map.fillRectangle(0, CELL_OFFSET, Config.TILE_SIZE, Config.TILE_SIZE);
@@ -95,7 +95,7 @@ public class LevelStageRenderer implements GameObjectRenderer, Disposable {
 
    public void addCell(int x, int y) {
       if (!isCurrentlyProcessed(x, y)) {
-         Gdx.app.log(LogTags.RENDER, "Adding new cell to LevelStageRenderer at " + x + "," + y);
+         Gdx.app.debug(LogTags.RENDER, "Adding new cell to LevelStageRenderer at " + x + "," + y);
          Cell cell = new Cell(x, y);
          cellIds.add(cell.getId());
          cells.add(cell);
@@ -104,7 +104,7 @@ public class LevelStageRenderer implements GameObjectRenderer, Disposable {
    }
 
    public void reset() {
-      Gdx.app.log(LogTags.RENDER, "Resetting LevelStageRenderer...");
+      Gdx.app.debug(LogTags.RENDER, "Resetting LevelStageRenderer...");
       renderRequest = true;
       cells.clear();
       cellIds.clear();
@@ -121,7 +121,7 @@ public class LevelStageRenderer implements GameObjectRenderer, Disposable {
    public void setStage(byte[][] data, boolean override, final LevelStageRenderListener callback) {
       this.data = data;
       if (texture != null && override) {
-         Gdx.app.log(LogTags.RENDER, "Overriding existing stage in LevelStageRenderer...");
+         Gdx.app.debug(LogTags.RENDER, "Overriding existing stage in LevelStageRenderer...");
          oldSprite = sprite;
          oldTexture = texture;
          renderRequest = true;
@@ -145,7 +145,7 @@ public class LevelStageRenderer implements GameObjectRenderer, Disposable {
                   }
                }).start(tweenManager);
       } else {
-         Gdx.app.log(LogTags.RENDER, "Resetting existing stage in LevelStageRenderer...");
+         Gdx.app.debug(LogTags.RENDER, "Resetting existing stage in LevelStageRenderer...");
          reset();
       }
    }
@@ -194,7 +194,7 @@ public class LevelStageRenderer implements GameObjectRenderer, Disposable {
    }
 
    private void buildTextureBuffer(Batch batch) {
-      Gdx.app.log(LogTags.RENDER, "Building texture buffer for current LevelStage...");
+      Gdx.app.debug(LogTags.RENDER, "Building texture buffer for current LevelStage...");
       int textureWidth = Config.TILE_SIZE * data.length;
       int textureHeight = Config.TILE_SIZE * data[0].length + CELL_OFFSET;
       Pixmap map = new Pixmap(textureWidth, textureHeight, Format.RGBA8888);
@@ -217,7 +217,7 @@ public class LevelStageRenderer implements GameObjectRenderer, Disposable {
       }
       texture = new Texture(map);
       sprite = new Sprite(texture);
-      Gdx.app.log(LogTags.RENDER, "Successfully built texture buffer!");
+      Gdx.app.debug(LogTags.RENDER, "Successfully built texture buffer!");
    }
 
    private void drawCellOntoPixmap(Pixmap map, byte value, int indexX, int indexY, Color colorA, Color colorADark,

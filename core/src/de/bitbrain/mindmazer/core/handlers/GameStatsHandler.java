@@ -1,5 +1,7 @@
 package de.bitbrain.mindmazer.core.handlers;
 
+import com.badlogic.gdx.Gdx;
+
 import de.bitbrain.braingdx.behavior.movement.RasteredMovementBehavior.RasteredMovementListener;
 import de.bitbrain.braingdx.world.GameObject;
 import de.bitbrain.mindmazer.core.GameStats;
@@ -32,6 +34,7 @@ public class GameStatsHandler implements RasteredMovementListener {
          int indexX = levelManager.getCurrentStage().convertToIndexX(object.getLeft() + moveX);
          int indexY = levelManager.getCurrentStage().convertToIndexY(object.getTop() + moveY);
          if (stage.getCompleteCell(indexX, indexY) > 0 && stage.getCurrentCell(indexX, indexY) == 0) {
+         	Gdx.app.debug("PLAYER", "Step to " + indexX + "," + indexY + "!");
             stats.step();
          }
       }

@@ -1,5 +1,7 @@
 package de.bitbrain.mindmazer;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
@@ -31,6 +33,9 @@ public class MindmazerGame extends BrainGdxGame {
 
    @Override
    protected AbstractScreen<?> getInitialScreen() {
+   	if (Config.DEBUG) {
+   		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+   	}
       Styles.init();
       Bundle.load();
       AudioManager.getInstance().setVolume(Config.MUSIC_VOLUME);
