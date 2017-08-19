@@ -17,8 +17,8 @@ public interface Assets {
       String LIFE_UP = "sound/1up.ogg";
       String LEVEL_COMPLETE = "sound/level_complete.ogg";
       String GAME_OVER = "sound/game_over_fx_short.ogg";
-      String JUMP_01 = "sound/jump_1.ogg";
-      String LAND_01 = "sound/land_1.ogg";
+      String JUMP_01 = "sound/step_2.ogg";
+      String LAND_01 = "sound/step_1.ogg";
    }
 
    interface Musics {

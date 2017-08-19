@@ -17,6 +17,7 @@ import de.bitbrain.mindmazer.i18n.Bundle;
 import de.bitbrain.mindmazer.i18n.Messages;
 import de.bitbrain.mindmazer.levelgen.LevelStage;
 import de.bitbrain.mindmazer.ui.Toast;
+import de.bitbrain.mindmazer.util.StringUtils;
 
 public class LevelLoaderHandler implements RasteredMovementListener {
 
@@ -43,7 +44,7 @@ public class LevelLoaderHandler implements RasteredMovementListener {
             @Override
             public void afterTransition() {
                ScreenTransitions.getInstance().in(1f);
-               LevelStage stage = levelManager.generateLevelStage();
+               LevelStage stage = levelManager.generateLevelStage(StringUtils.generateRandomString(Config.SEED_STRING_LENGTH));
                stats.reset();
                stats.addPoint();
                stats.nextStage();

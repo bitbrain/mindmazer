@@ -6,6 +6,7 @@ import de.bitbrain.mindmazer.Config;
 
 public class LevelStage {
 
+	private final long seed;
    private final List<Biom> biomes;
    private final int length;
    private final byte[][] completeData;
@@ -13,14 +14,19 @@ public class LevelStage {
    private final List<Integer> offsetsX;
    private final List<Integer> offsetsY;
 
-   public LevelStage(List<Biom> biomes, int length, byte[][] completeData, byte[][] currentData, List<Integer> offsetsX,
+   public LevelStage(long seed, List<Biom> biomes, int length, byte[][] completeData, byte[][] currentData, List<Integer> offsetsX,
          List<Integer> offsetsY) {
+   	this.seed = seed;
       this.biomes = biomes;
       this.length = length;
       this.completeData = completeData;
       this.currentData = currentData;
       this.offsetsX = offsetsX;
       this.offsetsY = offsetsY;
+   }
+   
+   public long getSeed() {
+   	return seed;
    }
 
    public float getLevelWidth() {

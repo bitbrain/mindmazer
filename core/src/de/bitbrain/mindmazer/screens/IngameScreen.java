@@ -37,6 +37,7 @@ import de.bitbrain.mindmazer.ui.LifeLabel;
 import de.bitbrain.mindmazer.ui.Styles;
 import de.bitbrain.mindmazer.ui.Toast;
 import de.bitbrain.mindmazer.util.LogTags;
+import de.bitbrain.mindmazer.util.StringUtils;
 
 public class IngameScreen extends AbstractScreen<MindmazerGame> {
 
@@ -58,7 +59,8 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       setBackgroundColor(Colors.BACKGROUND);
       GameObject world = setupWorld();
       levelManager = new LevelManager(context.getRenderManager(), world);
-      levelManager.generateLevelStage();
+      // TODO if player has a seed continue from there instead of generating a new one
+      levelManager.generateLevelStage(StringUtils.generateRandomString(Config.SEED_STRING_LENGTH));
       stats = new GameStats(levelManager);
       GameObject player = setupNewPlayer(levelManager);
       previewManager = new PreviewManager(levelManager, player, world, context.getGameCamera());
