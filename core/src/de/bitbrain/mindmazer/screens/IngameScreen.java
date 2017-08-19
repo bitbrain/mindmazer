@@ -1,5 +1,6 @@
 package de.bitbrain.mindmazer.screens;
 
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
@@ -139,26 +140,30 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    private void setupCamera(GameObject target) {
 	  context.getGameCamera().setTarget(target);
 	  context.getGameCamera().setSpeed(2.2f);
-	  context.getGameCamera().setBaseZoom(Config.BASE_ZOOM);
+	  if (Gdx.app.getType().equals(ApplicationType.Desktop)) {
+		  context.getGameCamera().setBaseZoom(Config.BASE_ZOOM_DESKTOP);
+	  } else {
+		  context.getGameCamera().setBaseZoom(Config.BASE_ZOOM);
+	  }
 	  context.getGameCamera().setZoomScale(0.001f);
    }
 
    private void setupShaders() {
-      RenderPipe worldPipe = context.getRenderPipeline().getPipe(RenderPipeIds.WORLD);
-      Bloom bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.7f), Math.round(Gdx.graphics.getHeight() * 0.7f));
-
-      bloom.setBaseIntesity(0.8f);
-      bloom.setBaseSaturation(1.7f);
-      bloom.setBlurAmount(0.7f);
-      bloom.setBloomSaturation(0.8f);
-      bloom.setBloomIntesity(0.6f);
-      bloom.setBlurPasses(4);
-      Vignette vignette = new Vignette(Math.round(Gdx.graphics.getWidth() / 2f),
-            Math.round(Gdx.graphics.getHeight() / 2f), false);
-      vignette.setIntensity(0.45f);
-      worldPipe.addEffects(vignette);
-      RenderPipe uiPipe = context.getRenderPipeline().getPipe(RenderPipeIds.UI);
-      uiPipe.addEffects(bloom);
+      if (Gdx.app.getType().equals(ApplicationType.Desktop)) {
+	      RenderPipe worldPipe = context.getRenderPipeline().getPipe(RenderPipeIds.WORLD);
+	      Vignette vignette = new Vignette(Math.round(Gdx.graphics.getWidth() / 2f), Math.round(Gdx.graphics.getHeight() / 2f), false);
+	      vignette.setIntensity(0.45f);
+	      worldPipe.addEffects(vignette);
+	      RenderPipe uiPipe = context.getRenderPipeline().getPipe(RenderPipeIds.UI);
+		   Bloom bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.7f), Math.round(Gdx.graphics.getHeight() * 0.7f));
+		   bloom.setBaseIntesity(0.8f);
+		   bloom.setBaseSaturation(1.7f);
+		   bloom.setBlurAmount(0.7f);
+		   bloom.setBloomSaturation(0.8f);
+	      bloom.setBloomIntesity(0.6f);
+	      bloom.setBlurPasses(4);
+	      uiPipe.addEffects(bloom);
+      }
    }
 
    private void setupUI(Stage stage, GameStats stats) {

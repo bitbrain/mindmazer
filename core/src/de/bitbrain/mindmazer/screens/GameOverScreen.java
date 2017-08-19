@@ -1,5 +1,6 @@
 package de.bitbrain.mindmazer.screens;
 
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
@@ -146,22 +147,23 @@ public class GameOverScreen extends AbstractScreen<MindmazerGame> {
    }
 
    private void setupShaders() {
-      RenderPipe worldPipe = context.getRenderPipeline().getPipe(RenderPipeIds.WORLD);
-      Bloom bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.9f), Math.round(Gdx.graphics.getHeight() * 0.9f));
-
-      bloom.setBaseIntesity(0.8f);
-      bloom.setBaseSaturation(1.7f);
-      bloom.setBlurType(BlurType.Gaussian5x5b);
-      bloom.setBlurAmount(0.8f);
-      bloom.setBloomSaturation(0.8f);
-      bloom.setBloomIntesity(0.9f);
-      bloom.setBlurPasses(7);
-      Vignette vignette = new Vignette(Math.round(Gdx.graphics.getWidth() / 2f),
-            Math.round(Gdx.graphics.getHeight() / 2f), false);
-      vignette.setIntensity(0.45f);
-      worldPipe.addEffects(vignette);
-      RenderPipe uiPipe = context.getRenderPipeline().getPipe(RenderPipeIds.UI);
-      uiPipe.addEffects(bloom);
+      if (Gdx.app.getType().equals(ApplicationType.Desktop)) {
+	      RenderPipe worldPipe = context.getRenderPipeline().getPipe(RenderPipeIds.WORLD);
+	      Vignette vignette = new Vignette(Math.round(Gdx.graphics.getWidth() / 2f),
+	            Math.round(Gdx.graphics.getHeight() / 2f), false);
+	      vignette.setIntensity(0.45f);
+	      worldPipe.addEffects(vignette);
+	      Bloom bloom = new Bloom(Math.round(Gdx.graphics.getWidth() * 0.9f), Math.round(Gdx.graphics.getHeight() * 0.9f));
+	      bloom.setBaseIntesity(0.8f);
+	      bloom.setBaseSaturation(1.7f);
+	      bloom.setBlurType(BlurType.Gaussian5x5b);
+	      bloom.setBlurAmount(0.8f);
+	      bloom.setBloomSaturation(0.8f);
+	      bloom.setBloomIntesity(0.9f);
+	      bloom.setBlurPasses(7);
+	      RenderPipe uiPipe = context.getRenderPipeline().getPipe(RenderPipeIds.UI);
+	      uiPipe.addEffects(bloom);
+      }
    }
 
 }

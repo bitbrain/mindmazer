@@ -99,7 +99,7 @@ public class LevelGenerator {
    private List<byte[]> getStagedPool(int stage) {
    	// It should get harder towards the end, 
    	// so it contributes into advanced pools on final biomes
-   	float advancedProbability = 2f * stage * stats.getStage() / 100f;
+   	float advancedProbability = 3f * stage * stats.getStage() / 100f;
    	if (advancedProbability > seeder.output().nextFloat()) {
    		return ADVANCED_POOL;
    	}   	

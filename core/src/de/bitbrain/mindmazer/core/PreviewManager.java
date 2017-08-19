@@ -1,5 +1,6 @@
 package de.bitbrain.mindmazer.core;
 
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
@@ -76,12 +77,13 @@ public class PreviewManager {
       float screenHeight = Gdx.graphics.getHeight() * Config.BASE_ZOOM;
       float levelWidth = levelManager.getCurrentStage().getLevelWidth();
       float levelHeight = levelManager.getCurrentStage().getLevelHeight();
+      float initialBasezoom = Gdx.app.getType().equals(ApplicationType.Desktop) ? Config.BASE_ZOOM_DESKTOP : Config.BASE_ZOOM;
       if (levelHeight > screenHeight) {
-         return Config.BASE_ZOOM + Config.BASE_ZOOM * (levelHeight / screenHeight);
+         return initialBasezoom + initialBasezoom * (levelHeight / screenHeight);
       }
       if (levelWidth > screenWidth) {
-         return Config.BASE_ZOOM + Config.BASE_ZOOM * (levelWidth / screenWidth);
+         return initialBasezoom + initialBasezoom * (levelWidth / screenWidth);
       }
-      return Config.BASE_ZOOM;
+      return initialBasezoom;
    }
 }
