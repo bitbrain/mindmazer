@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -19,10 +20,12 @@ public class Styles {
 
    public static final HeightedLabelStyle LABEL_TEXT_LOGO = new HeightedLabelStyle();
    public static final HeightedLabelStyle LABEL_TEXT_INFO = new HeightedLabelStyle();
+	public static final LabelStyle LABEL_POPUP_DESCRIPTION = new LabelStyle();
    public static final LabelStyle LABEL_TEXT_CREDITS = new LabelStyle();
    public static final HeightedLabelStyle LABEL_CAPTION = new HeightedLabelStyle();
    public static final TextButtonStyle TEXTBUTTON_MENU = new TextButtonStyle();
 	public static final TextButtonStyle TEXTBUTTON_TOAST = new TextButtonStyle();
+	public static final ImageButtonStyle IMAGEBUTTON_POPUPMENU = new ImageButtonStyle();
 
    public static void init() {
       LABEL_TEXT_INFO.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE, (int) (Gdx.graphics.getWidth() / 10.5f));
@@ -48,6 +51,9 @@ public class Styles {
       LABEL_CAPTION.fontColor = Colors.CELL_A;
       LABEL_CAPTION.fontColorHeighted = Colors.CELL_B_DARK;
       
+      LABEL_POPUP_DESCRIPTION.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE, (int) (Gdx.graphics.getWidth() / 16.5f));
+      LABEL_POPUP_DESCRIPTION.fontColor = Color.WHITE;
+      
       TEXTBUTTON_MENU.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE,
             (int) (Gdx.graphics.getWidth() / 11.5f));
       Texture buttonTexture = SharedAssetManager.getInstance().get(Assets.Textures.BUTTON_9, Texture.class);
@@ -57,6 +63,17 @@ public class Styles {
       TEXTBUTTON_MENU.over = new NinePatchDrawable(GraphicsFactory.createNinePatch(buttonTexture, 14, Colors.CELL_B));
       TEXTBUTTON_MENU.checkedFontColor = Colors.CELL_B_DARK;
       TEXTBUTTON_MENU.checked = new NinePatchDrawable(GraphicsFactory.createNinePatch(buttonTexture, 14, Colors.CELL_B_DARK));
+      
+      IMAGEBUTTON_POPUPMENU.up = new NinePatchDrawable(GraphicsFactory.createNinePatch(buttonTexture, 14, Colors.CELL_A));
+      IMAGEBUTTON_POPUPMENU.checked = new NinePatchDrawable(GraphicsFactory.createNinePatch(buttonTexture, 14, Colors.CELL_B));
+      IMAGEBUTTON_POPUPMENU.down = new NinePatchDrawable(GraphicsFactory.createNinePatch(buttonTexture, 14, Colors.CELL_B));
+      Sprite menuIconUp = new Sprite(SharedAssetManager.getInstance().get(Assets.Textures.MENU, Texture.class));
+      menuIconUp.setColor(Colors.CELL_B);
+      IMAGEBUTTON_POPUPMENU.imageUp = new SpriteDrawable(menuIconUp);
+      Sprite menuIconDown = new Sprite(SharedAssetManager.getInstance().get(Assets.Textures.MENU, Texture.class));
+      menuIconDown.setColor(Colors.CELL_A);
+      IMAGEBUTTON_POPUPMENU.imageDown = new SpriteDrawable(menuIconDown);
+      IMAGEBUTTON_POPUPMENU.imageChecked = new SpriteDrawable(menuIconDown);
    }
 
 }

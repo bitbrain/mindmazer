@@ -4,7 +4,9 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -38,6 +40,7 @@ import de.bitbrain.mindmazer.levelgen.LevelGenerator;
 import de.bitbrain.mindmazer.preferences.PrefKeys;
 import de.bitbrain.mindmazer.ui.CurrentStageLabel;
 import de.bitbrain.mindmazer.ui.LifeLabel;
+import de.bitbrain.mindmazer.ui.PopupMenu;
 import de.bitbrain.mindmazer.ui.Styles;
 import de.bitbrain.mindmazer.ui.Toast;
 import de.bitbrain.mindmazer.util.LogTags;
@@ -175,5 +178,24 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       progressLabel.setPosition(padding * 2f, Gdx.graphics.getHeight() - padding - progressLabel.getHeight());
       stage.addActor(progressLabel);
       stage.addActor(lifeWidget);
+      
+      PopupMenu popupMenu = new PopupMenu();
+      float buttonSize = 80f;
+      popupMenu.setPosition(Gdx.graphics.getWidth() - padding * 2f - buttonSize, padding * 2f);
+      popupMenu.setSize(buttonSize, buttonSize);
+      stage.addActor(popupMenu);
+      popupMenu.add(Assets.Textures.EXIT, "Exit game", new ClickListener() {
+      	@Override
+      	public void clicked(InputEvent event, float x, float y) {
+      		Gdx.app.exit();
+      	}
+      });
+      popupMenu.add(Assets.Textures.MUTE, "Toggle sound", new ClickListener() {
+      	@Override
+      	public void clicked(InputEvent event, float x, float y) {
+      		// TODO
+      	}
+      });
+      popupMenu.add(Assets.Textures.ACHIEVEMENTS, "Achievements", null);
    }
 }

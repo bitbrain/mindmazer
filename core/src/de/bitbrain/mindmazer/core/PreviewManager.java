@@ -73,11 +73,11 @@ public class PreviewManager {
    }
 
    private float calculateBaseZoom() {
-      float screenWidth = Gdx.graphics.getWidth() * Config.BASE_ZOOM;
-      float screenHeight = Gdx.graphics.getHeight() * Config.BASE_ZOOM;
+      float initialBasezoom = Gdx.app.getType().equals(ApplicationType.Desktop) ? Config.BASE_ZOOM_DESKTOP : Config.BASE_ZOOM;
+      float screenWidth = Gdx.graphics.getWidth() * initialBasezoom;
+      float screenHeight = Gdx.graphics.getHeight() * initialBasezoom;
       float levelWidth = levelManager.getCurrentStage().getLevelWidth();
       float levelHeight = levelManager.getCurrentStage().getLevelHeight();
-      float initialBasezoom = Gdx.app.getType().equals(ApplicationType.Desktop) ? Config.BASE_ZOOM_DESKTOP : Config.BASE_ZOOM;
       if (levelHeight > screenHeight) {
          return initialBasezoom + initialBasezoom * (levelHeight / screenHeight);
       }

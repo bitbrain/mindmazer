@@ -6,7 +6,10 @@ public interface Assets {
       String PLAYER = "textures/player.png";
       String CHIME = "textures/chime.png";
       String BUTTON_9 = "textures/button.9.png";
-      String LIFE = "textures/life.png";
+      String MENU = "textures/menu.png";
+      String ACHIEVEMENTS = "textures/achievements.png";
+      String MUTE = "textures/mute.png";
+      String EXIT = "textures/exit.png";
    }
 
    interface Sounds {

@@ -24,7 +24,10 @@ public class MindmazerAssetLoader implements GameAssetLoader {
       map.put(Assets.Textures.PLAYER, Texture.class);
       map.put(Assets.Textures.CHIME, Texture.class);
       map.put(Assets.Textures.BUTTON_9, Texture.class);
-      map.put(Assets.Textures.LIFE, Texture.class);
+      map.put(Assets.Textures.MENU, Texture.class);
+      map.put(Assets.Textures.MUTE, Texture.class);
+      map.put(Assets.Textures.ACHIEVEMENTS, Texture.class);
+      map.put(Assets.Textures.EXIT, Texture.class);
    }
 
    private void particles(Map<String, Class<?>> map) {
