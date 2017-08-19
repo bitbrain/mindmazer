@@ -1,23 +1,28 @@
 package de.bitbrain.mindmazer.core;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+
 import de.bitbrain.braingdx.util.DeltaTimer;
 import de.bitbrain.mindmazer.Config;
+import de.bitbrain.mindmazer.preferences.PrefKeys;
 
 public class GameStats {
 
    private int totalSteps;
    private int currentSteps;
-   private int stage = 1;
-   private int life = Config.DEFAULT_LIFE;
+   private int stage;
+   private int life;
    private DeltaTimer timer = new DeltaTimer();
-   private final LevelManager levelManager;
    private int points;
 
-   public GameStats(LevelManager levelManager) {
-      this.levelManager = levelManager;
-   }
-
    public void update(float delta) {
+   	Preferences prefs = prefs();
+   	life = prefs.getInteger(PrefKeys.PLAYER_LIFE, Config.DEFAULT_LIFE);
+   	stage = prefs.getInteger(PrefKeys.LEVEL_STAGE, 1);
+   	points = prefs.getInteger(PrefKeys.PLAYER_POINTS, 0);
+   	currentSteps = prefs.getInteger(PrefKeys.LEVEL_CURRENT_STEPS, 0);
+   	totalSteps = prefs.getInteger(PrefKeys.PLAYER_STEPS, 0);
       timer.update(delta);
    }
 
@@ -31,17 +36,23 @@ public class GameStats {
    
    public void nextStage() {
    	stage++;
+   	prefs().putInteger(PrefKeys.LEVEL_STAGE, stage);
+   	prefs().flush();
    }
 
    public void addLife() {
       if (life > 0) {
          life++;
+         prefs().putInteger(PrefKeys.PLAYER_LIFE, life);
+         prefs().flush();
       }
    }
 
    public void reduceLife() {
       if (life > 0) {
          life--;
+         prefs().putInteger(PrefKeys.PLAYER_LIFE, life);
+         prefs().flush();
       }
    }
 
@@ -63,6 +74,8 @@ public class GameStats {
    
    public void addPoint() {
 	   points++;
+	   prefs().putInteger(PrefKeys.PLAYER_POINTS, points);
+	   prefs().flush();
    }
    
    public int getPoints() {
@@ -74,10 +87,12 @@ public class GameStats {
       if (currentSteps > totalSteps) {
       	totalSteps++;
       }
+      prefs().putInteger(PrefKeys.LEVEL_CURRENT_STEPS, currentSteps);
+      prefs().putInteger(PrefKeys.PLAYER_STEPS, totalSteps);
+      prefs().flush();
    }
-
-   public int getLevelSteps() {
-      return levelManager.getCurrentStage().getLength();
+   
+   private Preferences prefs() {
+   	return Gdx.app.getPreferences(Config.PREFERENCE_ID);
    }
-
 }

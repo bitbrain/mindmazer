@@ -9,6 +9,7 @@ public class Seeder {
 	private String seedString;
 	
 	public void regenerate(String seedString) {
+		this.seedString = seedString;
 		seed = seedString.hashCode();
 		output = new Random(seed);
 	}

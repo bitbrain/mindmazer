@@ -1,6 +1,7 @@
 package de.bitbrain.mindmazer.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -32,6 +33,8 @@ import de.bitbrain.mindmazer.core.handlers.LevelLoaderHandler;
 import de.bitbrain.mindmazer.graphics.CellRenderHandler;
 import de.bitbrain.mindmazer.graphics.JumpAnimationRenderer;
 import de.bitbrain.mindmazer.input.InputManager;
+import de.bitbrain.mindmazer.levelgen.LevelGenerator;
+import de.bitbrain.mindmazer.preferences.PrefKeys;
 import de.bitbrain.mindmazer.ui.CurrentStageLabel;
 import de.bitbrain.mindmazer.ui.LifeLabel;
 import de.bitbrain.mindmazer.ui.Styles;
@@ -58,10 +61,11 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       this.context = context;
       setBackgroundColor(Colors.BACKGROUND);
       GameObject world = setupWorld();
-      levelManager = new LevelManager(context.getRenderManager(), world);
-      // TODO if player has a seed continue from there instead of generating a new one
-      levelManager.generateLevelStage(StringUtils.generateRandomString(Config.SEED_STRING_LENGTH));
-      stats = new GameStats(levelManager);
+      stats = new GameStats();
+      LevelGenerator levelGenerator = new LevelGenerator(stats);
+      levelManager = new LevelManager(context.getRenderManager(), world, levelGenerator);
+      Preferences prefs = Gdx.app.getPreferences(Config.PREFERENCE_ID);
+      levelManager.generateLevelStage(prefs.getString(PrefKeys.LEVEL_SEED, StringUtils.generateRandomString(Config.SEED_STRING_LENGTH)));
       GameObject player = setupNewPlayer(levelManager);
       previewManager = new PreviewManager(levelManager, player, world, context.getGameCamera());
       InputManager inputManager = new InputManager(previewManager, behavior);

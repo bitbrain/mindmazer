@@ -3,6 +3,10 @@ package de.bitbrain.mindmazer.levelgen;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
+
+import de.bitbrain.mindmazer.core.GameStats;
+
 public class LevelGenerator {
 
    private static final List<byte[]> BASIC_POOL = new ArrayList<byte[]>();
@@ -17,8 +21,14 @@ public class LevelGenerator {
 
    private final BiomFactory factory = new BiomFactory();
    private final Seeder seeder = new Seeder();
+   private final GameStats stats;
+   
+   public LevelGenerator(GameStats stats) {
+   	this.stats = stats;
+   }
 
    public LevelStage generateLevel(String seed) {
+   	Gdx.app.log("LEVELGEN", "Generating level [seed=" + seed + "]");
    	seeder.regenerate(seed);
       List<Biom> biomes = new ArrayList<Biom>();
       List<Integer> absolutesX = new ArrayList<Integer>();
@@ -29,7 +39,7 @@ public class LevelGenerator {
       int minX = 0;
       int maxX = 0;
       int offsetX = 0;
-      int stages = (int) (1 + seeder.output().nextFloat() * 2f);
+      int stages = (int) (2 + seeder.output().nextFloat() * stats.getStage() * 0.2f);
 
       // Calculate and position biomes
       for (int i = 0; i < stages; ++i) {
@@ -80,7 +90,7 @@ public class LevelGenerator {
             }
          }
       }
-      return new LevelStage(seeder.seed(), biomes, length, completeData, currentData, absolutesX, absolutesY);
+      return new LevelStage(seeder.string(), biomes, length, completeData, currentData, absolutesX, absolutesY);
    }
 
    private List<byte[]> getStagedPool(int stage) {

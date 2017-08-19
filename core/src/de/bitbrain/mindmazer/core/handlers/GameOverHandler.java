@@ -56,6 +56,8 @@ public class GameOverHandler implements RasteredMovementListener {
       }
       if (isGameOver()) {
          SharedAssetManager.getInstance().get(Assets.Sounds.GAME_OVER, Sound.class).play();
+         Gdx.app.getPreferences(Config.PREFERENCE_ID).clear();
+         Gdx.app.getPreferences(Config.PREFERENCE_ID).flush();
          stats.reset();
          object.setActive(false);
          ScreenTransitions.getInstance().out(new GameOverScreen(game, stats), 1.5f);

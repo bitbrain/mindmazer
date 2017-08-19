@@ -1,5 +1,7 @@
 package de.bitbrain.mindmazer.core.handlers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 
 import de.bitbrain.braingdx.assets.SharedAssetManager;
@@ -16,6 +18,7 @@ import de.bitbrain.mindmazer.core.PreviewManager;
 import de.bitbrain.mindmazer.i18n.Bundle;
 import de.bitbrain.mindmazer.i18n.Messages;
 import de.bitbrain.mindmazer.levelgen.LevelStage;
+import de.bitbrain.mindmazer.preferences.PrefKeys;
 import de.bitbrain.mindmazer.ui.Toast;
 import de.bitbrain.mindmazer.util.StringUtils;
 
@@ -45,11 +48,14 @@ public class LevelLoaderHandler implements RasteredMovementListener {
             public void afterTransition() {
                ScreenTransitions.getInstance().in(1f);
                LevelStage stage = levelManager.generateLevelStage(StringUtils.generateRandomString(Config.SEED_STRING_LENGTH));
+               Preferences prefs = Gdx.app.getPreferences(Config.PREFERENCE_ID);
                stats.reset();
                stats.addPoint();
                stats.nextStage();
                player.setPosition(stage.getAbsoluteStartOffsetX(0) * Config.TILE_SIZE,
                      stage.getAbsoluteStartOffsetY(0) * Config.TILE_SIZE);
+               prefs.putString(PrefKeys.LEVEL_SEED, stage.getSeedAsString());
+               prefs.flush();
                previewManager.initialPreview();
             }
 

@@ -15,14 +15,15 @@ public class LevelManager {
 
    private final GameObjectRenderManager renderManager;
    private final GameObject world;
-   private final LevelGenerator generator = new LevelGenerator();
+   private final LevelGenerator generator;
 
    private LevelStage currentStage;
    private LevelStageRenderer currentRenderer;
 
-   public LevelManager(GameObjectRenderManager renderManager, GameObject world) {
+   public LevelManager(GameObjectRenderManager renderManager, GameObject world, LevelGenerator generator) {
       this.renderManager = renderManager;
       this.world = world;
+      this.generator = generator;
    }
 
    public LevelStage getCurrentStage() {
