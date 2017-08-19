@@ -11,18 +11,23 @@ public class GameStats {
 
    private int totalSteps;
    private int currentSteps;
+   private int maxStageSteps;
    private int stage;
    private int life;
    private DeltaTimer timer = new DeltaTimer();
    private int points;
-
-   public void update(float delta) {
+   
+   public GameStats() {
    	Preferences prefs = prefs();
    	life = prefs.getInteger(PrefKeys.PLAYER_LIFE, Config.DEFAULT_LIFE);
    	stage = prefs.getInteger(PrefKeys.LEVEL_STAGE, 1);
    	points = prefs.getInteger(PrefKeys.PLAYER_POINTS, 0);
    	currentSteps = prefs.getInteger(PrefKeys.LEVEL_CURRENT_STEPS, 0);
+   	maxStageSteps = prefs.getInteger(PrefKeys.LEVEL_MAX_STEPS, 0);
    	totalSteps = prefs.getInteger(PrefKeys.PLAYER_STEPS, 0);
+   }
+
+   public void update(float delta) {
       timer.update(delta);
    }
 
@@ -70,11 +75,15 @@ public class GameStats {
 
    public void reset() {
       currentSteps = 0;
+      prefs().putInteger(PrefKeys.LEVEL_CURRENT_STEPS, currentSteps);
+      prefs().flush();
    }
    
    public void addPoint() {
+      maxStageSteps = 0;
 	   points++;
 	   prefs().putInteger(PrefKeys.PLAYER_POINTS, points);
+	   prefs().putInteger(PrefKeys.LEVEL_MAX_STEPS, maxStageSteps);
 	   prefs().flush();
    }
    
@@ -84,9 +93,11 @@ public class GameStats {
 
    public void step() {
       currentSteps++;
-      if (currentSteps > totalSteps) {
+      if (currentSteps > maxStageSteps) {
+      	maxStageSteps++;
       	totalSteps++;
       }
+      prefs().putInteger(PrefKeys.LEVEL_MAX_STEPS, maxStageSteps);
       prefs().putInteger(PrefKeys.LEVEL_CURRENT_STEPS, currentSteps);
       prefs().putInteger(PrefKeys.PLAYER_STEPS, totalSteps);
       prefs().flush();
