@@ -11,7 +11,7 @@ public interface Config {
    int DEFAULT_LIFE = 3;
    float MUSIC_VOLUME = 0.0f;
    int SWIPE_TOLERANCE = 8;
-   int SEED_STRING_LENGTH = 10;
+   int SEED_STRING_LENGTH = 24;
    
    String PREFERENCE_ID = "mindmazer-preferences";
 }
