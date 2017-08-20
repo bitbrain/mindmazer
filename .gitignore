@@ -68,6 +68,8 @@ com_crashlytics_export_strings.xml
 /html/build/
 /ios/build/
 /ios-moe/build/
+/android/aarDependencies/
+/android/libs/
 
 /nbbuild/
 /android/nbbuild/

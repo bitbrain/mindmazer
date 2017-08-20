@@ -9,7 +9,21 @@ buildscript {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
         classpath 'com.android.tools.build:gradle:1.5.0'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.0'
+        classpath 'com.github.ksoichiro:gradle-eclipse-aar-plugin:0.3.1'
     }
+}
+
+plugins {
+    id 'com.github.ksoichiro.eclipse.aar' version '0.3.1'
+}
+
+// Configure eclipse-aar plugin
+eclipseAar {
+    // See "Configurations" for details
+    androidTarget = 'android-21'
+    aarDependenciesDir = 'aarDependencies'
+    // Set to true if you use Andmore. Default is false
+    andmore = false
 }
 
 allprojects {
@@ -21,6 +35,9 @@ allprojects {
         appName = "mindmazer"
         gdxVersion = '1.9.6'
         roboVMVersion = '2.3.0'
+        appcompatLibraryVersion = '26.0.1+'
+        supportLibraryVersion = '26.0.1+'
+        gmsLibraryVersion = '11.2.0+'
     }
 
     repositories {
@@ -51,7 +68,10 @@ project(":android") {
     configurations { natives }
 
     dependencies {
-        compile project(":core")
+    	compile "com.android.support:support-v4:$supportLibraryVersion"
+    	compile "com.google.android.gms:play-services-games:$gmsLibraryVersion"
+   	 	compile "com.google.android.gms:play-services-plus:$gmsLibraryVersion"
+        
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
@@ -69,7 +89,9 @@ project(":android") {
 		natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
 		natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
 		natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
-		natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
+		natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"		
+		
+        compile project(":core")
     }
 }
 
