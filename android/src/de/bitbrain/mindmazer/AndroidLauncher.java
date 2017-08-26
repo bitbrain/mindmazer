@@ -1,13 +1,33 @@
 package de.bitbrain.mindmazer;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.GameHelper;
 import com.google.example.games.basegameutils.GameHelper.GameHelperListener;
 
-import android.os.Bundle;
+import de.bitbrain.mindmazer.social.SocialManager;
 
-public class AndroidLauncher extends AndroidApplication implements GameHelperListener {
-	
+public class AndroidLauncher extends AndroidApplication implements GameHelperListener, SocialManager {
+
+   public static final String TAG = "MindmazerActivity";
+
+	private GameHelper gameHelper;
+
+	@Override
+	public void onSignInFailed() {
+		Log.d(TAG, "Sign in failed!");
+	}
+
+	@Override
+	public void onSignInSucceeded() {
+		Log.d(TAG, "Sign in Succeeded!");
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -15,16 +35,93 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 		config.numSamples = 2;
 		config.useCompass = false;
 		config.useWakelock = true;
-		initialize(new MindmazerGame(), config);
+		gameHelper = new GameHelper(this, GameHelper.CLIENT_ALL);
+		gameHelper.setup(this);
+		initialize(new MindmazerGame(this), config);
 	}
 
 	@Override
-	public void onSignInFailed() {
-		// TODO
+	protected void onStart() {
+		super.onStart();
+		Log.d(TAG, "onStart(): Connecting to Google APIs");
+		gameHelper.onStart(this);
+	}
+
+	 @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop(): Disconnecting from Google APIs");
+		 gameHelper.onStop();
+    }
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		gameHelper.onStop();
 	}
 
 	@Override
-	public void onSignInSucceeded() {
-		// TODO
+	protected void onResume() {
+		super.onResume();
+		gameHelper.onStart(this);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		gameHelper.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public void login() {
+		try {
+			runOnUiThread(new Runnable(){
+				@Override
+				public void run(){
+					Log.d(TAG, "login(): begin user initiated sign in");
+					gameHelper.beginUserInitiatedSignIn();
+				}
+			});
+		} catch (final Exception ex){
+			Log.d(TAG, ex.getMessage());
+		}
+	}
+
+	@Override
+	public void logout() {
+		try {
+			runOnUiThread(new Runnable(){
+				@Override
+				public void run(){
+					gameHelper.signOut();
+				}
+			});
+		} catch (final Exception ex){
+			Log.d(TAG, ex.getMessage());
+		}
+	}
+
+	@Override
+	public boolean isSignedIn() {
+		return gameHelper.isSignedIn();
+	}
+
+	@Override
+	public void showLadder() {
+		if (isSignedIn()) {
+			startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(gameHelper.getApiClient()), 105);
+		}
+	}
+
+	@Override
+	public void showAchievements() {
+		if (isSignedIn()) {
+			startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), 105);
+		}
+	}
+
+	@Override
+	public boolean isConnected() {
+		return gameHelper.isSignedIn();
 	}
 }

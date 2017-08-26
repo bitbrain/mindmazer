@@ -5,6 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import de.bitbrain.mindmazer.Config;
 import de.bitbrain.mindmazer.MindmazerGame;
+import de.bitbrain.mindmazer.social.SocialManager;
 
 public class DesktopLauncher {
    public static void main(String[] arg) {
@@ -16,6 +17,37 @@ public class DesktopLauncher {
       config.resizable = false;
       config.useHDPI = true;
       config.samples = 8;
-		new LwjglApplication(new MindmazerGame(), config);
+		new LwjglApplication(new MindmazerGame(new SocialManager() {
+
+            @Override
+            public void login() {
+
+            }
+
+            @Override
+            public void logout() {
+
+            }
+
+            @Override
+            public boolean isSignedIn() {
+                return false;
+            }
+
+            @Override
+            public void showLadder() {
+
+            }
+
+            @Override
+            public void showAchievements() {
+
+            }
+
+            @Override
+            public boolean isConnected() {
+                return false;
+            }
+        }), config);
 	}
 }

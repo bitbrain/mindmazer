@@ -15,9 +15,16 @@ import de.bitbrain.mindmazer.assets.MindmazerAssetLoader;
 import de.bitbrain.mindmazer.i18n.Bundle;
 import de.bitbrain.mindmazer.screens.IngameScreen;
 import de.bitbrain.mindmazer.screens.MenuScreen;
+import de.bitbrain.mindmazer.social.SocialManager;
 import de.bitbrain.mindmazer.ui.Styles;
 
 public class MindmazerGame extends BrainGdxGame {
+
+   private final SocialManager socialManager;
+
+   public MindmazerGame(SocialManager socialManager) {
+      this.socialManager = socialManager;
+   }
 
    @Override
    public void resize(int width, int height) {
