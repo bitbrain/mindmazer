@@ -6,6 +6,8 @@ public interface Colors {
 
    Color BACKGROUND = Color.valueOf("1f1627");
    Color FOREGROUND = Color.valueOf("39253f");
+   Color PLASMA = Color.valueOf("ff0066");
+   Color PLASMA_DARK = Color.valueOf("981b5c");
    Color CELL_A = Color.valueOf("00ff84");
    Color CELL_B = Color.valueOf("1fb175");
    Color CELL_A_DARK = Color.valueOf("00c666");

@@ -172,7 +172,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
    private void setupUI(Stage stage, GameStats stats) {
       final float padding = 20f;
       CurrentStageLabel progressLabel = new CurrentStageLabel(stats, Styles.LABEL_TEXT_INFO);
-      LifeLabel lifeWidget = new LifeLabel(stats, Styles.LABEL_TEXT_INFO);
+      LifeLabel lifeWidget = new LifeLabel(stats, Styles.LABEL_TEXT_INFO_PLASMA);
       lifeWidget.setPosition(Gdx.graphics.getWidth() - padding * 2f - lifeWidget.getPrefWidth(),
             Gdx.graphics.getHeight() - padding - lifeWidget.getPrefHeight());
       progressLabel.setPosition(padding * 2f, Gdx.graphics.getHeight() - padding - progressLabel.getHeight());

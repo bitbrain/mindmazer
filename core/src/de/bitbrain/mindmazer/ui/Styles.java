@@ -20,6 +20,7 @@ public class Styles {
 
    public static final HeightedLabelStyle LABEL_TEXT_LOGO = new HeightedLabelStyle();
    public static final HeightedLabelStyle LABEL_TEXT_INFO = new HeightedLabelStyle();
+   public static final HeightedLabelStyle LABEL_TEXT_INFO_PLASMA = new HeightedLabelStyle();
 	public static final LabelStyle LABEL_POPUP_DESCRIPTION = new LabelStyle();
    public static final LabelStyle LABEL_TEXT_CREDITS = new LabelStyle();
    public static final HeightedLabelStyle LABEL_CAPTION = new HeightedLabelStyle();
@@ -30,8 +31,12 @@ public class Styles {
    public static void init() {
       LABEL_TEXT_INFO.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE, (int) (Gdx.graphics.getWidth() / 10.5f));
       LABEL_TEXT_INFO.fontColor = Colors.CELL_A;
-      LABEL_TEXT_INFO.fontColorHeighted = Colors.CELL_B_DARK;  
-      
+      LABEL_TEXT_INFO.fontColorHeighted = Colors.CELL_B_DARK;
+
+      LABEL_TEXT_INFO_PLASMA.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE, (int) (Gdx.graphics.getWidth() / 10.5f));
+      LABEL_TEXT_INFO_PLASMA.fontColor = Colors.PLASMA;
+      LABEL_TEXT_INFO_PLASMA.fontColorHeighted = Colors.PLASMA_DARK;
+
       TEXTBUTTON_TOAST.font = BitmapFontBaker.bake(Assets.Fonts.ANGIES_NEW_HOUSE, (int) (Gdx.graphics.getWidth() / 8.5f));
       TEXTBUTTON_TOAST.fontColor = Color.WHITE;
       TEXTBUTTON_TOAST.up = new SpriteDrawable(new Sprite(GraphicsFactory.createTexture(2, 2, new Color(0f, 0f, 0f, 0.65f))));
