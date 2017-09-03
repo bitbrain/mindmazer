@@ -1,10 +1,5 @@
 package de.bitbrain.mindmazer.graphics;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -14,6 +9,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -32,7 +32,7 @@ import de.bitbrain.mindmazer.util.LogTags;
 
 public class LevelStageRenderer implements GameObjectRenderer, Disposable {
 
-   public static interface LevelStageRenderListener {
+   public interface LevelStageRenderListener {
       void afterSetStage();
    }
 

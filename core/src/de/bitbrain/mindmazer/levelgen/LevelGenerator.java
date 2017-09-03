@@ -14,15 +14,14 @@ public class LevelGenerator {
 
    static {
      BASIC_POOL.add(BiomData.Simple.LINE_UP);
-     BASIC_POOL.add(BiomData.Simple.SNAKE_RIGHT);
-     BASIC_POOL.add(BiomData.Simple.SNAKE_LEFT);
+     BASIC_POOL.add(BiomData.Simple.CURVE_BOTTOM_LEFT);
+     BASIC_POOL.add(BiomData.Simple.CURVE_BOTTOM_RIGHT);
+     BASIC_POOL.add(BiomData.Simple.CURVE_TOP_LEFT);
+     BASIC_POOL.add(BiomData.Simple.CURVE_TOP_RIGHT);
      BASIC_POOL.add(BiomData.Simple.LINE_SIDE);
-     BASIC_POOL.add(BiomData.Simple.SIDE_RIGHT);
-     ADVANCED_POOL.add(BiomData.Advanced.SNAKE_RIGHT);
-     ADVANCED_POOL.add(BiomData.Advanced.SNAKE_LEFT);
-     ADVANCED_POOL.add(BiomData.Advanced.STAIR_LEFT);
-     ADVANCED_POOL.add(BiomData.Advanced.STAIR_RIGHT);
-     ADVANCED_POOL.add(BiomData.Advanced.SUPER_SNAKE);
+     ADVANCED_POOL.add(BiomData.Advanced.SWIRL);
+     ADVANCED_POOL.add(BiomData.Advanced.CROSS);
+     ADVANCED_POOL.add(BiomData.Advanced.SPIKE_UP);
    }
 
    private final BiomFactory factory = new BiomFactory();
@@ -45,7 +44,7 @@ public class LevelGenerator {
       int minX = 0;
       int maxX = 0;
       int offsetX = 0;
-      int stages = (int) (2 + seeder.output().nextFloat() * stats.getStage() * 0.15f);
+      int stages = (int) (2 + seeder.output().nextFloat() * stats.getStage() * .1f);
 
       // Calculate and position biomes
       for (int i = 0; i < stages; ++i) {
@@ -102,7 +101,7 @@ public class LevelGenerator {
    private List<byte[]> getStagedPool(int stage) {
    	// It should get harder towards the end, 
    	// so it contributes into advanced pools on final biomes
-   	float advancedProbability = 3f * stage * stats.getStage() / 100f;
+   	float advancedProbability = 5f * stage * stats.getStage() / 100f;
    	if (advancedProbability > seeder.output().nextFloat()) {
    		return ADVANCED_POOL;
    	}   	
