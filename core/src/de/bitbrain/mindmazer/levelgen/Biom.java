@@ -2,7 +2,7 @@ package de.bitbrain.mindmazer.levelgen;
 
 public class Biom {
 
-   private final byte[][] data;
+   final byte[][] data;
    private final int startX, startY;
    private final int height, width;
    private final int endX, endY;

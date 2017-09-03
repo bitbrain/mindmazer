@@ -1,9 +1,9 @@
 package de.bitbrain.mindmazer.levelgen;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.badlogic.gdx.Gdx;
 
 import de.bitbrain.mindmazer.core.GameStats;
 
@@ -14,12 +14,15 @@ public class LevelGenerator {
 
    static {
      BASIC_POOL.add(BiomData.Simple.LINE_UP);
-     BASIC_POOL.add(BiomData.Advanced.SNAKE_RIGHT);
-     BASIC_POOL.add(BiomData.Advanced.SNAKE_LEFT);
+     BASIC_POOL.add(BiomData.Simple.SNAKE_RIGHT);
+     BASIC_POOL.add(BiomData.Simple.SNAKE_LEFT);
+     BASIC_POOL.add(BiomData.Simple.LINE_SIDE);
+     BASIC_POOL.add(BiomData.Simple.SIDE_RIGHT);
      ADVANCED_POOL.add(BiomData.Advanced.SNAKE_RIGHT);
      ADVANCED_POOL.add(BiomData.Advanced.SNAKE_LEFT);
      ADVANCED_POOL.add(BiomData.Advanced.STAIR_LEFT);
      ADVANCED_POOL.add(BiomData.Advanced.STAIR_RIGHT);
+     ADVANCED_POOL.add(BiomData.Advanced.SUPER_SNAKE);
    }
 
    private final BiomFactory factory = new BiomFactory();
