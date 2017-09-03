@@ -3,25 +3,25 @@ package de.bitbrain.mindmazer.levelgen;
 import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.bitbrain.mindmazer.core.GameStats;
 
 public class LevelGenerator {
 
-   private static final List<byte[]> BASIC_POOL = new ArrayList<byte[]>();
-   private static final List<byte[]> ADVANCED_POOL = new ArrayList<byte[]>();
+   private static final Map<byte[], Float> BASIC_POOL = new HashMap<byte[], Float>();
 
    static {
-     BASIC_POOL.add(BiomData.Simple.LINE_UP);
-     BASIC_POOL.add(BiomData.Simple.CURVE_BOTTOM_LEFT);
-     BASIC_POOL.add(BiomData.Simple.CURVE_BOTTOM_RIGHT);
-     BASIC_POOL.add(BiomData.Simple.CURVE_TOP_LEFT);
-     BASIC_POOL.add(BiomData.Simple.CURVE_TOP_RIGHT);
-     BASIC_POOL.add(BiomData.Simple.LINE_SIDE);
-     ADVANCED_POOL.add(BiomData.Advanced.SWIRL);
-     ADVANCED_POOL.add(BiomData.Advanced.CROSS);
-     ADVANCED_POOL.add(BiomData.Advanced.SPIKE_UP);
+     BASIC_POOL.put(BiomData.Simple.LINE_VERTICAL, 0.8f);
+     BASIC_POOL.put(BiomData.Simple.LINE_HORIZONTAL, 0.8f);
+     BASIC_POOL.put(BiomData.Simple.LINE_HORIZONTAL_LONG, 0.4f);
+     BASIC_POOL.put(BiomData.Simple.LINE_VERTICAL_LONG, 0.4f);
+     BASIC_POOL.put(BiomData.Simple.CURVE_BOTTOM_LEFT, 1f);
+     BASIC_POOL.put(BiomData.Simple.CURVE_BOTTOM_RIGHT, 1f);
+     BASIC_POOL.put(BiomData.Simple.CURVE_TOP_LEFT, 1f);
+     BASIC_POOL.put(BiomData.Simple.CURVE_TOP_RIGHT, 1f);
    }
 
    private final BiomFactory factory = new BiomFactory();
@@ -44,7 +44,7 @@ public class LevelGenerator {
       int minX = 0;
       int maxX = 0;
       int offsetX = 0;
-      int stages = (int) (2 + seeder.output().nextFloat() * stats.getStage() * .1f);
+      int stages = (int) (2 + seeder.output().nextFloat() * stats.getStage() * .2f);
 
       // Calculate and position biomes
       for (int i = 0; i < stages; ++i) {
@@ -98,18 +98,18 @@ public class LevelGenerator {
       return new LevelStage(seeder.string(), biomes, length, completeData, currentData, absolutesX, absolutesY);
    }
 
-   private List<byte[]> getStagedPool(int stage) {
-   	// It should get harder towards the end, 
-   	// so it contributes into advanced pools on final biomes
-   	float advancedProbability = 5f * stage * stats.getStage() / 100f;
-   	if (advancedProbability > seeder.output().nextFloat()) {
-   		return ADVANCED_POOL;
-   	}   	
+   private Map<byte[], Float> getStagedPool(int stage) {
       return BASIC_POOL;
    }
 
-   private byte[] getRandomData(List<byte[]> pool) {
-      int index = (int) (seeder.output().nextFloat() * pool.size());
-      return pool.get(index);
+   private byte[] getRandomData(Map<byte[], Float> pool) {
+      List<byte[]> keysAsArray = new ArrayList<byte[]>(pool.keySet());
+      float probability = 0f;
+      byte[] selectedBytes = null;
+      while (seeder.output().nextFloat() > probability) {
+         selectedBytes = keysAsArray.get(seeder.output().nextInt(keysAsArray.size()));
+         probability = pool.get(selectedBytes);
+      }
+      return selectedBytes;
    }
 }

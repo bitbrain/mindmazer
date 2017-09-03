@@ -31,6 +31,22 @@ public class BiomFactoryTest {
    }
 
    @Test
+   public void testTeeShape() {
+      byte[] horizontalShape = {
+              1, 1, 1,
+              0, 1, 0, 3
+      };
+      Biom biom = biomFactory.create(horizontalShape);
+      Assert.assertEquals(0, biom.getEndX());
+      Assert.assertEquals(1, biom.getEndY());
+      Assert.assertEquals(1, biom.getStartX());
+      Assert.assertEquals(0, biom.getStartY());
+      Assert.assertEquals(3, biom.getWidth());
+      Assert.assertEquals(2, biom.getHeight());
+      Assert.assertEquals(4, biom.getLength());
+   }
+
+   @Test
    public void testHorizontalShape() {
       byte[] horizontalShape = {
               1, 1, 1, 3

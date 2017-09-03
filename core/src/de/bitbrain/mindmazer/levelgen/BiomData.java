@@ -4,13 +4,24 @@ public interface BiomData {
    
    interface Simple {
       
-      byte[] LINE_UP = {
+      byte[] LINE_VERTICAL = {
          1,
          1, 1
       };
 
-      byte[] LINE_SIDE = {
+      byte[] LINE_HORIZONTAL = {
               1, 1, 2
+      };
+
+      byte[] LINE_VERTICAL_LONG = {
+              1,
+              1,
+              1,
+              1, 1
+      };
+
+      byte[] LINE_HORIZONTAL_LONG = {
+              1, 1, 1, 1, 4
       };
 
       byte[] CURVE_BOTTOM_RIGHT = {
@@ -31,27 +42,6 @@ public interface BiomData {
       byte[] CURVE_TOP_RIGHT = {
               0, 1,
               1, 1, 2
-      };
-   }
-
-   interface Advanced {
-
-      byte[] SPIKE_UP = {
-              0, 1, 0,
-              1, 1, 1, 3
-      };
-
-      byte[] CROSS = {
-              0, 1, 0,
-              1, 1, 1,
-              0, 1, 0, 3
-      };
-
-      byte[] SWIRL = {
-         1, 1, 1, 1,
-         1, 0, 1, 0,
-         1, 0, 0, 1,
-         1, 1, 1, 1, 4
       };
    }
 }
