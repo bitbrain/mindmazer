@@ -104,9 +104,9 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        compile 'de.bitbrain.braingdx:braingdx-core:0.1.1'
-        compile 'de.bitbrain.braingdx:braingdx-core:0.1.1:sources'
-        compile 'de.bitbrain.braingdx:braingdx-core:0.1.1:javadoc'
+        compile 'de.bitbrain.braingdx:braingdx-core:0.1.9'
+        compile 'de.bitbrain.braingdx:braingdx-core:0.1.9:sources'
+        compile 'de.bitbrain.braingdx:braingdx-core:0.1.9:javadoc'
     }
 }
 
