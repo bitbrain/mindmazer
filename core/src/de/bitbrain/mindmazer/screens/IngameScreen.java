@@ -179,7 +179,7 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       stage.addActor(progressLabel);
       stage.addActor(lifeWidget);
       
-      PopupMenu popupMenu = new PopupMenu();
+      /*PopupMenu popupMenu = new PopupMenu();
       float buttonSize = 80f;
       popupMenu.setPosition(Gdx.graphics.getWidth() - padding * 2f - buttonSize, padding * 2f);
       popupMenu.setSize(buttonSize, buttonSize);
@@ -196,6 +196,6 @@ public class IngameScreen extends AbstractScreen<MindmazerGame> {
       		// TODO
       	}
       });
-      popupMenu.add(Assets.Textures.ACHIEVEMENTS, "Achievements", null);
+      popupMenu.add(Assets.Textures.ACHIEVEMENTS, "Achievements", null);*/
    }
 }

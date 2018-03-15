@@ -2,6 +2,7 @@ package de.bitbrain.mindmazer.screens;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -35,6 +36,7 @@ import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.assets.Assets;
 import de.bitbrain.mindmazer.i18n.Bundle;
 import de.bitbrain.mindmazer.i18n.Messages;
+import de.bitbrain.mindmazer.preferences.PrefKeys;
 import de.bitbrain.mindmazer.tweens.PointLightTween;
 import de.bitbrain.mindmazer.ui.HeightedLabel;
 import de.bitbrain.mindmazer.ui.Styles;
@@ -107,6 +109,7 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
    }
 
    private void setupUI(Stage stage) {
+      Preferences prefs = Gdx.app.getPreferences(Config.PREFERENCE_ID);
       Table layout = new Table();
       layout.setFillParent(true);
       // Logo
@@ -114,7 +117,11 @@ public class MenuScreen extends AbstractScreen<MindmazerGame> {
       layout.add(logo).padBottom(Gdx.graphics.getHeight() / 15f).row();
       
       // Buttons
-      TextButton play = new TextButton(Bundle.translations.get(Messages.MENU_PLAY), Styles.TEXTBUTTON_MENU);
+      String playButtonMsg = Messages.MENU_PLAY;
+      if (prefs.contains(PrefKeys.PLAYER_STEPS)) {
+          playButtonMsg = Messages.MENU_CONTINUE;
+      }
+      TextButton play = new TextButton(Bundle.translations.get(playButtonMsg), Styles.TEXTBUTTON_MENU);
       play.addCaptureListener(new ClickListener() {
          @Override
          public void clicked(InputEvent event, float x, float y) {

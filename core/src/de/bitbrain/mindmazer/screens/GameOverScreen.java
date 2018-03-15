@@ -23,6 +23,8 @@ import de.bitbrain.mindmazer.Colors;
 import de.bitbrain.mindmazer.MindmazerGame;
 import de.bitbrain.mindmazer.assets.Assets;
 import de.bitbrain.mindmazer.core.GameStats;
+import de.bitbrain.mindmazer.i18n.Bundle;
+import de.bitbrain.mindmazer.i18n.Messages;
 import de.bitbrain.mindmazer.ui.HeightedLabel;
 import de.bitbrain.mindmazer.ui.Styles;
 
@@ -76,13 +78,13 @@ public class GameOverScreen extends AbstractScreen<MindmazerGame> {
 	   Table layout = new Table();
 	   layout.setFillParent(true);
 	   stage.addActor(layout);
-	   HeightedLabel gameOver = new HeightedLabel("GAME OVER!", Styles.LABEL_CAPTION);
+	   HeightedLabel gameOver = new HeightedLabel(Bundle.translations.get(Messages.INGAME_UI_GAMEOVER), Styles.LABEL_CAPTION);
 	   layout.add(gameOver).height(50f).padBottom(60f).row();
-	   Label points = new Label(stats.getPoints() + " points", Styles.LABEL_TEXT_INFO);
+	   Label points = new Label(stats.getPoints() + " " + Bundle.translations.get(Messages.INGAME_UI_POINTS), Styles.LABEL_TEXT_INFO);
 	   layout.add(points).height(120f).row();
-	   Label totalSteps = new Label(stats.getTotalSteps() + " total steps", Styles.LABEL_TEXT_INFO);
+	   Label totalSteps = new Label(stats.getTotalSteps() + " " + Bundle.translations.get(Messages.INGAME_UI_STEPS), Styles.LABEL_TEXT_INFO);
 	   layout.add(totalSteps).height(120f).row();
-	   Label continueText = new Label("Press anything to continue...", Styles.LABEL_TEXT_CREDITS);
+	   Label continueText = new Label(Bundle.translations.get(Messages.INGAME_UI_CONTINUE), Styles.LABEL_TEXT_CREDITS);
 	   layout.add(continueText).height(20f).padTop(100f).row();
 	   
 	   // ANIM1 - LOGO

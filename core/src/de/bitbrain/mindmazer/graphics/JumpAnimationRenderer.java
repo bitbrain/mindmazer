@@ -32,18 +32,14 @@ public class JumpAnimationRenderer implements GameObjectRenderer, RasteredMoveme
    private final SpriteRenderer renderer;
 
    private Sprite sprite;
-   
-   private final RainbowMachine colorMixer;
 
    public JumpAnimationRenderer(SpriteRenderer renderer) {
       this.renderer = renderer;
-      this.colorMixer = new RainbowMachine();
    }
 
    @Override
    public void init() {
       renderer.init();
-      colorMixer.start();
    }
 
    @Override
@@ -65,7 +61,6 @@ public class JumpAnimationRenderer implements GameObjectRenderer, RasteredMoveme
       sprite.setPosition(object.getLeft() + object.getOffset().x + PADDING,
             object.getTop() + object.getOffset().y + PADDING / 4);
       sprite.draw(batch);
-      object.setColor(colorMixer.getColor());
       renderer.render(object, batch, delta);
    }
 

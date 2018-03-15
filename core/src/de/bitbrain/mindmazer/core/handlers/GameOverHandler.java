@@ -52,7 +52,7 @@ public class GameOverHandler implements RasteredMovementListener {
       if (isOutOfLevel) {
          SharedAssetManager.getInstance().get(Assets.Sounds.DEATH, Sound.class).play();
          stats.reduceLife();
-         Toast.getInstance().makeToast(Bundle.translations.get(Messages.TOAST_DEATH), Color.RED, 2f, 1.5f);
+         Toast.getInstance().makeToast(Bundle.translations.get(Messages.TOAST_DEATH), Color.valueOf("#ff0060"), 2f, 1.5f);
       }
       if (isGameOver()) {
          SharedAssetManager.getInstance().get(Assets.Sounds.GAME_OVER, Sound.class).play();

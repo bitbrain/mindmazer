@@ -58,18 +58,21 @@ public class AndroidLauncher extends AndroidApplication implements GameHelperLis
 	protected void onPause() {
 		super.onPause();
 		gameHelper.onStop();
+		Log.i("PLAYSERVICES", "onPause()");
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		gameHelper.onStart(this);
+		Log.i("PLAYSERVICES", "onResume()");
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		gameHelper.onActivityResult(requestCode, resultCode, data);
+		Log.i("PLAYSERVICES", "onActivityResult()");
 	}
 
 	@Override
