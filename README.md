@@ -12,5 +12,6 @@ The player enters a world and is able to see the full level unvealed. The player
 # The team
 
 - Programming & Art: bitbrain (Miguel)
+- Music by kostnix
 
 This game is a [#1gam](http://www.onegameamonth.com) 2017 February submission.
