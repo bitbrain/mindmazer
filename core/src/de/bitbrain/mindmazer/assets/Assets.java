@@ -4,6 +4,7 @@ public interface Assets {
 
    interface Textures {
       String PLAYER = "textures/player.png";
+      String BITBRAIN_LOGO = "textures/bitbrain.png";
       String LIFE = "textures/life.png";
       String CHIME = "textures/chime.png";
       String BUTTON_9 = "textures/button.9.png";
@@ -15,6 +16,7 @@ public interface Assets {
 
    interface Sounds {
       String OBSCURE_MAP = "sound/hidemap.ogg";
+      String BITBRAIN = "sound/bitbrain.ogg";
       String SHOW_MAP = "sound/showmap.ogg";
       String DEATH = "sound/death.ogg";
       String BUTTON_CLICK = "sound/button_click.ogg";

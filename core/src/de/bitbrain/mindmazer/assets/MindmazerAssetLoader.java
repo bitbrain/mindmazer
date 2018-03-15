@@ -22,6 +22,7 @@ public class MindmazerAssetLoader implements GameAssetLoader {
 
    private void textures(Map<String, Class<?>> map) {
       map.put(Assets.Textures.PLAYER, Texture.class);
+      map.put(Assets.Textures.BITBRAIN_LOGO, Texture.class);
       map.put(Assets.Textures.LIFE, Texture.class);
       map.put(Assets.Textures.CHIME, Texture.class);
       map.put(Assets.Textures.BUTTON_9, Texture.class);
@@ -42,6 +43,7 @@ public class MindmazerAssetLoader implements GameAssetLoader {
       map.put(Assets.Musics.INGAME_03, Music.class);
       map.put(Assets.Musics.GAMEOVER, Music.class);
 
+      map.put(Assets.Sounds.BITBRAIN, Sound.class);
       map.put(Assets.Sounds.BUTTON_CLICK, Sound.class);
       map.put(Assets.Sounds.DEATH, Sound.class);
       map.put(Assets.Sounds.GAME_OVER, Sound.class);

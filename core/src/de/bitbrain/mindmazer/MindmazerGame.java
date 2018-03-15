@@ -14,6 +14,7 @@ import de.bitbrain.braingdx.screens.AbstractScreen;
 import de.bitbrain.mindmazer.assets.MindmazerAssetLoader;
 import de.bitbrain.mindmazer.i18n.Bundle;
 import de.bitbrain.mindmazer.screens.IngameScreen;
+import de.bitbrain.mindmazer.screens.IntroScreen;
 import de.bitbrain.mindmazer.screens.MenuScreen;
 import de.bitbrain.mindmazer.social.SocialManager;
 import de.bitbrain.mindmazer.ui.Styles;
@@ -49,7 +50,7 @@ public class MindmazerGame extends BrainGdxGame {
       if (Config.DEBUG) {
          return new IngameScreen(this);
       } else {
-         return new MenuScreen(this);
+         return new IntroScreen(this);
       }
    }
 }
